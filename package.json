@@ -2,7 +2,7 @@
   "name": "food-blog",
   "version": "1.0.0",
   "description": "Not a professional chef no problem share your recipes on a food blog.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
