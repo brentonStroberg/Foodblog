@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/brentonStroberg/Food-Blog#readme",
   "dependencies": {
-    "express": "^4.18.1",
-    "mongodb": "^4.5.0"
+    "express": "^4.18.1"
   }
 }
