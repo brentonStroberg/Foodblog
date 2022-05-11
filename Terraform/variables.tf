@@ -39,3 +39,7 @@ variable "vpc_default_id" {
 variable "container_name" {
   default = "foodblog"
 }
+
+
+
+
