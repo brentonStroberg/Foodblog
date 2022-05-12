@@ -39,6 +39,19 @@ CREATE TABLE post (
 );
 
 
+CREATE table comment (
+    id  INT NOT NULL AUTO_INCREMENT,
+    createdBy VARCHAR(50) not null,
+    postId INT not NULL,
+    parentId INT NULL,
+    createdAt timestamp DEFAULT CURRENT_TIMESTAMP,
+    updatedAt timestamp NULL,
+    content TEXT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN  key (createdBy) REFERENCES  user (username),
+    FOREIGN  key (postId) REFERENCES post (id)
+);
+
 
 
 CREATE TABLE category (
