@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="../javascripts/amazon-congito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <script src="../javascripts/amazon-cognito-identity.min.js"></script>
+</head>
+<body>
+    <h1>Register an Account</h1>
+    <form name="regForm">
+        <input type="text" id="username" placeholder="Username" required  pattern="[a-zA-z]{1,15}"">
+        <input type="password" id="pwd" placeholder="Password" required pattern=(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-\x27!@#%&+\x3D\/,\x3E\x3C\x22:;|_~\x60])\S{8,99}>
+         <input type="password" id="confirm-pwd" placeholder="Confirm Password" required  pattern=(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-\x27!@#%&+\x3D\/,\x3E\x3C\x22:;|_~\x60])\S{8,99}>
+        <input type="email" id="email" placeholder="Email">
+        
+        <input type="submit" class="login" value="Log In" onclick="register()" formtarget="_blank">
+        </form>  
+
+        <script>
+            let username;
+            let email;
+            let password;
+            function register() {
+                username = document.getElementById("username").value
+                email = document.getElementById("email").value
+                password =  document.getElementById("pwd").value
+                console.log(username)
+                console.log(email)
+                poolData = {
+                    UserPoolId: "us-east-1_TRm9RBzep",
+                    ClientId: "6q1s31tlsinnohnetemldfgal6"
+                }
+                let userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData)
+                let attributes = []
+                attributes.push(new AmazonCognitoIdentity.CognitoUserAttribute({
+                    Name:"phone_number",
+                    Value:"+270638264972"
+                }));
+
+                attributes.push(new AmazonCognitoIdentity.CognitoUserAttribute({
+                    Name:"email",
+                    Value: email
+                }));
+
+                userPool.signUp(username,password,attributes,null,function (err,result)  {
+                    if(err) {
+                        alert(err.message)
+                        return;
+                    }
+
+                    console.log(result.user.getUsername());
+                });
+            }
+        </script>
+</body>
+</html>
