@@ -15,7 +15,6 @@ const {
 
 // EXAMPLE route
 router.get('/', function(req, res, next) {
-  console.log("in route")
   db_client.query("select * from user",(err, rows) => {
       if (err) {
         console.log("error");
