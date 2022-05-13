@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="./js/amazon-congito-auth.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+    <script src="./js/amazon-cognito-identity.min.js"></script>
+    <script src="./js/config.js"></script>
+    <script src="./js/register.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+    <form name="regForm" id="regForm" onsubmit="return(register());">
+        <fieldset>
+            <h1>Sign up</h1>
+            <h2>create account</h2>
+            <p>
+                <input type="text" id="username" placeholder="Username" required  pattern="[a-zA-z]{1,15}">
+                <span id="username_error" hidden="hidden">Username must not contain special characters</span>
+
+            </p>
+            <p>
+                <input type="password" id="pwd" placeholder="Password" required pattern=(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\^$*.\[\]{}\(\)?\-\x27!@#%&+\x3D\/,\x3E\x3C\x22:;|_~\x60])\S{8,99}>
+                <span id="password_error" hidden="hidden">Enter a password longer than 8 characters</span>
+            </p>
+            <p>
+               <input type="password" id="confirm_pwd" placeholder="Confirm Password" required>
+               <span id="password_confirm_error" hidden="hidden">Password mismatch</span>
+            </p>
+            <input type="email" id="email" placeholder="Email" required>
+            <span id="email_error" hidden="hidden">Invalid email</span>
+
+            <p>
+            <input type="submit" class="login" value="Log In"  formtarget="_blank">
+        </fieldset>
+
+        </form>  
+
+        <script>
+            let username = document.getElementById('username');
+            let password = document.getElementById('pwd');
+            let confirm_pwd = document.getElementById('confirm_pwd');
+            let email = document.getElementById('email');
+
+
+            username.addEventListener('invalid', function(event){
+                event.preventDefault();
+                if ( ! event.target.validity.valid ) {
+                    document.getElementById('username_error').removeAttribute("hidden");
+                }
+            });
+
+            username.addEventListener('input', function(event) {
+                event.preventDefault();
+                if (   !document.getElementById('username_error').hasAttribute("hidden")  ) {
+                    document.getElementById('username_error').setAttribute("hidden","hidden");
+                }
+            });
+
+
+            password.addEventListener('input', function(event) {
+                event.preventDefault();
+                if (   !document.getElementById('password_error').hasAttribute("hidden")  ) {
+                    document.getElementById('password_error').setAttribute("hidden","hidden");
+                }
+            });
+
+            
+
+            password.addEventListener('invalid', function(event){
+                event.preventDefault();
+                if ( ! event.target.validity.valid ) {
+                    document.getElementById('password_error').removeAttribute("hidden");
+                }
+            });
+            
+          
+            
+
+        </script>
+
+
+
+</body>
+</html>

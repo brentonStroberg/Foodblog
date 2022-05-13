@@ -1,0 +1,66 @@
+
+
+
+html,body {
+    height:100%;
+    width:100%;
+    margin:0;
+  }
+  body {
+    display:flex;
+  }
+  form {
+    margin:auto;/* nice thing of auto margin if display:flex; it center both horizontal and vertical :) */
+  }
+  
+
+
+/* Style inputs */
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+  input[type=email] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+
+  input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  /* Style the submit button */
+  input[type=submit] {
+    width: 100%;
+    background-color: #04AA6D;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Add a background color to the submit button on mouse-over */
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
