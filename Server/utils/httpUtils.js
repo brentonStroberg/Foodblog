@@ -3,6 +3,11 @@ function sendHttpError(req, res, error) {
     return handleError(req, res, error, statusCode);
 }
 
+
+function sendHttpUnauthorised(req, res, errorMessage) {
+    return handleError(req, res, errorMessage, 401);
+}
+
 function sendHttpBadRequest(req, res, errorMessage) {
     return handleError(req, res, errorMessage, 400);
 }
@@ -44,6 +49,6 @@ module.exports.sendHttpError = sendHttpError;
 module.exports.sendHttpBadRequest = sendHttpBadRequest;
 module.exports.sendHttpNoContent = sendHttpNoContent;
 module.exports.handleError = handleError;
-
+module.exports.sendHttpUnauthorised = sendHttpUnauthorised
 module.exports.sendHttpSuccess = sendHttpSuccess;
 module.exports.sendHttpNotFound = sendHttpNotFound;

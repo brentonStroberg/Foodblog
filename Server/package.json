@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/brentonStroberg/Food-Blog#readme",
   "dependencies": {
+    "cognito-express": "^3.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.0.1",
