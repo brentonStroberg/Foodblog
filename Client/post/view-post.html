@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/view-post.css" />
+    <title>Post View</title>
+  </head>
+  <body onload="loadPost()">
+    <article class="post-wrapper">
+      <section class="post">
+        <header class="post-header">
+          <h1 id="dish-name" class="post-name"></h1>
+          <p id="dish-desc" class="post-desc"></p>
+          <section class="comment-section">
+            <h2>Comments</h2>
+            <ul id="comments-section"></ul>
+            <form onsubmit="postComment(); return false" id="comment-form">
+              <input type="text" name="submit-comment"  placeholder="Write your comment here" required />
+              <input type="submit" value="Submit" />
+            </form>
+          </section>
+        </header>
+        <picture class="post-picture"
+          ><img id="dish-img" class="post-img" src="" alt="fish dish"
+        /></picture>
+      </section>
+    </article>
+    <script src="../js/view-post.js"></script>
+  </body>
+</html>
