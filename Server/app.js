@@ -21,10 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.set('view engine', 'jade');
-
-
-
 
 app.use('/api', authenticatedRoute);
 
