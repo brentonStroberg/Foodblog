@@ -1,0 +1,71 @@
+:root {
+  --purple: #6e63a5;
+  --lightGrey: #d3d3d3;
+  --backgroundGrey: #d4d4d4;
+  --mainNavFontHeaderColor: #62420f;
+
+  --headerFont: font-family: 'Macondo', cursive;
+  ;
+}
+
+
+nav {
+  background-color: var(--backgroundGrey);
+  overflow: hidden;
+  display: inline-flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.navbar.list{
+  list-style-type: none;
+  margin:0;
+  padding:0;  
+  flex: 3;
+  display: flex;
+  width: 100%;
+}
+
+.navbar.header {
+  font: var(--headerFont);
+  color: var(--mainNavFontHeaderColor);
+  flex:1;
+  font-size: 35px;
+  margin-left: 50px;
+}
+
+a.active {
+  color: var(--mainNavFontHeaderColor);
+}
+
+.navbar.list-item{
+  display: inline-block;
+  flex:1;
+}
+
+.navbar.item {
+  display: inline-block;
+  color: black;
+  font-size: 30px;
+  text-align: center;
+  width: 60%;
+  padding: 10px 10px 10px 10px;
+  margin: 50px 5px 20px 0px;
+  position: 0;
+}
+
+.navbar.list.buttons{
+  flex:1;
+}
+
+.navbar.button {
+  padding: 10px 10px 10px 10px;
+  font-size: 30px;
+  border-radius: 25px;
+  background-color: var(--purple);
+  border-style: solid;
+  border-color: var(--purple);
+  width: 100%;
+  height: 50px;
+  margin-top: 5%;
+}
