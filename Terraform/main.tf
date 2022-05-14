@@ -93,6 +93,20 @@ resource "aws_security_group" "aurora_sg" {
 }
 
 
+
+# resource "aws_rds_cluster" "food-blog-cluster" {
+#   cluster_identifier        = "food-blog-cluster"
+
+# }
+
+# resource "aws_rds_cluster_instance" "food-blog-cluster-instance" { 
+
+#    instance_class            = "db.serverless"
+#    cluster_identifier        = aws_rds_cluster.food-blog-cluster.id
+
+
+# }
+
 resource "aws_rds_cluster" "food-blog-cluster" {
   cluster_identifier        = "food-blog-cluster"
   availability_zones        = var.availability_zones
@@ -110,52 +124,53 @@ resource "aws_rds_cluster" "food-blog-cluster" {
   skip_final_snapshot       = true
   vpc_security_group_ids    = [aws_security_group.aurora_sg.id]
 
-#   lifecycle {
-#     ignore_changes = [
-#       allocated_storage,
-#       allow_major_version_upgrade,
-#       apply_immediately,
-#       arn,
-#       availability_zones,
-# backtrack_window,
-# cluster_identifier_prefix,
-# cluster_members,
-# cluster_resource_id,
-# copy_tags_to_snapshot,
-# db_cluster_instance_class,
-# db_cluster_parameter_group_name,
-# db_instance_parameter_group_name,
-# deletion_protection,
-# enable_global_write_forwarding,
-# enabled_cloudwatch_logs_exports,
-# endpoint,
-# engine_version_actual,
-# final_snapshot_identifier,
-# global_cluster_identifier ,
-# hosted_zone_id ,
-# iam_database_authentication_enabled ,
-# iam_roles ,
-# id ,
-# iops ,
-# kms_key_id ,
-# preferred_backup_window ,
-# preferred_maintenance_window ,
-# reader_endpoint ,
-# replication_source_identifier ,
-# restore_to_point_in_time ,
-# s3_import ,
-# snapshot_identifier ,
-# source_region ,
-# storage_encrypted ,
-# storage_type ,
-# tags ,
-# tags_all ,
-# timeouts ,
-# enable_http_endpoint,
-# id
+  lifecycle {
+    ignore_changes = [
+        master_password,
+      allocated_storage,
+      allow_major_version_upgrade,
+      apply_immediately,
+      arn,
+      availability_zones,
+backtrack_window,
+cluster_identifier_prefix,
+cluster_members,
+cluster_resource_id,
+copy_tags_to_snapshot,
+db_cluster_instance_class,
+db_cluster_parameter_group_name,
+db_instance_parameter_group_name,
+deletion_protection,
+enable_global_write_forwarding,
+enabled_cloudwatch_logs_exports,
+endpoint,
+engine_version_actual,
+final_snapshot_identifier,
+global_cluster_identifier ,
+hosted_zone_id ,
+iam_database_authentication_enabled ,
+iam_roles ,
+id ,
+iops ,
+kms_key_id ,
+preferred_backup_window ,
+preferred_maintenance_window ,
+reader_endpoint ,
+replication_source_identifier ,
+restore_to_point_in_time ,
+s3_import ,
+snapshot_identifier ,
+source_region ,
+storage_encrypted ,
+storage_type ,
+tags ,
+tags_all ,
+timeouts ,
+enable_http_endpoint,
+id
 
-#     ]
-#   }
+    ]
+  }
 
   serverlessv2_scaling_configuration {
       max_capacity = 2
@@ -172,37 +187,12 @@ resource "aws_rds_cluster_instance" "food-blog-cluster-instance" {
   engine_version            = aws_rds_cluster.food-blog-cluster.engine_version
   db_subnet_group_name      = aws_db_subnet_group.aurora_subnetgroup.id
   publicly_accessible       = true
+
+  lifecycle  {
+    ignore_changes = all
+  }
 }
 
-# resource "aws_rds_cluster" "Foodblog-cluster" {
-#   cluster_identifier                  = "food-blog"
-#   engine                              = "aurora-mysql"
-#   engine_version                      = "5.7.12"
-#   engine_mode                         = "serverless"
-#   database_name                       = "foodblog"
-#   master_username                     = "admin"
-#   master_password                     = "foodblog"
-#   port                                = 3306
-#   availability_zones                  = var.availability_zones
-#   db_subnet_group_name                = aws_db_subnet_group.aurora_subnetgroup.id
-
-#   vpc_security_group_ids              = [aws_security_group.aurora_sg.id]
-  
-#   skip_final_snapshot                 = true
-#   enable_http_endpoint                = true  
-#   backup_retention_period = 0
-
-#   db_cluster_instance_class = "db.t4g.micro"
-
-  
-#   scaling_configuration {
-#     auto_pause               = true
-#     min_capacity             = 1    
-#     max_capacity             = 2
-#     seconds_until_auto_pause = 1000
-#     timeout_action           = "ForceApplyCapacityChange"
-#   }  
-# }
 
 
 
@@ -217,6 +207,38 @@ resource "aws_ecr_repository" "foodblog-repo" {
   }
 }
 
+resource "aws_s3_bucket" "foodblog-avatar" {
+  bucket = "foodblog-avatar"
+
+}
+
+
+resource "aws_s3_bucket_policy" "foodblog-avatar-bucket-policy" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": "${aws_s3_bucket.foodblog-avatar.arn}/*",
+              "Principal": "*"
+        }
+      ]
+    }
+  POLICY
+}
+
+resource "aws_s3_bucket_acl" "foodblog-avatar-bucket-acl" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  acl    = "public-read-write"
+}
 
 
 
