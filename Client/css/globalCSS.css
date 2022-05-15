@@ -48,7 +48,7 @@ section{
   background-color: var(--backgroundGrey);
   width: 105%;
   margin:0 0 0 0;
-  height:150px;
+  height:125px;
   font-weight: bold;
 }
 
@@ -91,7 +91,7 @@ a.active {
 .navbar.item {
   display: inline-block;
   color: black;
-  font-size: 35px;
+  font-size: 25px;
   text-align: center;
   width: 60%;
   padding: 10px 10px 10px 10px;
@@ -115,4 +115,9 @@ a.active {
   height: 40px;
   margin: 50px 10px 10px 10px;
   font-weight: bold;
+}
+
+#formSearchText{
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
