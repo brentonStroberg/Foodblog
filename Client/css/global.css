@@ -1,68 +1,289 @@
-.section_overlay{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    min-height: 100vh;
-    border-style: solid;
-    border-color: black;
-    border-width: 5px;
-    background-color: transparent;
+:root {
+    --purple: #6e63a5;
+    --purpleClickable: #7a6dcb;
+    --lightGrey: #d3d3d3;
+    --backgroundGrey: #d4d4d4;
+    --mainNavFontHeaderColor: #62420f;
+    --headerFont: font-family: 'Macondo', cursive;
 }
-.section_content{
-    padding: 1%;
-    background-color: d4d4d4;
-    box-shadow: -1px 1px 3px;
-    width: 20%;
+
+nav{
+    position: fixed;
+    top: 0;
+    left:0;
+    right:0;
+    width: 100%;
+    height: 125px;
+}
+
+.nav{
+    height:100%;
+    width: 100%;
+}
+
+.navbarSection {
+    overflow: hidden;
+    display: inline-flex;
+    flex-flow: row wrap;
+    background: var(--backgroundGrey);
+    border: none;
+    width: 100%;
+}
+
+.navbar {
+    background-color: var(--backgroundGrey);
+    width: 100%;
+    height: 125px;
+    font-weight: bold;
+}
+
+.navbar.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    flex: 3;
+    display: flex;
+    width: 100%;
+}
+
+.navbar.header {
+    flex: 1;
+    text-decoration: none;
+}
+
+.navbar.header.text {
+    padding-left: 50px;
+    font: var(--headerFont);
+    color: var(--mainNavFontHeaderColor);
+    font-size: 45px;
+    /* margin-top: 50px; */
 
 }
-.form{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-between;
+
+a.active {
+    color: var(--mainNavFontHeaderColor);
 }
-h1{
-    height: fit-content;
-    margin: 0px
+
+.navbar.list-item {
+    display: inline-block;
+    flex: 1;
 }
-input{
-    border-style: none;
-    border-radius: 25px;
-}
-input:focus{
-    outline: none;
-}
-input::-webkit-input-placeholder {
+
+.navbar.item {
+    display: inline-block;
     color: black;
-    opacity: 0.5;
+    font-size: 22px;
+    text-align: center;
+    width: 60%;
+    padding: 10px 10px 10px 10px;
+    margin: 80px 0px 20px 0px;
+    position: 0;
+    text-decoration: none;
+}
+
+.navbar.list.buttons {
+    flex: 1;
+}
+
+.navbar.button {
+    padding: 10px 10px 10px 10px;
+    font-size: 20px;
+    border-radius: 25px;
+    background-color: var(--purple);
+    border-style: solid;
+    border-color: var(--purple);
+    width: 100%;
+    height: 40px;
+    margin: 50px 0px 10px 10px;
+    font-weight: bold;
+}
+
+.search {
+    background-color: white;
+    height: 75px;
     text-align: center;
 }
-.sign_in_options{
-    display: flex;
-    align-items: center;
+
+#formSearchText {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    background-color: var(--backgroundGrey);
+    width: 40%;
+    height: 30px;
+    margin-left: -5px;
+    padding: 0px 0px 0px 0px;
+    border-bottom: #000 solid 2px;
+    border-top: #000 solid 2px;
+    border-right: #000 solid 2px;
 }
-.clickable_label{
-    font-size: small;
+
+#formSearchSubmit {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: var(--backgroundGrey);
+    margin-right: 0px;
+    padding: 0px 0px 0px 0px;
+    width: 8%;
+    height: 34px;
 }
-.clickable_label:hover{
-    color: 7a6dcb;
+
+.formSearch {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
 }
-.submit_button{
-    margin-left: auto;
+
+.navbar.menu-toggler {
+    display: none;
+    float: right;
+    width: 50px;
+    text-align: center;
+    height: 50px;
+    margin-top: 50px;
+    background-color: var(--backgroundGrey);
 }
-button{
-    background-color: 7A6DCB;
-    border-style: none;
+
+.sidebar {
+    text-decoration: none;
+    list-style-type: none;
+    color: black;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
+.sidebar.inside {
+    float: right;
+    width: 40%;
+    background-color: var(--backgroundGrey);
+}
+
+.sidebar.list-item {
+    font-size: medium;
+    padding: 20px 20px 20px 20px;
+}
+
+.sidebar.item {
+    /*  */
+}
+
+.sidebar.button {
+    padding: 20px 20px 20px 20px;
+    font-size: 20px;
     border-radius: 25px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    height:fit-content;
+    background-color: var(--purple);
+    border-style: solid;
+    border-color: var(--purple);
+    width: 90%;
+    height: 40px;
+    font-weight: bold;
+    margin: 10px 10px 10px 10px;
 }
-br{
-    display: block;
-    margin: 10px 0;
-    content: " ";
+
+
+
+@media only screen and (min-width: 769px) {
+    .sidebar {
+        display: none;
+    }
+
+
+}
+
+@media only screen and (max-width: 768px) {
+    .navbar.list {
+        position: fixed;
+        left: -120%;
+        top: 5rem;
+        flex-direction: column;
+        background-color: #fff;
+        width: 100%;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+
+    .nav-item {
+        margin: 2.5rem 0;
+    }
+
+    .navbar.menu-toggler {
+        display: flex;
+        float: right;
+        border: none;
+    }
+
+    .search {
+        padding: 20px 0px 20px 0px;
+    }
+}
+
+
+/* [ON BIG SCREENS] */
+/* (A) WRAPPER */
+#hamnav {
+    width: 100%;
+    background: #000;
+    /* Optional */
+    position: sticky;
+    top: 0;
+}
+
+/* (B) HORIZONTAL MENU ITEMS */
+#hamitems {
+    display: flex;
+}
+
+#hamitems a {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+#hamnav label,
+#hamburger {
+    display: none;
+}
+
+/* [ON SMALL SCREENS] */
+@media screen and (max-width: 768px) {
+
+    /* (A) BREAK INTO VERTICAL MENU */
+    #hamitems a {
+        box-sizing: border-box;
+        display: block;
+        width: 100%;
+        border-top: 1px solid #333;
+    }
+
+    /* (B) SHOW HAMBURGER ICON */
+    #hamnav label {
+        display: inline-block;
+        color: white;
+        background: #a02620;
+        font-style: normal;
+        font-size: 1.2em;
+        padding: 10px;
+    }
+
+    /* (C) TOGGLE SHOW/HIDE MENU */
+    #hamitems {
+        display: none;
+    }
+
+    #hamnav input:checked~#hamitems {
+        display: block;
+    }
 }
