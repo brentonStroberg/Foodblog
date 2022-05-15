@@ -27,11 +27,10 @@
                 }
 
                 poolData = {
-                    UserPoolId : _config.cognito.userPoolId,
-                    ClientId : _config.cognito.clientId
+                    UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
                 };
 
-                console.log(poolData);
                 var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
 
                 let attributeList = []

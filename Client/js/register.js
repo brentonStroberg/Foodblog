@@ -19,7 +19,7 @@ function tregister() {
         clientId : _config.cognito.clientId
     };
 
-    let userPool = new ACI.CognitoUserPool (poolData);
+    let userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
 
     let attributeList = []
 
@@ -33,8 +33,8 @@ function tregister() {
         Value : name
     }
 
-    let attributeEmail = new ACI.CognitoUserAttribute(dataEmail);
-    let attributePersonalName = new ACI.CognitoUserAttribute(dataPersonalName);
+    let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+    let attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
 
     attributeList.push(attributeEmail);
     attributeList.push(attributePersonalName);

@@ -5,13 +5,46 @@
         <title>Sign in page</title>
         <link rel="stylesheet" href="css/global.css">
         <link rel="stylesheet" href="css/login.css">
-        <script type="module" src="js/login.js"></script>
+        <script type="text/javascript" src="js/login.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
         <script src="js/amazon-congito-auth.min.js"></script>
         <script src="js/amazon-cognito-identity.min.js"></script>
         <script src="js/config.js"></script>
-    </head>
+        <script>
+            function Sign_in() {
+                console.log('submitted');
+
+
+                var authenticationData = {
+                    Username :  document.getElementById('email_textbox').value,
+                    Password : document.getElementById('password_textbox').value,
+                };
+                var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
+                var poolData = { UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
+                };
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
+                var userData = {
+                    Username : 'username',
+                    Pool : userPool
+                };
+                var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: function (result) {
+                        var accessToken = result.getAccessToken().getJwtToken();
+
+                        /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer */
+                        var idToken = result.idToken.jwtToken;
+                    },
+
+                    onFailure: function(err) {
+                        alert(err);
+                    },
+
+                }); 
+            }
+        </script>
     </head>
     <body>
         <article>
@@ -27,9 +60,9 @@
                         <br>
                         <section class="sign_in_options">
                             <section>
-                                <label class="clickable_label" onclick="Forgot_Password()">Reset password</label>
+                                <label class="clickable_label" onclick="Reset_Password()">Reset password</label>
                                 <br style="margin:0">
-                                <label class="clickable_label" onclick="Create_Account()">create password</label>
+                                <label class="clickable_label" onclick="Create_Account()">create account</label>
                             </section>
                             <button class="submit_button" type="button" onclick="Sign_in()">sign in</button>
                         </section>
