@@ -1,6 +1,8 @@
 var express = require('express');
 const { resourceLimits } = require('worker_threads');
 var router = express.Router();
+var validateRequest = require('../middleware/requestAuthenticator');
+router.use(validateRequest);
 var db_client = require('../database.js');
 
 
