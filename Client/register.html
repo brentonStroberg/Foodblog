@@ -67,6 +67,7 @@
                         registerfields_list[i].type = 'hidden';
                     }
                     document.getElementById('heading_subtext').value = 'Registration successful. A confirmation email has been sent to ' + email;
+                    document.getElementById('return_to_login_button').style.display = 'block';
                 });
             }
         </script>
@@ -93,6 +94,7 @@
                         <br>
                         <br>
                         <button class="submit_button" onclick="register()" type="button">submit</button>
+                        <button id="return_to_login_button" style="display:none">Sign In</button>
                     </form>
                 </section>
             </section>
