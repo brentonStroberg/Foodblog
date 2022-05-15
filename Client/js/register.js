@@ -1,16 +1,12 @@
-//import * as ACI from "AmazonCognitoIdentity";
-import * as _config from '../js/config.js';
 
-//const ACI = require(AmazonCognitoIdentity);
-//const _config = require ('../js/config.js');
 
-function register() {
+function tregister() {
 
-    let name =document.getElementById('name_textbox');
-    let email =document.getElementById('email_textbox');
-    let username =document.getElementById('username_textbox');
-    let password =document.getElementById('password_textbox');
-    let passwordConfirm =document.getElementById('re-enter_password_textbox');
+    let name =document.getElementById('name_textbox').value;
+    let email =document.getElementById('email_textbox').value;
+    let username =document.getElementById('username_textbox').value;
+    let password =document.getElementById('password_textbox').value;
+    let passwordConfirm =document.getElementById('re-enter_password_textbox').value;
     let poolData;
 
     if (password !== passwordConfirm) {
@@ -23,7 +19,7 @@ function register() {
         clientId : _config.cognito.clientId
     };
 
-    let userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+    let userPool = new ACI.CognitoUserPool (poolData);
 
     let attributeList = []
 
@@ -37,8 +33,8 @@ function register() {
         Value : name
     }
 
-    let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-    let attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+    let attributeEmail = new ACI.CognitoUserAttribute(dataEmail);
+    let attributePersonalName = new ACI.CognitoUserAttribute(dataPersonalName);
 
     attributeList.push(attributeEmail);
     attributeList.push(attributePersonalName);
