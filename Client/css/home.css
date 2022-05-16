@@ -1,0 +1,17 @@
+:root {
+    --purple: #6e63a5;
+    --purpleClickable: #7a6dcb;
+    --lightGrey: #d3d3d3;
+    --backgroundGrey: #d4d4d4;
+    --mainNavFontHeaderColor: #62420f;
+    --headerFont: font-family: 'Kreon', serif;
+}
+
+.purpleBlock{
+    z-index: -1;
+    position: absolute;
+    height: 250px;
+    width: 100%;
+    background-color: var(--purple);
+    margin-top: -20px;
+}
