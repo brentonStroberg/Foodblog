@@ -22,6 +22,8 @@ function close_cookie_consent() {
     consent_overlay.style.bottom = '-50%';
 }
 
+// source:
+// https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript
 function setCookie(name,value,days) {
     var expires = "";
     if (days) {
