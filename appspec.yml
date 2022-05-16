@@ -5,15 +5,15 @@ files:
     destination: /home/ec2-user/express-app
 hook:
   ApplicationStop:
-    - location: /Server/deployment/application_stop.sh
+    - location: /deployment/application_stop.sh
       timeout: 300
       runas: ec2-user
   
   BeforeInstall:
-    - location: /Server/deployment/before_install.sh
+    - location: /deployment/before_install.sh
       timeout: 300
       runas: ec2-user
   ApplicationStart:
-    - location: /Server/deployment/application_start.sh
+    - location: /deployment/application_start.sh
       timeout: 300
       runas: ec2-user
