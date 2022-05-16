@@ -16,6 +16,15 @@ function sendHttpNotFound(req, res, errorMessage) {
     return handleError(req, res, errorMessage, 404);
 }
 
+
+function sendHttpResourceCreated(req,res,responseModel) {
+    if(responseModel) {
+        return res.status(201).json(responseModel);
+    } else {
+        return res.status(201).send();
+    }
+}
+
 function sendHttpNoContent(req, res) {
     return res.status(204).json('No content');
 }
@@ -52,3 +61,4 @@ module.exports.handleError = handleError;
 module.exports.sendHttpUnauthorised = sendHttpUnauthorised
 module.exports.sendHttpSuccess = sendHttpSuccess;
 module.exports.sendHttpNotFound = sendHttpNotFound;
+module.exports.sendHttpResourceCreated = sendHttpResourceCreated
