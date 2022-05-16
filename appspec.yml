@@ -3,16 +3,16 @@ os: linux
 files: 
   - source : /Server
     destination: /home/ec2-user/express-app
-hook:
+hooks:
   ApplicationStop:
-    - location: /deployment/application_stop.sh
+    - location: /Server/deployment/application_stop.sh
       timeout: 300
       runas: ec2-user
   BeforeInstall:
-    - location: /deployment/before_install.sh
+    - location: /Server/deployment/before_install.sh
       timeout: 300
       runas: ec2-user
   ApplicationStart:
-    - location: /deployment/application_start.sh
+    - location: /Server/deployment/application_start.sh
       timeout: 300
       runas: ec2-user
