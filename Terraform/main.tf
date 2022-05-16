@@ -215,7 +215,7 @@ resource "aws_security_group" "foodblog-ec2-secgroup" {
  ingress {
     from_port        = 22
     to_port          = 22
-    protocol         = "ssh"
+    protocol         = "tcp"
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
@@ -229,14 +229,30 @@ resource "aws_security_group" "foodblog-ec2-secgroup" {
 }
 
 
+resource "aws_iam_instance_profile" "ec2CodeDeployProfile" {
+  name = "ec2_profile"
+  role = "EC2CodeDeployRole"
+}
+
 
 resource "aws_instance" "foodblog-server" {
   ami = "ami-0022f774911c1d690"
   instance_type = "t2.micro"
-  iam_instance_profile = 
+  iam_instance_profile = aws_iam_instance_profile.ec2CodeDeployProfile.name
+  subnet_id  = aws_subnet.public_subnet[0].id
+  associate_public_ip_address = true
+  key_name = "foodblog-server-key"
 
-
-
+  user_data = <<EOF
+  #!/bin/bash
+  sudo yum -y update
+  sudo yum -y install ruby
+  sudo yum -y install wget
+  cd /home/ec2-user
+  wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+  sudo chmod +x ./install
+  sudo ./install auto
+  EOF
   tags = {
     Name = "foodblog-server"
   }
@@ -252,3 +268,77 @@ resource "aws_network_interface_sg_attachment" "sg_attachment" {
 }
 
 
+
+
+
+resource "aws_s3_bucket" "foodblog-avatar" {
+  bucket = "foodblog-avatar"
+
+}
+
+
+resource "aws_s3_bucket_policy" "foodblog-avatar-bucket-policy" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": "${aws_s3_bucket.foodblog-avatar.arn}/*",
+              "Principal": "*"
+        }
+      ]
+    }
+  POLICY
+}
+
+resource "aws_s3_bucket_acl" "foodblog-avatar-bucket-acl" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  acl    = "public-read-write"
+}
+
+
+
+
+
+
+
+resource "aws_s3_bucket" "foodblog-frontend" {
+  bucket = "foodblog-frontend"
+
+}
+
+
+resource "aws_s3_bucket_policy" "foodblog-frontend-policy" {
+  bucket = aws_s3_bucket.foodblog-frontend.id
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": "${aws_s3_bucket.foodblog-frontend.arn}/*",
+              "Principal": "*"
+        }
+      ]
+    }
+  POLICY
+}
+
+resource "aws_s3_bucket_acl" "foodblog-frontend-acl" {
+  bucket = aws_s3_bucket.foodblog-frontend.id
+  acl    = "public-read-write"
+}
