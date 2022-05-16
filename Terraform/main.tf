@@ -93,20 +93,6 @@ resource "aws_security_group" "aurora_sg" {
 }
 
 
-
-# resource "aws_rds_cluster" "food-blog-cluster" {
-#   cluster_identifier        = "food-blog-cluster"
-
-# }
-
-# resource "aws_rds_cluster_instance" "food-blog-cluster-instance" { 
-
-#    instance_class            = "db.serverless"
-#    cluster_identifier        = aws_rds_cluster.food-blog-cluster.id
-
-
-# }
-
 resource "aws_rds_cluster" "food-blog-cluster" {
   cluster_identifier        = "food-blog-cluster"
   availability_zones        = var.availability_zones
@@ -126,7 +112,8 @@ resource "aws_rds_cluster" "food-blog-cluster" {
 
   lifecycle {
     ignore_changes = [
-        master_password,
+      id,
+      tags,
       allocated_storage,
       allow_major_version_upgrade,
       apply_immediately,
@@ -188,10 +175,11 @@ resource "aws_rds_cluster_instance" "food-blog-cluster-instance" {
   db_subnet_group_name      = aws_db_subnet_group.aurora_subnetgroup.id
   publicly_accessible       = true
 
-  lifecycle  {
-    ignore_changes = all
-  }
+    lifecycle {
+      ignore_changes = all
+    }
 }
+
 
 
 
@@ -207,132 +195,30 @@ resource "aws_ecr_repository" "foodblog-repo" {
   }
 }
 
-resource "aws_s3_bucket" "foodblog-avatar" {
-  bucket = "foodblog-avatar"
 
+
+resource "aws_iam_role" "ecsTaskExecutionRole" {
+  name               = "ecsTaskExecutionRole"
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
 }
 
+data "aws_iam_policy_document" "assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
 
-resource "aws_s3_bucket_policy" "foodblog-avatar-bucket-policy" {
-  bucket = aws_s3_bucket.foodblog-avatar.id
-  policy = <<POLICY
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-              "Action": [
-                "s3:DeleteObject",
-                "s3:GetObject",
-                "s3:GetObjectAttributes",
-                "s3:PutObject"
-              ],
-              "Effect": "Allow",
-              "Resource": "${aws_s3_bucket.foodblog-avatar.arn}/*",
-              "Principal": "*"
-        }
-      ]
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
     }
-  POLICY
+  }
 }
 
-resource "aws_s3_bucket_acl" "foodblog-avatar-bucket-acl" {
-  bucket = aws_s3_bucket.foodblog-avatar.id
-  acl    = "public-read-write"
+resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
+  role       = aws_iam_role.ecsTaskExecutionRole.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
 
-
-# resource "aws_iam_role" "ecsTaskExecutionRole" {
-#   name               = "ecsTaskExecutionRole"
-#   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-# }
-
-# data "aws_iam_policy_document" "assume_role_policy" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
-
-#     principals {
-#       type        = "Service"
-#       identifiers = ["ecs-tasks.amazonaws.com"]
-#     }
-#   }
-# }
-
-# resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
-#   role       = aws_iam_role.ecsTaskExecutionRole.name
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-# }
-
-
-
-
-
-# resource "aws_ecs_cluster" "aws-ecs-cluster" {
-#   name = "foodblog-cluster"
-#   tags = {
-#     Name        = "foodblog-ecs"
-#   }
-# }
-
-
-
-
-
-# resource "aws_cloudwatch_log_group" "log-group" {
-#   name = "foodblog-logs"
-
-#   tags = {
-#     Application = "foodblog"
-#   }
-# }
-
-
-
-
-
-
-
-# resource "aws_ecs_task_definition" "aws-ecs-task" {
-#   family = "foodblog-task"
-
-#   container_definitions = <<DEFINITION
-#   [
-#     {
-#       "name": "${var.container_name}",
-#       "image": "${aws_ecr_repository.foodblog-repo.repository_url}:latest",
-#       "entryPoint": [],
-#       "essential": true,
-#       "logConfiguration": {
-#         "logDriver": "awslogs",
-#         "options": {
-#           "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
-#           "awslogs-region": "${var.aws_region}",
-#           "awslogs-stream-prefix": "foodblog-log"
-#         }
-#       },
-#       "portMappings": [
-#         {
-#           "containerPort": 8080,
-#           "hostPort": 8080
-#         }
-#       ],
-#       "cpu": 256,
-#       "memory": 512,
-#       "networkMode": "awsvpc"
-#     }
-#   ]
-#   DEFINITION
-
-#   requires_compatibilities = ["FARGATE"]
-#   network_mode             = "awsvpc"
-#   memory                   = "512"
-#   cpu                      = "256"
-#   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
-#   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
-
-#   tags = {
-#     Name        = "foodblog-ecs-td"
-#   }
-# }
-
-
+resource "aws_ecs_cluster" "aws-ecs-cluster" {
+  name = "foodblog-cluster"
+}
