@@ -183,42 +183,72 @@ resource "aws_rds_cluster_instance" "food-blog-cluster-instance" {
 
 
 
-
-
-
-resource "aws_ecr_repository" "foodblog-repo" {
-  name                 = "foodblog_repo"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
+resource "aws_security_group" "foodblog-ec2-secgroup" {
+  name          = "foodblog-ec2-secgroup"
+  description   = "security group for "
+  vpc_id        = aws_vpc.web_vpc.id
+  
+   ingress {
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
-}
 
 
-
-resource "aws_iam_role" "ecsTaskExecutionRole" {
-  name               = "ecsTaskExecutionRole"
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-}
-
-data "aws_iam_policy_document" "assume_role_policy" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type        = "Service"
-      identifiers = ["ecs-tasks.amazonaws.com"]
-    }
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
-}
-
-resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
-  role       = aws_iam_role.ecsTaskExecutionRole.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-}
 
 
-resource "aws_ecs_cluster" "aws-ecs-cluster" {
-  name = "foodblog-cluster"
+ ingress {
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  
+ ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "ssh"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
 }
+
+
+
+resource "aws_instance" "foodblog-server" {
+  ami = "ami-0022f774911c1d690"
+  instance_type = "t2.micro"
+  iam_instance_profile = 
+
+
+
+  tags = {
+    Name = "foodblog-server"
+  }
+
+  
+}
+
+
+
+resource "aws_network_interface_sg_attachment" "sg_attachment" {
+  security_group_id    = aws_security_group.foodblog-ec2-secgroup.id
+  network_interface_id = aws_instance.foodblog-server.primary_network_interface_id
+}
+
+
