@@ -1,0 +1,59 @@
+.section_overlay{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    border-style: solid;
+    border-color: black;
+    border-width: 5px;
+    background-color: transparent;
+}
+.section_content{
+    padding: 1%;
+    background-color: d4d4d4;
+    box-shadow: -1px 1px 3px;
+    width: 20%;
+}
+.sign_in_form{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+input{
+    border-style: none;
+    border-radius: 25px
+}
+input:focus{
+    outline: none;
+}
+.sign_in_options{
+    display: flex;
+    align-items: center;
+}
+.clickable_label{
+    font-size: small;
+}
+.clickable_label:hover{
+    color: 7a6dcb;
+}
+.sign_in_button{
+    margin-left: auto;
+}
+button{
+    background-color: 7A6DCB;
+    border-style: none;
+    border-radius: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    height:fit-content;
+}
+
+br{
+    display: block;
+    margin: 5px 0;
+    content: " ";
+}
