@@ -1,4 +1,4 @@
-function load_overlay() {
+function load_cookie_consent_overlay() {
 
     if (getCookie('cookie_consent') !== null) {
         console.log('cookie_consent cookie exists');
