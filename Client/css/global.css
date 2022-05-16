@@ -53,3 +53,27 @@ button{
     padding-bottom: 3px;
     height:fit-content;
 }
+.cookie_overlay{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    bottom: 130%;
+    z-index: 10;
+    transition-delay: 2s;
+    transition: bottom 2s;
+    transition-timing-function: ease-in-out;
+}
+.cookie_content{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 30%;
+    height: 30%;
+    padding: 1%;
+    background-color: d4d4d4;
+    text-align: center;
+    box-shadow: -0px 0px 3px;
+}
