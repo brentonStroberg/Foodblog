@@ -1,11 +1,8 @@
-function Sign_in() {
-    console.log('submitted');
-}
-
-function Forgot_Password() {
+function reset_password() {
     console.log('forgot password');
 }
 
-function Create_Account() {
+function create_account() {
     console.log('create account');
+    window.location.href = '/Client/register.html';
 }
