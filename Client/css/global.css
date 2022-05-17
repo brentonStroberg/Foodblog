@@ -100,6 +100,10 @@ input:focus{
     color: 7a6dcb;
 }
 
+.error_message{
+    color: red;
+}
+
 .navbar.items.list.item {
     flex: 1;
     width: 100%;

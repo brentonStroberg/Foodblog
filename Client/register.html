@@ -16,40 +16,42 @@
         <script>
             function register() {
 
-                let email =document.getElementById('email_textbox').value;
-                let username =document.getElementById('username_textbox').value;
+                let email = document.getElementById('email_textbox').value;
+                let username = document.getElementById('username_textbox').value;
                 let otp_username = document.getElementById('otp_username_textbox');
-                let password =document.getElementById('password_textbox').value;
-                let passwordConfirm =document.getElementById('re-enter_password_textbox').value;
-                let poolData;
+                let password = document.getElementById('password_textbox').value;
+                let passwordConfirm = document.getElementById('re-enter_password_textbox').value;
+
+                if (email === '' || username === '' || password === '' || passwordConfirm === '') {
+                    alert('Please ensure all fields are filled');
+                    return;
+                }
 
                 otp_username_textbox.value = username;
                 if (password !== passwordConfirm) {
                     alert('Passwords do not match');
-                    throw "Passwords do not match";
+                    return;
                 }
 
-                poolData = {
-                    UserPoolId : _config.cognito.UserPoolId,
-                    ClientId : _config.cognito.ClientId
-                };
+                let userPoolId = _config.cognito.UserPoolId;
+                let clientId = _config.cognito.ClientId;
 
-                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool({UserPoolId: userPoolId, ClientId: clientId});
 
-                let attributeList = []
+                let attributeList = [];
 
-                let dataEmail = {
-                    Name : 'email',
-                    Value : email
-                };
-
-                let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+                let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute({Name : 'email', Value : email});
 
                 attributeList.push(attributeEmail);
 
                 userPool.signUp(username, password, attributeList, null, function (err, result) {
                     if (err) {
-                        alert(err.message || JSON.stringify(err));
+                        if (err.name === 'UsernameExistsException') {
+                            alert('User already exists. Use existing OTP or send a new OTP');
+                            switch_to_OTP();
+                            return;
+                        }
+                        alert(err.message);
                         return;
                     }
                     cognitoUser = result.user;
@@ -65,11 +67,12 @@
 
             function confirmSignUp(){
 
-                let username =document.getElementById('otp_username_textbox').value;
+                let username = document.getElementById('otp_username_textbox').value;
                 let otp_code = document.getElementById('otp_code').value;
 
-                if (username === null) {
-                    alert('Input Username');
+                if (username === '' || otp_code === '') {
+                    document.getElementById('otp_error_message').value = 'Please input username and OTP';
+                    document.getElementById('otp_error_message').style.display = 'block';
                     return;
                 }
                 poolData = {
@@ -83,18 +86,23 @@
                     cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
 
                     cognitoUser.confirmRegistration(otp_code, true, function (err, result) {
-                        err ? alert(err.message) : console.log(result);
+
+                        if (err) {
+                            alert(err.message);
+                            return;
+                        }
+                        console.log(result);
                         });
                 } catch {
-                    alert('User not found')
+                    alert('User not found');
                 }
             }
 
             function resendOTP(){
 
-                let username =document.getElementById('otp_username_textbox').value;
+                let username = document.getElementById('otp_username_textbox').value;
 
-                if (username === null) {
+                if (username === '') {
                     alert('Input Username');
                     return;
                 }
@@ -104,10 +112,10 @@
                     cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
 
                     cognitoUser.resendConfirmationCode(function(err, result) {
-                        err ? alert(err.message) : alert('OTP Sent. Check your inbox or junk folder');
+                        alert('OTP Sent. Check your inbox or junk folder');
                     });
                 } catch {
-                    alert('User not found')
+                    alert('User not found');
                 }
             }
         </script>
@@ -123,8 +131,8 @@
         <article>
             <section class="section_overlay">
                 <section class="section_content"><h1>SIGN UP</h1>
-                    <label id="heading_subtext">create account</label>
                     <form id="register_form" class="auth_form">
+                        <label id="heading_subtext">create account</label>
                         <br>
                         <input type="text" placeholder="email" id="email_textbox">
                         <br>
@@ -151,12 +159,12 @@
                                 this.value = this.value.slice(0, this.maxLength);
                             }
                         }"type="number" maxlength="6" />
-                    <br>
-                    <button onclick="confirmSignUp()" type="button">Confirm OTP</button>
-                    <br>
-                    <button onclick="resendOTP()" type="button">Resend OTP</button>
-                    <br>
-                    <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
+                        <br>
+                        <button onclick="confirmSignUp()" type="button">Confirm OTP</button>
+                        <br>
+                        <button onclick="resendOTP()" type="button">Resend OTP</button>
+                        <br>
+                        <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
                     </section>
                     <br>
                 </section>

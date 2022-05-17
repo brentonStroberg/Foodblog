@@ -16,6 +16,7 @@
         <script>
             function sign_in() {
                 console.log('submitted');
+                document.getElementById('incorrect_auth').style.display = 'none'
 
                 let username = document.getElementById('username_textbox').value;
                 let password = document.getElementById('password_textbox').value;
@@ -43,7 +44,7 @@
                         },
 
                         onFailure: function(err) {
-                            alert(err);
+                            document.getElementById('incorrect_auth').style.display = 'block'
                         },
 
                     }); 
@@ -79,6 +80,7 @@
                             </section>
                             <button class="form_button" type="button" onclick="sign_in()">sign in</button>
                         </section>
+                        <label id="incorrect_auth" class="error_message" style="display: none">Incorrect username or password</label>
                     </form>
                 </section>
             </section>
