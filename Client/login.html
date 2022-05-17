@@ -17,36 +17,39 @@
             function sign_in() {
                 console.log('submitted');
 
+                let username = document.getElementById('username_textbox').value;
+                let password = document.getElementById('password_textbox').value;
 
-                var authenticationData = {
-                    Username :  document.getElementById('email_textbox').value,
-                    Password : document.getElementById('password_textbox').value,
-                };
-                var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
-                var poolData = { UserPoolId : _config.cognito.UserPoolId,
-                    ClientId : _config.cognito.ClientId
-                };
-                var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
-                var userData = {
-                    Username : 'username',
-                    Pool : userPool
-                };
-                var cognitoUser = new AmazonCognitoIdentity.CognitoUser(userData);
-                cognitoUser.authenticateUser(authenticationDetails, {
-                    onSuccess: function (result) {
-                        var accessToken = result.getAccessToken().getJwtToken();
+                var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({Username: username, Password: password});
 
-                        /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer */
-                        var idToken = result.idToken.jwtToken;
-                        setCookie('jwtToken', accessToken);
-                        window.location.href = '/Client/home.html';
-                    },
+                let userPoolId = _config.cognito.UserPoolId;
+                let clientId = _config.cognito.ClientId;
 
-                    onFailure: function(err) {
-                        alert(err);
-                    },
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool({UserPoolId: userPoolId, ClientId: clientId});
 
-                }); 
+                var cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
+
+                try{
+                    cognitoUser.authenticateUser(authenticationDetails, {
+                        onSuccess: function (result) {
+                            var accessToken = result.getAccessToken().getJwtToken();
+
+                            /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer */
+                            var idToken = result.idToken.jwtToken;
+                            setCookie('accessToken', accessToken);
+                            setCookie('idToken', idToken);
+                            setCookie('userData', cognitoUser);
+                            window.location.href = '/Client/home.html';
+                        },
+
+                        onFailure: function(err) {
+                            alert(err);
+                        },
+
+                    }); 
+                } catch {
+                    alert('Sign In failed');
+                }
             }
         </script>
     </head>
@@ -60,10 +63,10 @@
         <article>
             <section class="section_overlay">
                 <section class="section_content">
-                    <form class="form">
+                    <form class="auth_form">
                         <h1>SIGN IN</h1>
                         <br>
-                        <input type="text" placeholder="email" id="email_textbox">
+                        <input type="text" placeholder="username" id="username_textbox">
                         <br>
                         <input type="password" placeholder="password" id="password_textbox">
                         <br>
@@ -74,7 +77,7 @@
                                 <br style="margin:0">
                                 <label class="clickable_label" onclick="create_account()">create account</label>
                             </section>
-                            <button class="submit_button" type="button" onclick="sign_in()">sign in</button>
+                            <button class="form_button" type="button" onclick="sign_in()">sign in</button>
                         </section>
                     </form>
                 </section>

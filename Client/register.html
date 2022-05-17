@@ -99,12 +99,7 @@
                     return;
                 }
 
-                poolData = {
-                    UserPoolId : _config.cognito.UserPoolId,
-                    ClientId : _config.cognito.ClientId
-                };
-
-                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool ({UserPoolId : _config.cognito.UserPoolId, ClientId : _config.cognito.ClientId});
                 try{
                     cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
 
@@ -129,7 +124,7 @@
             <section class="section_overlay">
                 <section class="section_content"><h1>SIGN UP</h1>
                     <label id="heading_subtext">create account</label>
-                    <form id="register_form" class="form">
+                    <form id="register_form" class="auth_form">
                         <br>
                         <input type="text" placeholder="email" id="email_textbox">
                         <br>
