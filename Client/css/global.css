@@ -54,6 +54,11 @@ nav {
     box-shadow: -1px 1px 3px;
     width: 20%;
 }
+.auth_form{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
 
 .navbar.title {
     font-size: x-large;
@@ -84,6 +89,15 @@ input{
     border-style: none;
     border-radius: 25px;
     text-align: center;
+}
+input:focus{
+    outline: none;
+}
+.clickable_label{
+    font-size: small;
+}
+.clickable_label:hover{
+    color: 7a6dcb;
 }
 
 .navbar.items.list.item {
