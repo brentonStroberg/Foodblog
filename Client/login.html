@@ -38,6 +38,8 @@
 
                         /* Use the idToken for Logins Map when Federating User Pools with identity pools or when passing through an Authorization Header to an API Gateway Authorizer */
                         var idToken = result.idToken.jwtToken;
+                        setCookie('jwtToken', accessToken);
+                        window.location.href = '/Client/home.html';
                     },
 
                     onFailure: function(err) {
@@ -48,7 +50,13 @@
             }
         </script>
     </head>
-    <body onload="load_cookie_consent_overlay()">
+    <body onload=" () => {
+
+        load_cookie_consent_overlay();
+        if (getCookie('email') !== null) {
+            window.location.href = '/Client/home.html';
+        }
+    }">
         <article>
             <section class="section_overlay">
                 <section class="section_content">
