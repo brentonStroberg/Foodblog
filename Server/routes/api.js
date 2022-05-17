@@ -19,7 +19,7 @@ const {
 
 
 const validateRequestBody = require('../utils/requestBodyValidator');
-const { body, check } = require('express-validator');
+const { body, check ,query} = require('express-validator');
 /************************************************
   FAVOURITE ROUTES & CRUD OPS
 ************************************************/
@@ -278,6 +278,242 @@ const updateAvatarUrl = async (url) => {
 }
 
 
+
+
+
+
+
+/************************************************
+  POST ROUTES & CRUD OPS
+************************************************/
+
+
+// create post
+router.post('/post',fileUploader.fileUploader, validateRequestBody(
+  [
+    body('title').isString().isLength({max:50}), 
+    body('createdAt').isISO8601(),
+    body('content').isString(),
+    body('category').isString().isLength({max:50})
+    
+  ]
+  
+  
+  ), function(req, res ,next)  {
+  if (!req.file) {
+    return sendHttpError(req,res,{response:"Failed to upload banner image"});
+  } else {
+
+
+    post = {
+        banner: req.file.location,
+        username: req.user.username,
+        title: req.body.title,
+        createdAt: req.body.createdAt,
+        content: req.body.content,
+        category: req.body.category
+    }
+
+
+
+    createPost(post)
+    .then(resultSet => {
+        return sendHttpSuccess(req,res,null);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+  }
+});
+
+
+
+
+
+
+const createPost = async (post) => {
+  return new Promise((resolve,reject) => {
+
+    db_client.beginTransaction(function(err) {
+
+        if (err) {
+          err.response="Failed to create post"
+          reject(err)
+        }
+
+        let postQuery = "INSERT INTO post SET createdBy = :username, title = :title, createdAt = :createdAt, content = :content, banner = :banner;"
+
+
+        db_client.query(postQuery, post, function(err,resultSet1) {
+            if(err) {
+              db_client.rollback(function() {
+                err.response="Failed to create post"
+                reject(err);
+              })
+            }  
+           
+            let categoryQuery = "INSERT  IGNORE INTO category SET title = :category"
+
+            db_client.query(categoryQuery, post, function(err, resultSet2)  {
+                if(err) {
+                  db_client.rollback(function() {
+                    err.response="Failed to create  category"
+                    reject(err);
+                  })
+                }
+
+          
+                let postCategory = {
+                    postId: resultSet1.insertId,
+                    categoryId: resultSet2.insertId
+                  }
+                  
+              
+
+            
+                let postCategoryQuery = "INSERT INTO post_category SET postId = :postId  , categoryId = :categoryId"
+
+                db_client.query(postCategoryQuery,postCategory, function(err,resultSet3) {
+                  if(err) {
+                  
+                    db_client.rollback(function() {
+                      err.response="Failed to create post category"
+                      reject(err);
+                    })
+
+                  }
+
+                  db_client.commit(function(err) {
+                    if (err) {
+                      db_client.rollback(function() {
+                        err.response="Failed to create post"
+                        reject(err);
+                      })
+
+                
+                    }
+
+                    resolve();
+                  })
+                })
+
+            })
+          
+
+        })
+
+    })
+
+  });
+} 
+
+
+// delete post by id
+router.delete('/post',validateRequestBody([query('id').isNumeric()]) ,function(req,res,next){
+    id = {
+      id: req.query.id
+    }
+  deletePost(id)
+  .then(resultSet => {
+      return sendHttpSuccess(req,res,null);
+  }).catch(err => {
+    return sendHttpError(req,res,err);
+  })
+})
+
+
+const deletePost = async (id) => {
+  return new Promise((resolve,reject) => {
+      let query = "DELETE FROM post WHERE id = :id;"
+      db_client.query(query,id, function(err,resultSet) {
+        if(err) {
+          err.response = "Failed to delete post"
+          reject(err)
+        } else {
+          resolve("Post deleted");
+        }
+      })
+  });
+}
+
+
+
+// get post 
+router.get('/post',validateRequestBody([query('id').isNumeric()]),function(req,res,next){
+      id = {
+        id: req.query.id
+      }
+    getPost(id)
+    .then(resultSet => {
+        return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+})
+
+
+const getPost = async(id) => {
+  return new Promise((resolve,reject) => {
+
+      let query = `SELECT p.id, p.createdBy, p.title,p.slug,p.createdAt, p.updatedAt,p.content,p.banner,p.rating FROM post p WHERE p.id = :id;`
+
+        db_client.query(query,id,function(err,resultSet) {
+
+            if(err){
+              console.log(err)
+              err.response="Failed to get post";
+              reject(err);
+
+            } else {
+              resolve(resultSet);
+            }
+
+        })
+
+
+
+  })
+}
+
+
+
+
+
+// get post  comments
+router.get('/comment',validateRequestBody([query('id').isNumeric()]),function(req,res,next){
+  id = {
+    id: req.query.id
+  }
+getComments(id)
+.then(resultSet => {
+    return sendHttpSuccess(req,res,resultSet);
+}).catch(err => {
+  return sendHttpError(req,res,err);
+})
+})
+
+
+const getComments = async(id) => {
+return new Promise((resolve,reject) => {
+
+  let query = `SELECT c.id, c.createdBy, c.postId,c.parentId,c.createdAt, c.updatedAt,c.content FROM comment  c WHERE c.postId = :id;`
+
+    db_client.query(query,id,function(err,resultSet) {
+
+        if(err){
+          console.log(err)
+          err.response="Failed to get comments";
+          reject(err);
+
+        } else {
+          resolve(resultSet);
+        }
+
+    })
+
+
+
+})
+}
 
 
 
