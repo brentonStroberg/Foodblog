@@ -110,52 +110,54 @@ resource "aws_rds_cluster" "food-blog-cluster" {
   skip_final_snapshot       = true
   vpc_security_group_ids    = [aws_security_group.aurora_sg.id]
 
-#   lifecycle {
-#     ignore_changes = [
-#       allocated_storage,
-#       allow_major_version_upgrade,
-#       apply_immediately,
-#       arn,
-#       availability_zones,
-# backtrack_window,
-# cluster_identifier_prefix,
-# cluster_members,
-# cluster_resource_id,
-# copy_tags_to_snapshot,
-# db_cluster_instance_class,
-# db_cluster_parameter_group_name,
-# db_instance_parameter_group_name,
-# deletion_protection,
-# enable_global_write_forwarding,
-# enabled_cloudwatch_logs_exports,
-# endpoint,
-# engine_version_actual,
-# final_snapshot_identifier,
-# global_cluster_identifier ,
-# hosted_zone_id ,
-# iam_database_authentication_enabled ,
-# iam_roles ,
-# id ,
-# iops ,
-# kms_key_id ,
-# preferred_backup_window ,
-# preferred_maintenance_window ,
-# reader_endpoint ,
-# replication_source_identifier ,
-# restore_to_point_in_time ,
-# s3_import ,
-# snapshot_identifier ,
-# source_region ,
-# storage_encrypted ,
-# storage_type ,
-# tags ,
-# tags_all ,
-# timeouts ,
-# enable_http_endpoint,
-# id
+  lifecycle {
+    ignore_changes = [
+      id,
+      tags,
+      allocated_storage,
+      allow_major_version_upgrade,
+      apply_immediately,
+      arn,
+      availability_zones,
+backtrack_window,
+cluster_identifier_prefix,
+cluster_members,
+cluster_resource_id,
+copy_tags_to_snapshot,
+db_cluster_instance_class,
+db_cluster_parameter_group_name,
+db_instance_parameter_group_name,
+deletion_protection,
+enable_global_write_forwarding,
+enabled_cloudwatch_logs_exports,
+endpoint,
+engine_version_actual,
+final_snapshot_identifier,
+global_cluster_identifier ,
+hosted_zone_id ,
+iam_database_authentication_enabled ,
+iam_roles ,
+id ,
+iops ,
+kms_key_id ,
+preferred_backup_window ,
+preferred_maintenance_window ,
+reader_endpoint ,
+replication_source_identifier ,
+restore_to_point_in_time ,
+s3_import ,
+snapshot_identifier ,
+source_region ,
+storage_encrypted ,
+storage_type ,
+tags ,
+tags_all ,
+timeouts ,
+enable_http_endpoint,
+id
 
-#     ]
-#   }
+    ]
+  }
 
   serverlessv2_scaling_configuration {
       max_capacity = 2
@@ -172,97 +174,135 @@ resource "aws_rds_cluster_instance" "food-blog-cluster-instance" {
   engine_version            = aws_rds_cluster.food-blog-cluster.engine_version
   db_subnet_group_name      = aws_db_subnet_group.aurora_subnetgroup.id
   publicly_accessible       = true
+
+    lifecycle {
+      ignore_changes = all
+    }
 }
 
-# resource "aws_rds_cluster" "Foodblog-cluster" {
-#   cluster_identifier                  = "food-blog"
-#   engine                              = "aurora-mysql"
-#   engine_version                      = "5.7.12"
-#   engine_mode                         = "serverless"
-#   database_name                       = "foodblog"
-#   master_username                     = "admin"
-#   master_password                     = "foodblog"
-#   port                                = 3306
-#   availability_zones                  = var.availability_zones
-#   db_subnet_group_name                = aws_db_subnet_group.aurora_subnetgroup.id
 
-#   vpc_security_group_ids              = [aws_security_group.aurora_sg.id]
+
+
+resource "aws_security_group" "foodblog-ec2-secgroup" {
+  name          = "foodblog-ec2-secgroup"
+  description   = "security group for "
+  vpc_id        = aws_vpc.web_vpc.id
   
-#   skip_final_snapshot                 = true
-#   enable_http_endpoint                = true  
-#   backup_retention_period = 0
-
-#   db_cluster_instance_class = "db.t4g.micro"
-
-  
-#   scaling_configuration {
-#     auto_pause               = true
-#     min_capacity             = 1    
-#     max_capacity             = 2
-#     seconds_until_auto_pause = 1000
-#     timeout_action           = "ForceApplyCapacityChange"
-#   }  
-# }
-
-
-
-
-
-resource "aws_ecr_repository" "foodblog-repo" {
-  name                 = "foodblog_repo"
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
+   ingress {
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
   }
+
+
+  ingress {
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+
+ ingress {
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  
+ ingress {
+    from_port        = 22
+    to_port          = 22
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+}
+
+
+resource "aws_iam_instance_profile" "ec2CodeDeployProfile" {
+  name = "ec2_profile"
+  role = "EC2CodeDeployRole"
+}
+
+
+resource "aws_instance" "foodblog-server" {
+  ami = "ami-0022f774911c1d690"
+  instance_type = "t2.micro"
+  iam_instance_profile = aws_iam_instance_profile.ec2CodeDeployProfile.name
+  subnet_id  = aws_subnet.public_subnet[0].id
+  associate_public_ip_address = true
+  key_name = "foodblog-server-key"
+
+  user_data = <<EOF
+  #!/bin/bash
+  sudo yum -y update
+  sudo yum -y install ruby
+  sudo yum -y install wget
+  cd /home/ec2-user
+  wget https://aws-codedeploy-us-east-1.s3.amazonaws.com/latest/install
+  sudo chmod +x ./install
+  sudo ./install auto
+  EOF
+  tags = {
+    Name = "foodblog-server"
+  }
+
+  
+}
+
+
+
+resource "aws_network_interface_sg_attachment" "sg_attachment" {
+  security_group_id    = aws_security_group.foodblog-ec2-secgroup.id
+  network_interface_id = aws_instance.foodblog-server.primary_network_interface_id
 }
 
 
 
 
-# resource "aws_iam_role" "ecsTaskExecutionRole" {
-#   name               = "ecsTaskExecutionRole"
-#   assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
-# }
 
-# data "aws_iam_policy_document" "assume_role_policy" {
-#   statement {
-#     actions = ["sts:AssumeRole"]
+resource "aws_s3_bucket" "foodblog-avatar" {
+  bucket = "foodblog-avatar"
 
-#     principals {
-#       type        = "Service"
-#       identifiers = ["ecs-tasks.amazonaws.com"]
-#     }
-#   }
-# }
-
-# resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
-#   role       = aws_iam_role.ecsTaskExecutionRole.name
-#   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
-# }
+}
 
 
+resource "aws_s3_bucket_policy" "foodblog-avatar-bucket-policy" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": "${aws_s3_bucket.foodblog-avatar.arn}/*",
+              "Principal": "*"
+        }
+      ]
+    }
+  POLICY
+}
 
-
-
-# resource "aws_ecs_cluster" "aws-ecs-cluster" {
-#   name = "foodblog-cluster"
-#   tags = {
-#     Name        = "foodblog-ecs"
-#   }
-# }
-
-
-
-
-
-# resource "aws_cloudwatch_log_group" "log-group" {
-#   name = "foodblog-logs"
-
-#   tags = {
-#     Application = "foodblog"
-#   }
-# }
+resource "aws_s3_bucket_acl" "foodblog-avatar-bucket-acl" {
+  bucket = aws_s3_bucket.foodblog-avatar.id
+  acl    = "public-read-write"
+}
 
 
 
@@ -270,47 +310,35 @@ resource "aws_ecr_repository" "foodblog-repo" {
 
 
 
-# resource "aws_ecs_task_definition" "aws-ecs-task" {
-#   family = "foodblog-task"
+resource "aws_s3_bucket" "foodblog-frontend" {
+  bucket = "foodblog-frontend"
 
-#   container_definitions = <<DEFINITION
-#   [
-#     {
-#       "name": "${var.container_name}",
-#       "image": "${aws_ecr_repository.foodblog-repo.repository_url}:latest",
-#       "entryPoint": [],
-#       "essential": true,
-#       "logConfiguration": {
-#         "logDriver": "awslogs",
-#         "options": {
-#           "awslogs-group": "${aws_cloudwatch_log_group.log-group.id}",
-#           "awslogs-region": "${var.aws_region}",
-#           "awslogs-stream-prefix": "foodblog-log"
-#         }
-#       },
-#       "portMappings": [
-#         {
-#           "containerPort": 8080,
-#           "hostPort": 8080
-#         }
-#       ],
-#       "cpu": 256,
-#       "memory": 512,
-#       "networkMode": "awsvpc"
-#     }
-#   ]
-#   DEFINITION
-
-#   requires_compatibilities = ["FARGATE"]
-#   network_mode             = "awsvpc"
-#   memory                   = "512"
-#   cpu                      = "256"
-#   execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
-#   task_role_arn            = aws_iam_role.ecsTaskExecutionRole.arn
-
-#   tags = {
-#     Name        = "foodblog-ecs-td"
-#   }
-# }
+}
 
 
+resource "aws_s3_bucket_policy" "foodblog-frontend-policy" {
+  bucket = aws_s3_bucket.foodblog-frontend.id
+  policy = <<POLICY
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+              "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:GetObjectAttributes",
+                "s3:PutObject"
+              ],
+              "Effect": "Allow",
+              "Resource": "${aws_s3_bucket.foodblog-frontend.arn}/*",
+              "Principal": "*"
+        }
+      ]
+    }
+  POLICY
+}
+
+resource "aws_s3_bucket_acl" "foodblog-frontend-acl" {
+  bucket = aws_s3_bucket.foodblog-frontend.id
+  acl    = "public-read-write"
+}
