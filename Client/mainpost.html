@@ -10,26 +10,38 @@
 <body>
     <section class="form">
         <section class="title">Create New Post</section>
-                <section class="container">
-                    <section>
+
+                <section class="flex-container">
+                    <section class="sec1">
                         <h2>Description</h2>  
-                        <form>                  
+                        <form class="textarea">                  
                             <textarea name="myText" id="myTextarea" rows="1" placeholder="Type here..." maxlength="400"></textarea>
                         </form>
                     </section>
-                    <section>
+
+                    <section class="sec2">
                         <h2 class="upload_image_h2">Upload Image</h2>
                         <form class="form_image" action="upload.php" method="POST">
                             <input type="file" multiple>
                                 <p>Drag your files here or click in this area.</p>
-                            <button type="submit">Upload</button>
                         </form>
                     </section>
-        </section>
-    <section>
-        <button type="text" class="submit">Post</button>
+                </section>
+                
+                <section class="sec3">
+                    <h1>Enter Category</h1>
+                    <input class="category" type="text" id="name" placeholder="Category...">
+                </section>
+
+
+                <section class="button">
+                    <button type="text" class="submit">Post</button>
+                </section>
     </section>
+
 </body>
+<script src="js\post.js"> </script>
+
 </html>
 
 
