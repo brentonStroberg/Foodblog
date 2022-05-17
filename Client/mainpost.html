@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <section class="form">
+        <section class="title">Create New Post</section>
+                <section class="container">
+                    <section>
+                        <h2>Description</h2>  
+                        <form>                  
+                            <textarea name="myText" id="myTextarea" rows="1" placeholder="Type here..." maxlength="400"></textarea>
+                        </form>
+                    </section>
+                    <section>
+                        <h2 class="upload_image_h2">Upload Image</h2>
+                        <form class="form_image" action="upload.php" method="POST">
+                            <input type="file" multiple>
+                                <p>Drag your files here or click in this area.</p>
+                            <button type="submit">Upload</button>
+                        </form>
+                    </section>
+        </section>
+    <section>
+        <button type="text" class="submit">Post</button>
+    </section>
+</body>
+</html>
+
+
+
+
+
+
