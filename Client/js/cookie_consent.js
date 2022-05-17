@@ -2,7 +2,6 @@ function load_cookie_consent_overlay() {
 
     if (getCookie('cookie_consent') !== null) {
         console.log('cookie_consent cookie exists');
-        console.log(getCookie('cookie_consent'));
         return;
     }
     console.log('loading overlay');
@@ -22,9 +21,7 @@ function close_cookie_consent() {
     consent_overlay.style.bottom = '-50%';
 }
 
-// source:
-// https://stackoverflow.com/questions/14573223/set-cookie-and-get-cookie-with-javascript
-function setCookie(name,value,days) {
+function setCookie(name,value,days=0.25) {
     var expires = "";
     if (days) {
         var date = new Date();
