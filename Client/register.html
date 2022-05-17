@@ -55,6 +55,7 @@
                     cognitoUser = result.user;
                     console.log('username is ' + cognitoUser.getUsername());
 
+                    setCookie('currentUser', cognitoUser);
                     //add some UI confirmation
 
                     switch_to_OTP();
@@ -63,6 +64,56 @@
             }
 
             function confirmSignUp(){
+
+                let username =document.getElementById('otp_username_textbox').value;
+                let otp_code = document.getElementById('otp_code').value;
+
+                if (username === null) {
+                    alert('Input Username');
+                    return;
+                }
+                poolData = {
+                    UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
+                };
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+
+                try{
+                    cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
+
+                    cognitoUser.confirmRegistration(otp_code, true, function (err, result) {
+                        err ? alert(err.message) : console.log(result);
+                        });
+                } catch {
+                    alert('User not found')
+                }
+            }
+
+            function resendOTP(){
+
+                let username =document.getElementById('otp_username_textbox').value;
+
+                if (username === null) {
+                    alert('Input Username');
+                    return;
+                }
+
+                poolData = {
+                    UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
+                };
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+                try{
+                    cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
+
+                    cognitoUser.resendConfirmationCode(function(err, result) {
+                        err ? alert(err.message) : alert('OTP Sent. Check your inbox or junk folder');
+                    });
+                } catch {
+                    alert('User not found')
+                }
             }
         </script>
         
@@ -107,6 +158,8 @@
                         }"type="number" maxlength="6" />
                     <br>
                     <button onclick="confirmSignUp()" type="button">Confirm OTP</button>
+                    <br>
+                    <button onclick="resendOTP()" type="button">Resend OTP</button>
                     <br>
                     <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
                     </section>
