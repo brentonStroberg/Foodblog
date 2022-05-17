@@ -16,13 +16,14 @@
         <script>
             function register() {
 
-                let name =document.getElementById('name_textbox').value;
                 let email =document.getElementById('email_textbox').value;
                 let username =document.getElementById('username_textbox').value;
+                let otp_username = document.getElementById('otp_username_textbox');
                 let password =document.getElementById('password_textbox').value;
                 let passwordConfirm =document.getElementById('re-enter_password_textbox').value;
                 let poolData;
 
+                otp_username_textbox.value = username;
                 if (password !== passwordConfirm) {
                     alert('Passwords do not match');
                     throw "Passwords do not match";
@@ -42,16 +43,9 @@
                     Value : email
                 };
 
-                let dataPersonalName = {
-                    Name : 'name',
-                    Value : name
-                }
-
                 let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
-                let attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
 
                 attributeList.push(attributeEmail);
-                attributeList.push(attributePersonalName);
 
                 userPool.signUp(username, password, attributeList, null, function (err, result) {
                     if (err) {
@@ -63,27 +57,28 @@
 
                     //add some UI confirmation
 
-                    let registerfields_list = document.getElementById('register_form');
-                    for (let i=0; i < registerfields_list.length; i++) {
-                        registerfields_list[i].type = 'hidden';
-                    }
-                    document.getElementById('heading_subtext').value = 'Registration successful. A confirmation email has been sent to ' + email;
-                    document.getElementById('return_to_login_button').style.display = 'block';
+                    switch_to_OTP();
+                    
                 });
+            }
+
+            function confirmSignUp(){
             }
         </script>
         
     </head>
     </head>
-    <body onload="load_cookie_consent_overlay()">
+    <body onload=" () => {
+        load_cookie_consent_overlay();
+        if (getCookie('email') !== null) {
+            window.location.href = '/Client/home.html';
+        }
+    }">
         <article>
             <section class="section_overlay">
-                <section class="section_content">
+                <section class="section_content"><h1>SIGN UP</h1>
+                    <label id="heading_subtext">create account</label>
                     <form id="register_form" class="form">
-                        <h1>SIGN UP</h1>
-                        <label id="'heading_subtext">create account</label>
-                        <br>
-                        <input type="text" placeholder="name" id="name_textbox">
                         <br>
                         <input type="text" placeholder="email" id="email_textbox">
                         <br>
@@ -94,9 +89,28 @@
                         <input type="password" placeholder="re-enter password" id="re-enter_password_textbox">
                         <br>
                         <br>
-                        <button class="submit_button" onclick="register()" type="button">submit</button>
-                        <button id="return_to_login_button" style="display:none">Sign In</button>
+                        <button class="form_button" onclick="register()" type="button">submit</button>
+                        <br>
+                        <button class="form_button" onclick="switch_to_OTP()" type="button">I already have an OTP</button>
+                        <br>
+                        <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
                     </form>
+                    <section id="OTP_section" style="display:none">
+                        <label id="OTP_subtext">An OTP has been sent to your email. Please enter it here</label>
+                        <br>
+                        <input type="text" placeholder="username" id="otp_username_textbox">
+                        <br>
+                        <input id="otp_code" oninput="{
+                            if (this.value.length > this.maxLength) {
+                                this.value = this.value.slice(0, this.maxLength);
+                            }
+                        }"type="number" maxlength="6" />
+                    <br>
+                    <button onclick="confirmSignUp()" type="button">Confirm OTP</button>
+                    <br>
+                    <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
+                    </section>
+                    <br>
                 </section>
                 <aside id="cookie_overlay" class="cookie_overlay">
                     <section class="cookie_content">
