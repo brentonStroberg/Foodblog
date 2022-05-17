@@ -4,7 +4,7 @@
     --lightGrey: #d3d3d3;
     --backgroundGrey: #d4d4d4;
     --mainNavFontHeaderColor: #62420f;
-    --headerFont: font-family: 'Kreon', serif;
+    --font: 'Kreon', serif;
 }
 
 .purpleBlock{
@@ -14,4 +14,26 @@
     width: 100%;
     background-color: var(--purple);
     margin-top: -20px;
+}
+
+
+.section{
+    height: 300px;
+    width: 100%;
+}
+
+.sectionTitles{
+    font-family: var(--font);
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.sectionTitles.outside{
+    width: 50%;
+    padding-left: 60px;
+}
+
+.sectionTitles.inside{
+    border-bottom: solid black 1px;
+    text-align: left;
 }
