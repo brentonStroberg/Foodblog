@@ -40,7 +40,7 @@ input::-webkit-input-placeholder {
 .clickable_label:hover{
     color: 7a6dcb;
 }
-.submit_button{
+.form_button{
     margin-left: auto;
 }
 button{
