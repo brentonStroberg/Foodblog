@@ -3,3 +3,8 @@ br{
     margin: 10px 0;
     content: " ";
 }
+
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
