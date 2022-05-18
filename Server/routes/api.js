@@ -352,7 +352,7 @@ const createPost = async (post) => {
               })
             }  
            
-            let categoryQuery = "INSERT  IGNORE INTO category SET title = :category"
+            let categoryQuery = "INSERT   INTO category SET title = :category"
 
             db_client.query(categoryQuery, post, function(err, resultSet2)  {
                 if(err) {
@@ -375,7 +375,7 @@ const createPost = async (post) => {
 
                 db_client.query(postCategoryQuery,postCategory, function(err,resultSet3) {
                   if(err) {
-                  
+                    console.log(err);
                     db_client.rollback(function() {
                       err.response="Failed to create post category"
                       reject(err);
