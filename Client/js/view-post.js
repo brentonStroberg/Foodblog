@@ -1,68 +1,29 @@
 populatePost = () => {
-  document.getElementById("dish-name").innerHTML =
-    "Fried Chicken and sweetchilli fries";
+  // TODO: read/fetch post info from storage
 
-  document.getElementById(
-    "dish-desc"
-  ).innerHTML = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,
-    iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo
-    assumenda voluptate expedita sed natus sint! Autem aliquid molestiaeLorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,
-    iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo
-    assumenda voluptate expedita sed natus sint! Autem aliquid molestiaeLorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,
-    iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo
-    assumenda voluptate expedita sed natus sint! Autem aliquid molestiae`;
+  let postHeader = document.createElement("section");
 
-  document.getElementById("dish-img").src = "../assets/pancakes.jfif";
+  let dishName = `<h1 id="dish-name" class="post-name">title</h1>`;
+  let dishDesc = `<p id="dish-desc" class="post-desc">description</p>`;
+
+  postHeader.innerHTML = dishName + dishDesc;
+
+  document.getElementById("post-content").appendChild(postHeader);
+
+  document.getElementById("dish-img").src = "xxx";
 };
-let comments = [
-  {
-    createdBy: "Steven",
-    createdAt: new Date(),
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo",
-  },
-  {
-    createdBy: "Mark",
-    createdAt: new Date(),
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-  },
-  {
-    createdBy: "Steven",
-    createdAt: new Date(),
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo",
-  },
-  {
-    createdBy: "Mark",
-    createdAt: new Date(),
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-  },
-  {
-    createdBy: "Mark",
-    createdAt: new Date(),
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-  },
-  {
-    createdBy: "Steven",
-    createdAt: new Date(),
-    content:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita,iure atque! Ipsa quidem vero doloribus dolorem, ea, asperiores illo",
-  },
-  {
-    createdBy: "Mark",
-    createdAt: new Date(),
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. ",
-  },
-];
-populateComments = () => {
+
+
+populateComments = (comments) => {
   let list = document.getElementById("comments-section");
 
   comments.forEach((item) => {
     let li = document.createElement("li");
+    let date = new Date(item.createdAt)
 
     let comment = `<header class="comment-header" id="comment-header">
     <h3 id="created-by">${item.createdBy}</h3>
-      <h5 id="created-at">${item.createdAt.toLocaleDateString()}</h5>
+      <h5 id="created-at">${date.toLocaleDateString()}</h5>
     </header>
     <p id="content">${item.content}</p>`;
 
@@ -72,12 +33,11 @@ populateComments = () => {
 };
 
 loadPost = () => {
+  fetchComment();
   populatePost();
-  populateComments();
 };
 
 postComment = () => {
-  //   console.log(document.forms[0][0].value);
   let content = document.forms[0][0].value;
   let comment = {
     createdBy: "Phindi",
@@ -93,7 +53,7 @@ postComment = () => {
   <p id="content">${comment.content}</p>`;
 
   li.innerHTML = commentDisplay;
-  let commentSection = document.getElementById('comments-section')
+  let commentSection = document.getElementById("comments-section");
   commentSection.appendChild(li);
   document.getElementById("comment-form").reset();
 };

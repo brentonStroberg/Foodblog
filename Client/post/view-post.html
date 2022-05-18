@@ -9,14 +9,19 @@
   <body onload="loadPost()">
     <article class="post-wrapper">
       <section class="post">
-        <header class="post-header">
-          <h1 id="dish-name" class="post-name"></h1>
-          <p id="dish-desc" class="post-desc"></p>
+        <header id="post-header" class="post-header">
+          <section id="post-content"></section>
+
           <section class="comment-section">
             <h2>Comments</h2>
             <ul id="comments-section"></ul>
             <form onsubmit="postComment(); return false" id="comment-form">
-              <input type="text" name="submit-comment"  placeholder="Write your comment here" required />
+              <input
+                type="text"
+                name="submit-comment"
+                placeholder="Write your comment here"
+                required
+              />
               <input type="submit" value="Submit" />
             </form>
           </section>
@@ -27,5 +32,28 @@
       </section>
     </article>
     <script src="../js/view-post.js"></script>
+    <script src="../js/endpoints-sdk.js"></script>
+    <script>
+      fetchComment = () => {
+        // TODO: fetch/read post id and token from storage
+        let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
+        let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
+          .withCredentials()
+          .withQueryParams({ id: 'xx' })
+          .withHeader(
+            "Authorization",
+            `Bearer ${xx}`
+          )
+          .withHeader("Content-Type", "application/json")
+          .build();
+
+        Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
+          let comments = results[0].value;
+
+          populateComments(comments);
+          console.log(results[0].value);
+        });
+      };
+    </script>
   </body>
 </html>
