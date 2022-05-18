@@ -1,0 +1,112 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>register page</title>
+        <link rel="stylesheet" href="css/global.css">
+        <link rel="stylesheet" href="css/register.css">
+        <link rel="stylesheet" href="css/cookie_consent.css">
+        <script type="text/javascript" src="js/register.js"></script>
+        <script type="text/javascript" src="js/cookie_consent.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+        <script src="js/amazon-congito-auth.min.js"></script>
+        <script src="js/amazon-cognito-identity.min.js"></script>
+        <script src="js/config.js"></script>
+        <script>
+            function register() {
+
+                let name =document.getElementById('name_textbox').value;
+                let email =document.getElementById('email_textbox').value;
+                let username =document.getElementById('username_textbox').value;
+                let password =document.getElementById('password_textbox').value;
+                let passwordConfirm =document.getElementById('re-enter_password_textbox').value;
+                let poolData;
+
+                if (password !== passwordConfirm) {
+                    alert('Passwords do not match');
+                    throw "Passwords do not match";
+                }
+
+                poolData = {
+                    UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
+                };
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+
+                let attributeList = []
+
+                let dataEmail = {
+                    Name : 'email',
+                    Value : email
+                };
+
+                let dataPersonalName = {
+                    Name : 'name',
+                    Value : name
+                }
+
+                let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute(dataEmail);
+                let attributePersonalName = new AmazonCognitoIdentity.CognitoUserAttribute(dataPersonalName);
+
+                attributeList.push(attributeEmail);
+                attributeList.push(attributePersonalName);
+
+                userPool.signUp(username, password, attributeList, null, function (err, result) {
+                    if (err) {
+                        alert(err.message || JSON.stringify(err));
+                        return;
+                    }
+                    cognitoUser = result.user;
+                    console.log('username is ' + cognitoUser.getUsername());
+
+                    //add some UI confirmation
+
+                    let registerfields_list = document.getElementById('register_form');
+                    for (let i=0; i < registerfields_list.length; i++) {
+                        registerfields_list[i].type = 'hidden';
+                    }
+                    document.getElementById('heading_subtext').value = 'Registration successful. A confirmation email has been sent to ' + email;
+                    document.getElementById('return_to_login_button').style.display = 'block';
+                });
+            }
+        </script>
+        
+    </head>
+    </head>
+    <body onload="load_cookie_consent_overlay()">
+        <article>
+            <section class="section_overlay">
+                <section class="section_content">
+                    <form id="register_form" class="form">
+                        <h1>SIGN UP</h1>
+                        <label id="'heading_subtext">create account</label>
+                        <br>
+                        <input type="text" placeholder="name" id="name_textbox">
+                        <br>
+                        <input type="text" placeholder="email" id="email_textbox">
+                        <br>
+                        <input type="text" placeholder="username" id="username_textbox">
+                        <br>
+                        <input type="password" placeholder="password" id="password_textbox">
+                        <br>
+                        <input type="password" placeholder="re-enter password" id="re-enter_password_textbox">
+                        <br>
+                        <br>
+                        <button class="submit_button" onclick="register()" type="button">submit</button>
+                        <button id="return_to_login_button" style="display:none">Sign In</button>
+                    </form>
+                </section>
+                <aside id="cookie_overlay" class="cookie_overlay">
+                    <section class="cookie_content">
+                        <h3>Cookie Consent</h3>
+                        <p>Our site uses cookie to store browser information required for navigating pages and login functionality.</p>
+                        <p>By continuing to use this website, you consent to the use of cookies.</p>
+                        <button onclick="close_cookie_consent()">Confirm and close</button>
+                    </section>
+                </aside>
+            </section>
+        </article>
+    </body>
+</html>
