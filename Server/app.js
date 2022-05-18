@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var validateRequest = require('./middleware/requestAuthenticator');
 var authenticatedRoute = require('./routes/api');
-
+var cors = require('cors');
 
 
 
@@ -20,6 +20,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+
+
+
+app.use(cors({
+    origin: 'http://127.0.0.1:5500',
+    credentials: true
+}));
 
 
 app.use('/api', authenticatedRoute);
