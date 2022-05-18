@@ -375,7 +375,6 @@ const createPost = async (post) => {
 
                 db_client.query(postCategoryQuery,postCategory, function(err,resultSet3) {
                   if(err) {
-                    console.log(err);
                     db_client.rollback(function() {
                       err.response="Failed to create post category"
                       reject(err);
