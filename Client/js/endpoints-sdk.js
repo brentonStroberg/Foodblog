@@ -25,13 +25,14 @@ Promise.allSettled([callAPI(endpoint,request)])
 
 */
 
-let currentHost = 'remote';
-let hosts = {
+export const currentHost = 'remote';
+
+export const hosts = {
     localhost: 'localhost:8080',
     remote: '3.226.187.18:8080'
 };
 
-let endpoints = {
+export const endpoints = {
     getFavourites : '/api/favourite',
     addToFavourites: '/api/favourite',  // specify id of the post as query param id=<insert id>
     removeFromFavourites: '/api/favourite',  // specify id of the post as query param id=<insert id>    
@@ -48,7 +49,7 @@ let endpoints = {
 
 
 
-class ApiCall {
+export class ApiCall {
 
     request = {
         
@@ -87,7 +88,7 @@ class ApiCall {
 
 }
 
-const   callAPI = (endpoint,request) => {
+export const   callAPI = (endpoint,request) => {
     return new Promise((resolve,reject) => {
         fetch(endpoint,request)
         .then(resp => resp.json())
