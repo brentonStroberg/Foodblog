@@ -24,7 +24,7 @@ const { body, check ,query} = require('express-validator');
   FAVOURITE ROUTES & CRUD OPS
 ************************************************/
 
-
+// get iser favourites
 router.get('/favourite', function(req, res, next) {
   favourite = {
     username : req.user.username
@@ -37,11 +37,11 @@ router.get('/favourite', function(req, res, next) {
   })
 });
 
-
-router.post('/favourite',validateRequestBody([body('postId').isNumeric()]),function (req,res,next) {
+// add post to favourite
+router.post('/favourite',validateRequestBody([query('id').isNumeric()]),function (req,res,next) {
 
     favourite = {
-        postId: req.body.postId,
+        postId: req.query.id,
         username: req.user.username
     } 
   
@@ -56,11 +56,11 @@ router.post('/favourite',validateRequestBody([body('postId').isNumeric()]),funct
 
 });
 
-
-router.delete('/favourite',validateRequestBody([body('postId').isNumeric()]), function (req,res,next) {
+// delete user favourite
+router.delete('/favourite',validateRequestBody([query('id').isNumeric()]), function (req,res,next) {
 
     favourite = {
-      postId: req.body.postId,
+      postId: req.query.id,
       username: req.user.username
   } 
     removeFavourite(favourite)
@@ -77,9 +77,9 @@ router.delete('/favourite',validateRequestBody([body('postId').isNumeric()]), fu
 
 const getUserFavourites = async (username) => {
   return new Promise((resolve, reject) => {
-      let query = `select p.id, p.createdBy, p.title, p.slug, p.summary, p.createdAt, p.updatedAt, p.content, p.banner,p.rating  from post p 
-      Inner join favourite f  on f.username = :username  and p.id = f.postId`
-      db_client.query(query, favourite,(err,resultSet) => {
+      let query = `select p.id, p.createdBy, p.title, p.slug, p.createdAt, p.updatedAt, p.content, p.banner,p.rating  from post p 
+      Inner join favourite f  on f.username = :username  and p.id = f.postId;`
+      db_client.query(query, username,(err,resultSet) => {
           if (err) {
             err.response = "Failed to get user favourites"
             reject(err);
@@ -87,6 +87,7 @@ const getUserFavourites = async (username) => {
               resolve(resultSet);
           }
       });
+  
   });
 };
 
@@ -94,7 +95,7 @@ const getUserFavourites = async (username) => {
 const addFavourite = async (favourite) => {
   return new Promise((resolve,reject) => {
     let query = "INSERT INTO favourite SET username = :username, postId = :postId ON DUPLICATE KEY UPDATE username = :username , postId = :postId;"
-    db_client.query(query, favourite,(err,resultSet) => {
+   db_client.query(query, favourite,(err,resultSet) => {
         if (err) {
           err.response = "Failed to add post to user favourites"
           reject(err);
