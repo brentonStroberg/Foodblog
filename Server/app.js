@@ -16,7 +16,7 @@ var app = express();
 
 
 var allowedOrigins = ['http://localhost:5500',
-                      'http:127.0.0.1:5500'];
+                      'http://127.0.0.1:5500','undefined'];
 
 
 var corsOptions = {
@@ -24,9 +24,10 @@ var corsOptions = {
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
-      callback(new Error('Not allowed by CORS with origin' + origin))
+      callback(new Error('Not allowed by CORS with origin ' + origin))
     }
-  }
+  },
+  credentials: true
 }
 
 app.use(cors(corsOptions));

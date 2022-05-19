@@ -20,6 +20,7 @@ const validateRequest = async (req, res, next) => {
                 const token = req.headers.authorization.split(" ")[1]
                 const response = await cognito.validate(token);
                 req.user=response;
+                res.user=response;
                 next();
             } catch (e) {
                 res.locals.user = response;
