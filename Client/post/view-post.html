@@ -15,13 +15,14 @@
           <section class="comment-section">
             <h2>Comments</h2>
             <ul id="comments-section"></ul>
-            <form onsubmit="postComment(); return false" id="comment-form">
+            <form onsubmit="displayComment(); return false" id="comment-form">
               <textarea
                 class="comment-input"
                 form="comment-form"
                 name="submit-comment"
                 placeholder="Write your comment here"
-                rows="4" cols="50"
+                rows="4"
+                cols="50"
                 required
               ></textarea>
               <input type="submit" value="Submit" class="submit-button" />

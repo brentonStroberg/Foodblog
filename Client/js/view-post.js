@@ -1,31 +1,20 @@
-populatePost = () => {
-  // TODO: read/fetch post info from storage
- // check if post info exist and display error msg
- let postHeader = document.createElement("main");
- if(false){
-  document.getElementById('error-display').classList.add("error-display");
-  let errorMsg = `<h1 class="error-msg">Opps! Something went wrong on our side.</h1>`;
-  postHeader.innerHTML = errorMsg;
-  return document.getElementById("error-display").appendChild(postHeader);
- }
+let accessToken;
+let userName;
+loadPost = () => {
+  accessToken = getCookie("accessToken").split("=")[1];
+  console.log(accessToken);
+  fetchComment();
+  populatePost();
 
-  let dishName = `<h1 id="dish-name" class="post-name">title</h1>`;
-  let dishDesc = `<p id="dish-desc" class="post-desc">description</p>`;
-
-  postHeader.innerHTML = dishName + dishDesc;
-
-  document.getElementById("post-content").appendChild(postHeader);
-
-  document.getElementById("dish-img").src = "";
+  userName = parseJwt(accessToken).username;
 };
-
 
 populateComments = (comments) => {
   let list = document.getElementById("comments-section");
 
   comments.forEach((item) => {
     let li = document.createElement("li");
-    let date = new Date(item.createdAt)
+    let date = new Date(item.createdAt);
 
     let comment = `<header class="comment-header" id="comment-header">
     <h3 id="created-by">${item.createdBy}</h3>
@@ -38,19 +27,53 @@ populateComments = (comments) => {
   });
 };
 
-loadPost = () => {
-  fetchComment();
-  populatePost();
+fetchComment = () => {
+  let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
+
+  let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
+    .withCredentials()
+    .withQueryParams({ id: 2 })
+    .withHeader("Authorization", `Bearer ${accessToken}`)
+    .withHeader("Content-Type", "application/json")
+    .build();
+
+  Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
+    let comments = results[0].value;
+
+    console.log(results);
+    populateComments(comments);
+  });
 };
 
-postComment = () => {
+populatePost = () => {
+  // TODO: read/fetch post info from storage
+  // check if post info exist and display error msg
+  let postHeader = document.createElement("main");
+  if (false) {
+    document.getElementById("error-display").classList.add("error-display");
+    let errorMsg = `<h1 class="error-msg">Opps! Something went wrong on our side.</h1>`;
+    postHeader.innerHTML = errorMsg;
+    return document.getElementById("error-display").appendChild(postHeader);
+  }
+
+  let dishName = `<h1 id="dish-name" class="post-name">title</h1>`;
+  let dishDesc = `<p id="dish-desc" class="post-desc">description</p>`;
+
+  postHeader.innerHTML = dishName + dishDesc;
+
+  document.getElementById("post-content").appendChild(postHeader);
+
+  document.getElementById("dish-img").src = "../assets/pancakes.jfif";
+};
+
+displayComment = () => {
   let content = document.forms[0][0].value;
-  //TODO: get logged in username
+
   let comment = {
-    postId: 1,
-    createdBy: 'This guy',
+    createdBy: userName,
     createdAt: new Date(),
     content: content,
+    postId: 2,
   };
 
   let li = document.createElement("li");
@@ -62,53 +85,40 @@ postComment = () => {
   <p id="content">${comment.content}</p>`;
 
   li.innerHTML = commentDisplay;
+
   let commentSection = document.getElementById("comments-section");
   commentSection.appendChild(li);
-  postRemoteComment()
+
+  postRemoteComment(comment);
   document.getElementById("comment-form").reset();
 };
 
-fetchComment = () => {
-  // TODO: fetch/read post id and token from storage
-  let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
-  // let accessToken = getCookie('accessToken');
-  // console.log(accessToken)
-  let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
-    .withCredentials()
-    .withQueryParams({ id: 1 })
-    .withHeader("Authorization", `Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2ZWZhMjhlOS02M2QwLTRiNTYtYWUxZS1lYzU5NWNjOTFlMWIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIHBob25lIG9wZW5pZCBlbWFpbCIsImF1dGhfdGltZSI6MTY1Mjk1OTc0NCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMVpIZ3dzNWhzIiwiZXhwIjoxNjUzMDQ2MTQ0LCJpYXQiOjE2NTI5NTk3NDQsInZlcnNpb24iOjIsImp0aSI6IjRlMzI5MmQxLWRkNGQtNDljZS05YTMyLWM1MWEwZWFiMGFmNiIsImNsaWVudF9pZCI6IjNyMnBzZW41MmRna2luYmp1dm5vczNqdm9lIiwidXNlcm5hbWUiOiJ0YXJzaGVuIn0.fehTt1r0BeXxVTyZpW0NWxCuvz5P_mYAoDyXtl8tC4Nr5gREfwdfvpZSY9d48QI3EsEPMQW5mLdcthVhlI7thsaHG8HKe57Ebw593UWPTvL2kxfTOzalecunKh07WG7L2ySCADTYXyZttL5KrMr9hMQQASs6W-eeKhiWpip1XWbVDR1AZvQrk4XLakVupPelWXa4H5ENcd6efiN5GUbrXM-NSk7ncSIJjRNguGUVFVCJ37fsifqQ3j9clegBRD-aSXYTGuH95pKhaS4o2pa8zwkl8NM3Gy5b-sUR8D0GJ0JwITisr5ZWEq3IyHeLl1hRFSpsxbC2Sjrsxj1G48MRdw`)
-    .withHeader("Content-Type", "application/json")
-    .build();
+postRemoteComment = (comment) => {
 
-  Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    let comments = results[0].value;
+  let comments_endpoint = `http://${hosts[currentHost]}${endpoints.makeComment}`;
 
-    populateComments(comments);
-    console.log(results[0].value);
-  });
-};
-
-
-postRemoteComment = () => {
-  // TODO: fetch/read post id and token from storage
-  let comments_endpoint = `http://${hosts[currentHost]}${endpoints.postComment}`;
-  let comment = {
-    postId: 1,
-    createdAt: new Date().toISOString(),
-    content: 'yass ow yes'
-
-  }
-  console.log(JSON.stringify(comment))
   let { endpoint, request } = new ApiCall(comments_endpoint, "POST")
     .withCredentials()
     .withBody(JSON.stringify(comment))
-    .withHeader("Authorization", `Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2ZWZhMjhlOS02M2QwLTRiNTYtYWUxZS1lYzU5NWNjOTFlMWIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIHBob25lIG9wZW5pZCBlbWFpbCIsImF1dGhfdGltZSI6MTY1Mjk1OTc0NCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMVpIZ3dzNWhzIiwiZXhwIjoxNjUzMDQ2MTQ0LCJpYXQiOjE2NTI5NTk3NDQsInZlcnNpb24iOjIsImp0aSI6IjRlMzI5MmQxLWRkNGQtNDljZS05YTMyLWM1MWEwZWFiMGFmNiIsImNsaWVudF9pZCI6IjNyMnBzZW41MmRna2luYmp1dm5vczNqdm9lIiwidXNlcm5hbWUiOiJ0YXJzaGVuIn0.fehTt1r0BeXxVTyZpW0NWxCuvz5P_mYAoDyXtl8tC4Nr5gREfwdfvpZSY9d48QI3EsEPMQW5mLdcthVhlI7thsaHG8HKe57Ebw593UWPTvL2kxfTOzalecunKh07WG7L2ySCADTYXyZttL5KrMr9hMQQASs6W-eeKhiWpip1XWbVDR1AZvQrk4XLakVupPelWXa4H5ENcd6efiN5GUbrXM-NSk7ncSIJjRNguGUVFVCJ37fsifqQ3j9clegBRD-aSXYTGuH95pKhaS4o2pa8zwkl8NM3Gy5b-sUR8D0GJ0JwITisr5ZWEq3IyHeLl1hRFSpsxbC2Sjrsxj1G48MRdw`)
+    .withHeader("Authorization", `Bearer ${accessToken}`)
     .withHeader("Content-Type", "application/json")
     .build();
-
   callAPI(endpoint, request).then((results) => {
-    // let comments = results[0].value;
-
     console.log(results);
   });
 };
+
+function parseJwt(token) {
+  var base64Url = token.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  console.log(JSON.parse(jsonPayload).username);
+  return JSON.parse(jsonPayload);
+}

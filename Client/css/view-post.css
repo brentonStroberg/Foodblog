@@ -69,6 +69,7 @@ li {
 .comment-input {
   width: 90%;
   resize: none;
+  margin-top: 2rem;
 }
 .submit-button {
   background-color: #fe9901;
