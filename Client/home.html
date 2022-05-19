@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/home.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>Food Blog FOODIE</title>
 </head>
 
@@ -15,33 +14,34 @@
         <label class="logo">FOODIE</label>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#posts">Posts</a></li>
-            <li><a href="#subscribe">Subscribe</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#favourites">Favourite Posts</a></li>
+            <li><a href="#recents">Recent Posts</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href="#">Profile</a></li>
         </ul>
         <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log Out</button></a>
     </nav>
 
-    <section id="posts" class="posts">
+    <section id="favourites" class="posts">
         <h2 class="posts-title">Favourite Posts</h2>
-        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
-        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
-        <main id="posts-container" class="posts-container">
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-favs" class="posts-container">
         </main>
     </section>
 
-    <section class="posts">
+    <section id="recents" class="posts">
         <h2 class="posts-title">Recent Posts</h2>
-        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
-        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
-        <main class="posts-container">
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-recents" class="posts-container">
         </main>
     </section>
 
-    <section class="posts">
+    <section id="explore" class="posts">
         <h2 class="posts-title">Explore</h2>
-        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
-        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
         <main class="posts-container">
             <!-- <section class="post-card">
                 <figure class="post-image">
@@ -99,7 +99,6 @@
                             <button type="button" class="form_button">Send</button>
                         </section>
                     </section>
-                    
                 </section>
             </section>
         </section>
