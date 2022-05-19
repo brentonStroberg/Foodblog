@@ -30,6 +30,7 @@ var allowedOrigins = ['http://localhost:5500',
 //   credentials: true
 // }
 
+
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
