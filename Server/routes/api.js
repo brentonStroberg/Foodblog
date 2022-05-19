@@ -318,12 +318,9 @@ const updateAvatarUrl = async (url) => {
 ************************************************/
 
 //get recent posts
-router.get('/recent', validateRequestBody([query('date').isISO8601()]), function(req,res,next) {
-    let date = {
-      date: req.query.date
-    }
-    console.log(date)
-    getRecentPosts(date)
+router.get('/recent', function(req,res,next) {
+  
+    getRecentPosts()
     .then(resultSet => {
       return sendHttpSuccess(req,res,resultSet);
     }).catch(err => {
@@ -332,11 +329,11 @@ router.get('/recent', validateRequestBody([query('date').isISO8601()]), function
 })
 
 
-const getRecentPosts = async (date) =>  {
+const getRecentPosts = async () =>  {
   return new Promise((resolve,reject) => {
-    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p where cast(p.createdAt AS date)  between  DATE_SUB(:date, INTERVAL 7 DAY)  AND STR_TO_DATE(:date, '%Y-%m-%d') order by p.createdAt"
-    console.log(query)
-    db_client.query(query, date, function(err,resultSet) {
+    
+    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt LIMIT 10"
+    db_client.query(query, function(err,resultSet) {
       if(err) {
         err.response="Failed to get recent post"
         reject(err);
