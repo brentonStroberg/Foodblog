@@ -21,11 +21,11 @@ function close_cookie_consent() {
     consent_overlay.style.bottom = '-50%';
 }
 
-function setCookie(name,value,days=0.25) {
+function setCookie(name,value,seconds) {
     var expires = "";
-    if (days) {
+    if (seconds) {
         var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
+        date.setTime(date.getTime() + (seconds));
         expires = "; expires=" + date.toUTCString();
     }
     document.cookie = name + "=" + (value || "")  + expires + "; path=/";

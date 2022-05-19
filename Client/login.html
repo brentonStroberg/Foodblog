@@ -16,10 +16,10 @@
         <script>
             function sign_in() {
                 console.log('submitted');
-                document.getElementById('incorrect_auth').style.display = 'none'
+                document.getElementById('incorrect_auth').style.display = 'none';
 
-                let username = document.getElementById('username_textbox').value;
-                let password = document.getElementById('password_textbox').value;
+                let username = document.getElementById('login_username_textbox').value;
+                let password = document.getElementById('login_password_textbox').value;
 
                 var authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({Username: username, Password: password});
 
@@ -44,12 +44,118 @@
                         },
 
                         onFailure: function(err) {
-                            document.getElementById('incorrect_auth').style.display = 'block'
+                            document.getElementById('incorrect_auth').style.display = 'block';
                         },
 
                     }); 
                 } catch {
                     alert('Sign In failed');
+                }
+            }
+        </script>
+        <script>
+            function register() {
+
+                let email = document.getElementById('register_email_textbox').value;
+                let username = document.getElementById('register_username_textbox').value;
+                let otp_username = document.getElementById('otp_username_textbox');
+                let password = document.getElementById('register_password_textbox').value;
+                let passwordConfirm = document.getElementById('register_re-enter_password_textbox').value;
+
+                if (email === '' || username === '' || password === '' || passwordConfirm === '') {
+                    alert('Please ensure all fields are filled');
+                    return;
+                }
+
+                otp_username_textbox.value = username;
+                if (password !== passwordConfirm) {
+                    alert('Passwords do not match');
+                    return;
+                }
+
+                let userPoolId = _config.cognito.UserPoolId;
+                let clientId = _config.cognito.ClientId;
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool({UserPoolId: userPoolId, ClientId: clientId});
+
+                let attributeList = [];
+
+                let attributeEmail = new AmazonCognitoIdentity.CognitoUserAttribute({Name : 'email', Value : email});
+
+                attributeList.push(attributeEmail);
+
+                userPool.signUp(username, password, attributeList, null, function (err, result) {
+                    if (err) {
+                        if (err.name === 'UsernameExistsException') {
+                            alert('User already exists. Use existing OTP or send a new OTP');
+                            switch_to_OTP();
+                            return;
+                        }
+                        alert(err.message);
+                        return;
+                    }
+                    cognitoUser = result.user;
+                    console.log('username is ' + cognitoUser.getUsername());
+
+                    setCookie('currentUser', cognitoUser);
+                    //add some UI confirmation
+
+                    switch_to_OTP();
+                    
+                });
+            }
+
+            function confirmSignUp(){
+
+                let username = document.getElementById('otp_username_textbox').value;
+                let otp_code = document.getElementById('otp_code').value;
+
+                if (username === '' || otp_code === '') {
+                    document.getElementById('otp_error_message').value = 'Please input username and OTP';
+                    document.getElementById('otp_error_message').style.display = 'block';
+                    return;
+                }
+                poolData = {
+                    UserPoolId : _config.cognito.UserPoolId,
+                    ClientId : _config.cognito.ClientId
+                };
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool (poolData);
+
+                try{
+                    cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
+
+                    cognitoUser.confirmRegistration(otp_code, true, function (err, result) {
+
+                        if (err) {
+                            alert(err.message);
+                            return;
+                        }
+                        console.log(result);
+                        });
+                } catch {
+                    alert('User not found');
+                }
+            }
+
+            function resendOTP(){
+
+                let username = document.getElementById('otp_username_textbox').value;
+
+                if (username === '') {
+                    alert('Input Username');
+                    return;
+                }
+
+                var userPool = new AmazonCognitoIdentity.CognitoUserPool ({UserPoolId : _config.cognito.UserPoolId, ClientId : _config.cognito.ClientId});
+                try{
+                    cognitoUser = new AmazonCognitoIdentity.CognitoUser({Username: username, Pool: userPool});
+
+                    cognitoUser.resendConfirmationCode(function(err, result) {
+                        alert('OTP Sent. Check your inbox or junk folder');
+                    });
+                } catch {
+                    alert('User not found');
                 }
             }
         </script>
@@ -61,37 +167,79 @@
             window.location.href = '/home.html';
         }
     }">
-        <article>
-            <section class="section_overlay">
-                <section class="section_content">
-                    <form class="auth_form">
-                        <h1>SIGN IN</h1>
-                        <br>
-                        <input type="text" placeholder="username" id="username_textbox">
-                        <br>
-                        <input type="password" placeholder="password" id="password_textbox">
-                        <br>
-                        <br>
-                        <section class="sign_in_options">
-                            <section>
-                                <label class="clickable_label" onclick="reset_password()">Reset password</label>
-                                <br style="margin:0">
-                                <label class="clickable_label" onclick="create_account()">create account</label>
+        <section class="section_overlay" >
+            <section class="section_content">
+                <aside class="sign_in_switch_overlay">
+                    <section class="sign_in_switch">
+                        <button id="btn_switch_signin" class="sign_in_switch inset_shadow_button" onclick="switch_sign_in(true)">Sign In</button>
+                        <button id="btn_switch_register" class="sign_in_switch" onclick="switch_sign_in(false)">Sign Up</button>
+                    </section>
+                </aside>
+                <br>
+                <section id="login_page">
+                    <section>
+                        <form class="auth_form">
+                            <input type="text" placeholder="username" id="login_username_textbox">
+                            <br>
+                            <input type="password" placeholder="password" id="login_password_textbox">
+                            <br>
+                            <br>
+                            <section class="sign_in_options">
+                                <section>
+                                    <label class="clickable_label" onclick="reset_password()">Reset password</label>
+                                </section>
+                                <button class="form_button" type="button" onclick="sign_in()">sign in</button>
                             </section>
-                            <button class="form_button" type="button" onclick="sign_in()">sign in</button>
+                            <label id="incorrect_auth" class="error_message" style="display: none">Incorrect username or password</label>
+                        </form>
+                    </section>
+                </section>
+                <section id="register_page"style="display:none">
+                    <section>
+                        <form id="register_form" class="auth_form">
+                            <input type="text" placeholder="email" id="register_email_textbox">
+                            <br>
+                            <input type="text" placeholder="username" id="register_username_textbox">
+                            <br>
+                            <input type="password" placeholder="password" id="register_password_textbox">
+                            <br>
+                            <input type="password" placeholder="re-enter password" id="register_re-enter_password_textbox">
+                            <br>
+                            <br>
+                            <button class="form_button" onclick="register()" type="button">submit</button>
+                            <br>
+                            <button class="form_button" onclick="switch_to_OTP()" type="button">I already have an OTP</button>
+                        </form>
+                        <section id="OTP_section" style="display:none">
+                            <label id="OTP_subtext">An OTP has been sent to your email. Please enter it here</label>
+                            <br>
+                            <input type="text" placeholder="username" id="otp_username_textbox">
+                            <br>
+                            <input id="otp_code" oninput="{
+                                if (this.value.length > this.maxLength) {
+                                    this.value = this.value.slice(0, this.maxLength);
+                                }
+                            }"type="number" maxlength="6" />
+                            <br>
+                            <button class="form_button"  onclick="confirmSignUp()" type="button">Confirm OTP</button>
+                            <br>
+                            <button class="form_button"  onclick="resendOTP()" type="button">Resend OTP</button>
                         </section>
-                        <label id="incorrect_auth" class="error_message" style="display: none">Incorrect username or password</label>
-                    </form>
+                        <br>
+                    </section>
                 </section>
             </section>
-            <aside id="cookie_overlay" class="cookie_overlay">
-                <section class="cookie_content">
-                    <h3>Cookie Consent</h3>
-                    <p>Our site uses cookie to store browser information required for navigating pages and login functionality.</p>
-                    <p>By continuing to use this website, you consent to the use of cookies.</p>
-                    <button onclick="close_cookie_consent()">Confirm and close</button>
-                </section>
-            </aside>
-        </article>
+        </section>
+        <aside id="cookie_overlay" class="cookie_overlay">
+            <section class="cookie_content">
+                <h3>Cookie Consent</h3>
+                <p>Our site uses cookie to store browser information required for navigating pages and login functionality.</p>
+                <p>By continuing to use this website, you consent to the use of cookies.</p>
+                <button class="simple_button" onclick="close_cookie_consent()">Confirm and close</button>
+            </section>
+        </aside>
+        <iframe src="https://foodblog.auth.us-east-1.amazoncognito.com/login?client_id=3r2psen52dgkinbjuvnos3jvoe&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=http://localhost:5500/loginRedirect.html">
+            
+        </iframe>
     </body>
 </html>
