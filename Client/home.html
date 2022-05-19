@@ -14,147 +14,41 @@
         <label class="logo">FOODIE</label>
         <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#posts">Posts</a></li>
-            <li><a href="#">Subscribe</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#favourites">Favourite Posts</a></li>
+            <li><a href="#recents">Recent Posts</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href="#">Profile</a></li>
         </ul>
+        <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log
+                Out</button></a>
     </nav>
 
-    <section id="posts" class="posts">
-        <h2 class="posts-title">Recent Posts</h2>
-        <!-- <hr class="solid"> -->
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-        <main id="posts-container" class="posts-container">
-           
-        </main>
-    </section>
-
-    <section class="posts">
+    <section id="favourites" class="posts">
+        <a href=""></a>
         <h2 class="posts-title">Favourite Posts</h2>
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-        <main class="posts-container">
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="https://foodblog-avatar.s3.amazonaws.com/2022-05-19T112209.497Z-directory.PNG.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-favs" class="posts-container">
         </main>
     </section>
 
-    <section class="posts">
-        <h2 class="posts-title">Categories</h2>
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-        <main class="posts-container">
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card3.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card4.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card3.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card4.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
+    <section id="recents" class="posts">
+        <h2 class="posts-title">Recent Posts</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-recents" class="posts-container">
         </main>
     </section>
 
-    <section id="subscribe" class="subscribe">
-        <h2 class="posts-title">Subscribe to our daily mail</h2>
-        <br>
-        <form action="">
-            <label class="email-label" for="email">Enter email address: </label>
-            <input class="email-input" type="text" id="email" name="email"><br><br>
-        </form>
+    <section id="explore" class="posts">
+        <h2 class="posts-title">Explore</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-explore" class="posts-container">
+        </main>
     </section>
 
-    <footer class="footer-content">
+    <!-- <footer class="footer-content">
         <section class="footer_section">
             <section class="footer_subsection">
                 <section class="footer_panel">
@@ -170,7 +64,8 @@
                             <a href="#">Contact</a>
                         </section>
                         <section class="footer_panel">
-                            <a href="/index.html" onclick="eraseCookie('accessToken'); eraseCookie('idToken');">Sign Out</a>
+                            <a href="/index.html" onclick="eraseCookie('accessToken'); eraseCookie('idToken');">Sign
+                                Out</a>
                             <br>
                             <a href="#posts">Posts</a>
                             <br>
@@ -198,13 +93,10 @@
                             <button type="button" class="form_button">Send</button>
                         </section>
                     </section>
-                    
                 </section>
             </section>
         </section>
-    </footer>
-
-    <script src="script.js"></script>
+    </footer> -->
     <script src="./js/home.js"></script>
     <script src="./js/cookie_consent.js"></script>
     <script src="./js/endpoints-sdk.js"></script>

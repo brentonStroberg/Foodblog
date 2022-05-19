@@ -26,6 +26,7 @@
 }
 
 .logo {
+    margin-left: 2rem;
     font-size: 2rem;
     font-weight: bolder;
     cursor: pointer;
@@ -129,7 +130,6 @@ button:hover {
     border: none;
 }
 
-/* PRODUCTS */
 .posts {
     position: relative;
     overflow: hidden;
@@ -255,6 +255,21 @@ button:hover {
 .prev-btn:hover i,
 .nxt-btn:hover i {
     opacity: 1;
+}
+
+.log-out-btn {
+    width: 100px;
+    padding: 15px 0;
+    text-align: center;
+    margin-right: 2rem;
+    border-radius: 25px;
+    font-weight: bold;
+    border: 1px solid black;
+    background: #009688;
+    color: black;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
 }
 
 /* hr.rounded {
