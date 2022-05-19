@@ -44,7 +44,11 @@ let  currentHost = 'remote';
     deleteProfile: '/api/user/profile',
     updateIntro: '/user/intro',  // specify intro in body,
     updateAvatar: '/user/avatar',  // specify file
-    getRecents: '/api/recent' // specifiy the date as a query param
+    getUserPosts: '/api//user/posts',
+    getRecentPosts: '/api/recent', // specify date as query param
+    makeComment: '/api/comment'
+
+
 };
 
 
