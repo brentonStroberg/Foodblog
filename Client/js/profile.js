@@ -37,7 +37,6 @@ function elementCreate(typeOfElement, classList, num, value) {
   return ele;
 }
 
-
 function addClass(str, article) {
   var arr = str.split(' ');
   arr.forEach(element => {
@@ -46,12 +45,8 @@ function addClass(str, article) {
   return article;
 }
 
-
-
-
 function fetchUserProfile() {
   let userpost_endpoint = `http://${hosts[currentHost]}${endpoints.getProfile}`
-
 
   let { endpoint, request } = new ApiCall(userpost_endpoint, 'GET')
     .withCredentials()
@@ -75,10 +70,8 @@ function loadUserInfo(User){
   document.getElementById('userprofileDescription').innerHTML = User.intro;
 }
 
-
 function fetchUserPosts() {
   let userpost_endpoint = `http://${hosts[currentHost]}${endpoints.getUserPosts}`
-
 
   let { endpoint, request } = new ApiCall(userpost_endpoint, 'GET')
     .withCredentials()
@@ -94,5 +87,3 @@ function fetchUserPosts() {
     return results[0].value;
   })
 }
-
-
