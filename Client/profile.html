@@ -5,8 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/profile.css">
-    <link rel="stylesheet" href="css/global.css">
-
+    <link rel="stylesheet" href="css/home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kreon:wght@300&display=swap" rel="stylesheet">
@@ -16,144 +15,63 @@
 </head>
 
 <body onload="onloadProfile()">
-    <nav class="navbar outside">
-        <section class="navbar inside">
-            <section class="navbarheader">
-                <a class="navbarheader anchor">
-                    <h1 class="navbar title">Foodie</h1>
-                </a>
-                <button class="navbarheader menu-toggler" onclick="toggleNavbar()">
-                    <span class="material-symbols-outlined">
-                        menu
-                    </span>
-                </button>
-            </section>
-            <section class="navbar items">
-                <ul class="navbar items list">
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">home</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">posts</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">subscribe</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">contact us</a>
-                    </li>
-                </ul>
-                <ul class="navbar buttons list">
-                    <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">LOG IN</button>
-                    </li>
-                    <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">SIGN UP</button>
-                    </li>
-                </ul>
-            </section>
-            <section class="sidebar" id="sidebar">
-                <ul class="sidebar items list">
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">home</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">posts</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">subscribe</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">contact us</a>
-                    </li>
-                </ul>
-                <ul class="sidebar buttons list">
-                    <li class="sidebar buttons list item">
-                        <button class="sidebar buttons list button" href="#">LOG IN</button>
-                    </li>
-                    <li class="sidebar buttons list item">
-                        <button class="sidebar buttons list button" href="#">SIGN UP</button>
-                    </li>
-                </ul>
-            </section>
-        </section>
-    </nav>
+    <nav class="navbar">
+        <label class="logo">FOODIE</label>
+        <ul>
+            <li><a class="home" href="#">Home</a></li>
+            <li><a class="post" href="#">Posts</a></li>
+            <li><a class="sub" href="#">Subscribe</a></li>
+            <li><a class="contact" href="#">Contact</a></li>
+        </ul>
+    </nav> 
     <br>
     <br>
-
-
-    <section class="purpleBlock"></section>
-    <br>
-    <!-- CSS styling goes into home.css -->
     <main>
 
-        <!-- this is the markup. you can change the details (your own name, your own avatar etc.) but don’t change the basic structure! -->
 
-        <aside class="profile-card">
+
+     <aside class="profile-card">
             <header>
-
-                <!-- here’s the avatar -->
                 <a href="https://tutsplus.com">
                     <img src="https://en.gravatar.com/userimage/42992842/b8e8ff24d6f1cb84bbe5c839903086bb.png?size=200">
                 </a>
-
-                <!-- the username -->
                 <h1>ALENA STUDIO</h1>
-
-                <!-- and role or location -->
                 <h2>WEB DESIGNER</h2>
 
             </header>
-
-
-            <!-- bit of a bio; who are you? -->
             <p class="profile-bio">
 
             <p>"Terence is an avid reader of science fiction, especially anything to do with aliens and tweed jackets.
                 Most weekends, he can be found cataloguing his collection of rodent skeletons."</p>
 
             </p>
-
-            <!-- some social links to show off -->
             <ul class="profile-social-links">
-
-                <!-- twitter - el clásico  -->
                 <li>
                     <a href="https://twitter.com/tutsplus">
                         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-twitter.svg">
                     </a>
                 </li>
-
-                <!-- envato – use this one to link to your marketplace profile -->
                 <li>
                     <a href="https://envato.com">
                         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-envato.svg">
                     </a>
                 </li>
-
-                <!-- codepen - your codepen profile-->
                 <li>
                     <a href="https://codepen.io/tutsplus">
                         <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/social-codepen.svg">
                     </a>
                 </li>
-
-                <!-- add or remove social profiles as you see fit -->
-
             </ul>
-
         </aside>
-        <!-- that’s all folks! -->
-        <section class="main--container" id="userposts">
+         <section class="main--container" id="userposts">
 
 
-        </section>
-
-
+        </section> 
+    </main>
         <script src="js/navbar.js"></script>
-
+        <script src='js/endpoints-sdk.js'></script>
         <script src="js/profile.js"></script>
-
+        <script src="js/cookie_consent.js"></script>
 </body>
 
 </html>

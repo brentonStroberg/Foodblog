@@ -9,14 +9,14 @@
     <title>Food Blog FOODIE</title>
 </head>
 
-<body onload="loadFunction()">
+<body onload="loadFunction(), setNavbarRoutes()">
     <nav class="navbar">
         <label class="logo">FOODIE</label>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#posts">Posts</a></li>
-            <li><a href="#">Subscribe</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a class="home" href="#">Home</a></li>
+            <li><a class="post" href="#">Posts</a></li>
+            <li><a class="sub" href="#">Subscribe</a></li>
+            <li><a class="contact" href="#">Contact</a></li>
         </ul>
     </nav>
 
@@ -26,7 +26,7 @@
         <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
         <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
         <main id="posts-container" class="posts-container">
-           
+
         </main>
     </section>
 
@@ -37,7 +37,8 @@
         <main class="posts-container">
             <section class="post-card">
                 <figure class="post-image">
-                    <img src="https://foodblog-avatar.s3.amazonaws.com/2022-05-19T112209.497Z-directory.PNG.jpg" class="post-thumb" alt="">
+                    <img src="https://foodblog-avatar.s3.amazonaws.com/2022-05-19T112209.497Z-directory.PNG.jpg"
+                        class="post-thumb" alt="">
                 </figure>
                 <article class="post-info">
                     <h2 class="post-name">Crunch Wrap</h2>

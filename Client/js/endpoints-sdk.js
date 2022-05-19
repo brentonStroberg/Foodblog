@@ -51,8 +51,6 @@ let  currentHost = 'remote';
 
 };
 
-
-
 class ApiCall {
 
     request = {
