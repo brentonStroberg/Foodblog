@@ -15,6 +15,21 @@ var app = express();
 
 
 
+var allowedOrigins = ['http://localhost:5500',
+                      'http:127.0.0.1:5500'];
+
+
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS with origin' + origin))
+    }
+  }
+}
+ 
+
 // app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,29 +37,6 @@ app.use(cookieParser());
 
 
 
-
-var allowedOrigins = ['http://localhost:5500',
-                      'http:127.0.0.1:5500'];
-// app.use(cors({
-//   origin: function(origin, callback){
-//     // allow requests with no origin 
-//     // (like mobile apps or curl requests)
-//     if(!origin) return callback(null, true);
-//     if(allowedOrigins.indexOf(origin) === -1){
-//       var msg = 'The CORS policy for this site does not ' +
-//                 'allow access from the specified Origin. ' + origin;
-//       return callback(new Error(msg), false);
-//     }
-//     return callback(null, true);
-//   },
-//   credentials: true
-// }));
-
-
-// app.use(cors({
-//     origin: 'http://127.0.0.1:5500',
-//     credentials: true
-// }));
 
 
 
