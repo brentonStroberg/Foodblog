@@ -20,7 +20,8 @@ let endpoints = {
   getUserPosts: '/api//user/posts',
   getRecentPosts: '/api/recent', // specify date as query param
   makeComment: '/api/comment',
-  allPosts: '/api/all'
+  allPosts: '/api/all',
+  getProfile: '/api/user/profile'
 }
 
 class ApiCall {
