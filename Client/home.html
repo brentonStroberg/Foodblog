@@ -9,10 +9,11 @@
     <title>Food Blog FOODIE</title>
 </head>
 
-<body onload="loadFunction()">
+<body onload="loadFunction(), setNavbarRoutes()">
     <nav class="navbar">
         <label class="logo">FOODIE</label>
         <ul>
+
             <li><a href="#">Home</a></li>
             <li><a href="#favourites">Favourite Posts</a></li>
             <li><a href="#recents">Recent Posts</a></li>
@@ -22,7 +23,6 @@
         <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log
                 Out</button></a>
     </nav>
-
     <section id="favourites" class="posts">
         <a href=""></a>
         <h2 class="posts-title">Favourite Posts</h2>
