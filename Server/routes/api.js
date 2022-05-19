@@ -265,7 +265,7 @@ router.put('/user/avatar',fileUploader.fileUploader, function(req, res ,next)  {
 const updateAvatarUrl = async (url) => {
   return new Promise((resolve,reject) => {
       let query = "UPDATE profile SET avatarUrl = :avatarUrl WHERE username = :username;";
-     let x = db_client.query(query
+     db_client.query(query
         ,url, 
         function (err,resultSet) {
           if (err) {
@@ -287,6 +287,41 @@ const updateAvatarUrl = async (url) => {
 /************************************************
   POST ROUTES & CRUD OPS
 ************************************************/
+
+//get recent posts
+router.get('/recent', validateRequestBody([query('date').isISO8601()]), function(req,res,next) {
+    let date = {
+      date: req.query.date
+    }
+    console.log(date)
+    getRecentPosts(date)
+    .then(resultSet => {
+      return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+})
+
+
+const getRecentPosts = async (date) =>  {
+  return new Promise((resolve,reject) => {
+    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p where cast(p.createdAt AS date)  between  DATE_SUB(:date, INTERVAL 7 DAY)  AND STR_TO_DATE(:date, '%Y-%m-%d') order by p.createdAt"
+    console.log(query)
+    db_client.query(query, date, function(err,resultSet) {
+      if(err) {
+        err.response="Failed to get recent post"
+        reject(err);
+      } else {
+        resolve(resultSet);
+      }
+    })
+  
+  })
+}
+
+
+
+
 
 
 // create post
