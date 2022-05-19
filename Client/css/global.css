@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kreon&display=swap');
+
 :root {
     --purple: #6e63a5;
     --purpleClickable: #7a6dcb;
@@ -11,6 +13,7 @@ body {
     margin: 0;
     font: var(--headerFont);
     text-align: center;
+    font-family: 'Kreon', serif;
 }
 
 nav {
@@ -38,11 +41,26 @@ nav {
     min-height: 100vh;
     background-color: transparent;
 }
+
+.section_overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    background-color: transparent; 
+}
+
 .section_content{
     padding: 1%;
     background-color: d4d4d4;
     box-shadow: -1px 1px 3px;
     width: 20%;
+}
+.auth_form{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
 }
 
 .navbar.title {
@@ -74,6 +92,19 @@ input{
     border-style: none;
     border-radius: 25px;
     text-align: center;
+}
+input:focus{
+    outline: none;
+}
+.clickable_label{
+    font-size: small;
+}
+.clickable_label:hover{
+    color: 7a6dcb;
+}
+
+.error_message{
+    color: red;
 }
 
 .navbar.items.list.item {
@@ -126,7 +157,27 @@ input{
     z-index: 2;
     width: 100%;
 }
-
+.simple_button{
+    background-color: 7A6DCB;
+    border-style: none;
+    border-radius: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height:fit-content;
+}
+.form_button{
+    background-color: 7A6DCB;
+    border-style: none;
+    border-radius: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height:fit-content;
+    margin-left: auto;
+}
 .sidebar.items.list {
     width: 100%;
     padding-left: 0;
@@ -185,17 +236,6 @@ input{
     .navbarheader.menu-toggler {
         display: none;
     }
-}
-
-button{
-    background-color: 7A6DCB;
-    border-style: none;
-    border-radius: 25px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    height:fit-content;
 }
 
 @media only screen and (max-width: 768px) {

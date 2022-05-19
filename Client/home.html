@@ -1,114 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kreon:wght@300&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>FoodBlog</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/home.css">
+    <title>Food Blog FOODIE</title>
 </head>
 
-<body onload="onload()">
-    <nav class="navbar outside">
-        <section class="navbar inside">
-            <section class="navbarheader">
-                <a class="navbarheader anchor">
-                    <h1 class="navbar title">Foodie</h1>
-                </a>
-                <button class="navbarheader menu-toggler" onclick="toggleNavbar()">
-                    <span class="material-symbols-outlined">
-                        menu
-                    </span>
-                </button>
-            </section>
-            <section class="navbar items">
-                <ul class="navbar items list">
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">home</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">posts</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">subscribe</a>
-                    </li>
-                    <li class="navbar items list item">
-                        <a class="navbar items list item anchor" href="#">contact us</a>
-                    </li>
-                </ul>
-                <ul class="navbar buttons list">
-                    <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">LOG IN</button>
-                    </li>
-                    <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">SIGN UP</button>
-                    </li>
-                </ul>
-            </section>
-            <section class="sidebar" id="sidebar">
-                <ul class="sidebar items list">
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">home</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">posts</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">subscribe</a>
-                    </li>
-                    <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor" href="#">contact us</a>
-                    </li>
-                </ul>
-                <ul class="sidebar buttons list">
-                    <li class="sidebar buttons list item">
-                        <button class="sidebar buttons list button" href="#">LOG IN</button>
-                    </li>
-                    <li class="sidebar buttons list item">
-                        <button class="sidebar buttons list button" href="#">SIGN UP</button>
-                    </li>
-                </ul>
-            </section>
-        </section>
+<body onload="loadFunction()">
+    <nav class="navbar">
+        <label class="logo">FOODIE</label>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#favourites">Favourite Posts</a></li>
+            <li><a href="#recents">Recent Posts</a></li>
+            <li><a href="#explore">Explore</a></li>
+            <li><a href="#">Profile</a></li>
+        </ul>
+        <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log
+                Out</button></a>
     </nav>
-    <br>
-    <br>
-    <section class="search">
-        <form class="formSearch">
-            <button type="submit" id="formSearchSubmit" name="formSearchSubmit" value="">
-                <span class="material-symbols-outlined">
-                    search
-                </span>
-            </button>
-            <input type="text" id="formSearchText" name="formSearchText" />
-        </form>
+
+    <section id="favourites" class="posts">
+        <a href=""></a>
+        <h2 class="posts-title">Favourite Posts</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-favs" class="posts-container">
+        </main>
     </section>
 
-    <section class="purpleBlock"></section>
-    <br>
-    <!-- CSS styling goes into home.css -->
-    <main>
-        <section class="recentPosts">
+    <section id="recents" class="posts">
+        <h2 class="posts-title">Recent Posts</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-recents" class="posts-container">
+        </main>
+    </section>
 
+    <section id="explore" class="posts">
+        <h2 class="posts-title">Explore</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-explore" class="posts-container">
+        </main>
+    </section>
+
+    <!-- <footer class="footer-content">
+        <section class="footer_section">
+            <section class="footer_subsection">
+                <section class="footer_panel">
+                    <label>FOODIE</label>
+                    <section class="footer_subsection">
+                        <section class="footer_panel">
+                            <a href="/home.html">Home</a>
+                            <br>
+                            <a href="#posts">Posts</a>
+                            <br>
+                            <a href="#">Subscribe</a>
+                            <br>
+                            <a href="#">Contact</a>
+                        </section>
+                        <section class="footer_panel">
+                            <a href="/index.html" onclick="eraseCookie('accessToken'); eraseCookie('idToken');">Sign
+                                Out</a>
+                            <br>
+                            <a href="#posts">Posts</a>
+                            <br>
+                            <a href="#">Subscribe</a>
+                            <br>
+                            <a href="#">Contact</a>
+                        </section>
+                    </section>
+                    <label>icons</label>
+                </section>
+                <section class="footer_panel">
+                    <section class="footer_subsection">
+                        <section class="footer_panel">
+                            <label>Contact Us:</label>
+                        </section>
+                        <section class="footer_panel">
+                            <input class="footer_email footer_input" placeholder="email">
+                            <br>
+                            <label>-</label>
+                            <br>
+                            <input class="footer_message footer_input" placeholder="message">
+                            <br>
+                            <label>-</label>
+                            <br>
+                            <button type="button" class="form_button">Send</button>
+                        </section>
+                    </section>
+                </section>
+            </section>
         </section>
-        <br>
-        <section class="favourites">
-
-        </section>
-        <br>
-        <section class="categories">
-
-        </section>
-        <br>
-    </main>
-
-    <script src="js/navbar.js"></script>
+    </footer> -->
+    <script src="./js/home.js"></script>
+    <script src="./js/cookie_consent.js"></script>
+    <script src="./js/endpoints-sdk.js"></script>
+    <script src="./js/cookie_consent.js"></script>
 </body>
 
 </html>
