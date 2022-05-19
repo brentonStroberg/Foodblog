@@ -261,7 +261,58 @@ button:hover {
   border-top: 8px solid #bbb;
   border-radius: 5px;
 } */
-footer {
-    height: 15rem;
+.footer-content {
+    height: 30vh;
     background-color: #EDC862;
+}
+
+.footer_section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1%;
+    height: 80%;
+}
+
+.footer_subsection{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.footer_panel{
+    width: 50%;
+}
+.footer_br{
+    margin: 1px;
+}
+.footer_input{
+    border-style: none;
+    border-radius: 25px;
+    text-align: center;
+    width: 90%;
+}
+.footer_input:hover{
+    outline: none;
+}
+.footer_email{
+    height: 15%;
+    margin-top: 0;
+}
+.footer_message{
+    height: 30%;
+    margin-bottom: 0;
+}
+.form_button{
+    background-color: 7A6DCB;
+    border-style: none;
+    border-radius: 25px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    height:fit-content;
 }
