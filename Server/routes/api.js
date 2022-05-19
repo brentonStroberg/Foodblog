@@ -136,6 +136,35 @@ const removeFavourite = async (favourite) => {
 ************************************************/
 
 
+router.get('/user/posts', function(req,res,next) {
+    let username = {
+      username: req.user.username
+    };
+    getUsersPosts(username).then(resultSet => {
+      return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+     
+      return sendHttpError(req,res,err);
+    })
+});
+
+
+const getUsersPosts = async  (username) => {
+    return new Promise((resolve,reject) => {
+        let query = "SELECT p.id, p.createdBy,p.title,p.slug,p.createdAt,p.updatedAt,p.content,p.banner,p.rating from post p WHERE p.createdBy = :username;"
+
+        db_client.query(query,username, function(err,resultSet) {
+            if(err) {
+              console.log(err);
+              err.response = "Failed to delete favourite"
+              reject(err);
+            } else {
+              resolve(resultSet);
+            }
+        });
+    });
+}
+
 // create profile
 router.post('/user/profile',validateRequestBody([body('username').isString().isLength({min:9,max:99}),body('intro').isString().isLength({max:255}), body('avatarUrl').isURL().isLength({max : 50})]), function(req,res,next) {
     
@@ -469,6 +498,9 @@ const deletePost = async (id) => {
       })
   });
 }
+
+
+
 
 
 
