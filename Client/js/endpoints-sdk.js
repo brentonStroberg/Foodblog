@@ -25,13 +25,14 @@ Promise.allSettled([callAPI(endpoint,request)])
 
 */
 
-let currentHost = 'remote';
-let hosts = {
+let  currentHost = 'remote';
+
+ let hosts = {
     localhost: 'localhost:8080',
     remote: '3.226.187.18:8080'
 };
 
-let endpoints = {
+ let endpoints = {
     getFavourites : '/api/favourite',
     addToFavourites: '/api/favourite',  // specify id of the post as query param id=<insert id>
     removeFromFavourites: '/api/favourite',  // specify id of the post as query param id=<insert id>    
