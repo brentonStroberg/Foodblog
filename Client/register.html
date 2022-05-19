@@ -125,7 +125,7 @@
     <body onload=" () => {
         load_cookie_consent_overlay();
         if (getCookie('email') !== null) {
-            window.location.href = '/Client/home.html';
+            window.location.href = '/home.html';
         }
     }">
         <article>
@@ -147,7 +147,7 @@
                         <br>
                         <button class="form_button" onclick="switch_to_OTP()" type="button">I already have an OTP</button>
                         <br>
-                        <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
+                        <button class="form_button" onclick="window.location.href = '/login.html';" type="button">Back to sign In</button>
                     </form>
                     <section id="OTP_section" style="display:none">
                         <label id="OTP_subtext">An OTP has been sent to your email. Please enter it here</label>
@@ -164,7 +164,7 @@
                         <br>
                         <button onclick="resendOTP()" type="button">Resend OTP</button>
                         <br>
-                        <button class="form_button" onclick="window.location.href = '/Client/login.html';" type="button">Back to sign In</button>
+                        <button class="form_button" onclick="window.location.href = '/login.html';" type="button">Back to sign In</button>
                     </section>
                     <br>
                 </section>

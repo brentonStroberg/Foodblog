@@ -4,5 +4,5 @@ function reset_password() {
 
 function create_account() {
     console.log('create account');
-    window.location.href = '/Client/register.html';
+    window.location.href = '/register.html';
 }

@@ -40,7 +40,7 @@
                             setCookie('accessToken', accessToken);
                             setCookie('idToken', idToken);
                             setCookie('userData', cognitoUser);
-                            window.location.href = '/Client/home.html';
+                            window.location.href = '/home.html';
                         },
 
                         onFailure: function(err) {
@@ -58,7 +58,7 @@
 
         load_cookie_consent_overlay();
         if (getCookie('email') !== null) {
-            window.location.href = '/Client/home.html';
+            window.location.href = '/home.html';
         }
     }">
         <article>
