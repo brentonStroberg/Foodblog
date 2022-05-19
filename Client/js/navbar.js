@@ -1,7 +1,7 @@
 function setNavbarRoutes(){
-    setRoute('home', 'home.html');
+    setRoute('home', '');
     setRoute('post','');
-    setRoute('contact','contact_us.html');
+    setRoute('contact','');
     setRoute('sub','');
 }
 

@@ -42,6 +42,7 @@ let  currentHost = 'remote';
     getPost : '/api/post',  // specify id of the post as query param id=<insert id>
     createProfile : '/api/user/profile',
     deleteProfile: '/api/user/profile',
+    getProfile: '/api/user/profile',
     updateIntro: '/user/intro',  // specify intro in body,
     updateAvatar: '/user/avatar',  // specify file
     getUserPosts: '/api//user/posts',

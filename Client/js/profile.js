@@ -3,36 +3,37 @@ function onloadProfile() {
 }
 
 function loadUserPost() {
-  console.log(fetchUserPosts());
-  addUserPost()
-  addUserPost()
-  addUserPost()
-  addUserPost()
-  addUserPost()
-  addUserPost()
-  addUserPost()
-  addUserPost()
+  fetchUserProfile();
+  fetchUserPosts();
 }
 
-function addUserPost() {
-  let carousel = document.getElementById('userposts');
-  let article = elementCreate('article', 'section carousel item');
-  let sectionCardFlip = elementCreate('section', 'card-flip');
-  let sectionCardFlipInner = elementCreate('section', 'card-flip-inner');
-  let sectionCardFlipBack = elementCreate('section', "card-flip-back");
-  article.append(sectionCardFlip);
-  sectionCardFlip.append(sectionCardFlipInner);
-  sectionCardFlip.append(sectionCardFlipBack);
-  sectionCardFlipInner.append(elementCreate('img', 'card-flip-image'));
-  sectionCardFlipInner.append(elementCreate('h1', 'card-flip-header'));
-  sectionCardFlipBack.append(elementCreate('h2', 'card-flip-header'));
-  sectionCardFlipBack.append(elementCreate('article', 'card-flip-text'));
-  carousel.append(article);
+function addUserPost(Posts) {
+  Posts.forEach(element => {
+    let main = document.getElementById('userposts');
+    let article = elementCreate('article', 'section carousel item');
+    let sectionCardFlip = elementCreate('section', 'card-flip');
+    let sectionCardFlipInner = elementCreate('section', 'card-flip-inner');
+    let sectionCardFlipBack = elementCreate('section', "card-flip-back");
+    article.append(sectionCardFlip);
+    sectionCardFlip.append(sectionCardFlipInner);
+    sectionCardFlip.append(sectionCardFlipBack);
+    sectionCardFlipInner.append(elementCreate('img', 'card-flip-image', 2, element.banner));
+    sectionCardFlipInner.append(elementCreate('h1', 'card-flip-header', 1,element.title));
+    sectionCardFlipBack.append(elementCreate('h2', 'card-flip-header', 1, element.title));
+    sectionCardFlipBack.append(elementCreate('article', 'card-flip-text', 1, element.createdAt));
+    main.append(article);
+  })
 }
 
-function elementCreate(typeOfElement, classList) {
+// text 1, src 2, 
+function elementCreate(typeOfElement, classList, num, value) {
   let ele = document.createElement(typeOfElement);
   ele = addClass(classList, ele);
+  if (num === 1) {
+    ele.innerHTML = value;
+  } else if (num === 2) {
+    ele.src = value;
+  }
   return ele;
 }
 
@@ -45,18 +46,50 @@ function addClass(str, article) {
   return article;
 }
 
+
+
+
+function fetchUserProfile() {
+  let userpost_endpoint = `http://${hosts[currentHost]}${endpoints.getProfile}`
+
+
+  let { endpoint, request } = new ApiCall(userpost_endpoint, 'GET')
+    .withCredentials()
+    .withQueryParams()
+    .withHeader('Content-Type', 'application/json;')
+    .withHeader('Accept', 'application/json')
+    .withHeader('Authorization', 'Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiM2IxMmEwYy1kMjU3LTRiNDctOTBmZC1jMzY1M2U1MTExZTgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV8xWkhnd3M1aHMiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIzcjJwc2VuNTJkZ2tpbmJqdXZub3MzanZvZSIsImV2ZW50X2lkIjoiMDQ0ZTM4NTgtNjg3NC00YjljLWFiM2EtYzdiNzU0MWU3N2RmIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiBwaG9uZSBvcGVuaWQgZW1haWwiLCJhdXRoX3RpbWUiOjE2NTI5NjAzNjEsImV4cCI6MTY1MzA0Njc2MSwiaWF0IjoxNjUyOTYwMzYxLCJqdGkiOiIxMzQ0MmU3MS1iMzE0LTRhNDUtODIxMy00MzllMmNiYTBhZmYiLCJ1c2VybmFtZSI6IlJhemVlbiJ9.YrdPUxvfVOBUsMFJWMDUUpOtkHaCieLtBSjJx_IlvfqpzZRzB-6veUUgpXZoed4h0pVJTZoqcrUcdqTpUAAUGv3QDRhWtkB88hv36h_a6h2UFI8Xj7yy_2MDSboaCviAIufAGTpRNnZchnmpy2_ng0FoDwfayi-qzH55n7D4MI1apJgywr7Jf1bSxcys-BelUhFi548YYRskVtFD7qethdbE-WHDtuzQiu9PM4ZW8WI5pdbSIRg6gkyS49ZARov1n0Pxc6ZB8Njbx7GUmxKfm71AdLAqUut5daA430bKdNILduo79iYazFPCd4hq4eCgsQowKgTVGrYF4PdbSPGXHg')
+
+    .build()
+
+  Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
+    loadUserInfo(results[0].value);
+    return results[0].value;
+  })
+}
+
+function loadUserInfo(User){
+  User = User[0]
+  document.getElementById('userprofile').src = User.avatarUrl;
+  document.getElementById('name').innerHTML = User.username;
+  document.getElementById('userprofileDescription').innerHTML = User.intro;
+}
+
+
 function fetchUserPosts() {
   let userpost_endpoint = `http://${hosts[currentHost]}${endpoints.getUserPosts}`
 
 
   let { endpoint, request } = new ApiCall(userpost_endpoint, 'GET')
     .withCredentials()
-    .withHeader('Authorization', `Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2ZWZhMjhlOS02M2QwLTRiNTYtYWUxZS1lYzU5NWNjOTFlMWIiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIHBob25lIG9wZW5pZCBlbWFpbCIsImF1dGhfdGltZSI6MTY1Mjk2NzMxOCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMS5hbWF6b25hd3MuY29tXC91cy1lYXN0LTFfMVpIZ3dzNWhzIiwiZXhwIjoxNjUzMDUzNzE4LCJpYXQiOjE2NTI5NjczMTgsInZlcnNpb24iOjIsImp0aSI6IjAyM2NhZmNjLWQwYzQtNGI2OS1iMDUwLWIwY2RjYWVjZWY1YiIsImNsaWVudF9pZCI6IjNyMnBzZW41MmRna2luYmp1dm5vczNqdm9lIiwidXNlcm5hbWUiOiJ0YXJzaGVuIn0.yRt7phsGVYttlRbMv52W2bKUMILSp9BTkwT1wzoVb2wbMUG9nrTd71GhL_CRbv2icAzcR7cDj4cB6J1QVMpus-_vNNGQ6KF4b6faeQXHsExXl8lzaVzKuxZbdyCvIs3zq20YIxGjHrde9vV8Ecbn8E56Xr5smPRYA6KctS5CJjt5qnUtmv75oRnAL4b3a15LfGH7EW18EFdeaSdP7Bv21BE5lSXWmntkaxkA--PskH3s8YV-FYW6pXQUJkDVxOVmWdjFhc8q-UGCZEe0eMD-kTlw4yRXU7Lb1UPzGx5B41uLUZpNDHXQkwkXotGLroHuqTppyLZ-BNiQLnOZzXFfpg`)
-    .withHeader('Content-Type', 'application/json')
-    .build()
+    .withQueryParams()
+    .withHeader('Content-Type', 'application/json;')
+    .withHeader('Accept', 'application/json')
+    .withHeader('Authorization', 'Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiM2IxMmEwYy1kMjU3LTRiNDctOTBmZC1jMzY1M2U1MTExZTgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV8xWkhnd3M1aHMiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIzcjJwc2VuNTJkZ2tpbmJqdXZub3MzanZvZSIsImV2ZW50X2lkIjoiMDQ0ZTM4NTgtNjg3NC00YjljLWFiM2EtYzdiNzU0MWU3N2RmIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiBwaG9uZSBvcGVuaWQgZW1haWwiLCJhdXRoX3RpbWUiOjE2NTI5NjAzNjEsImV4cCI6MTY1MzA0Njc2MSwiaWF0IjoxNjUyOTYwMzYxLCJqdGkiOiIxMzQ0MmU3MS1iMzE0LTRhNDUtODIxMy00MzllMmNiYTBhZmYiLCJ1c2VybmFtZSI6IlJhemVlbiJ9.YrdPUxvfVOBUsMFJWMDUUpOtkHaCieLtBSjJx_IlvfqpzZRzB-6veUUgpXZoed4h0pVJTZoqcrUcdqTpUAAUGv3QDRhWtkB88hv36h_a6h2UFI8Xj7yy_2MDSboaCviAIufAGTpRNnZchnmpy2_ng0FoDwfayi-qzH55n7D4MI1apJgywr7Jf1bSxcys-BelUhFi548YYRskVtFD7qethdbE-WHDtuzQiu9PM4ZW8WI5pdbSIRg6gkyS49ZARov1n0Pxc6ZB8Njbx7GUmxKfm71AdLAqUut5daA430bKdNILduo79iYazFPCd4hq4eCgsQowKgTVGrYF4PdbSPGXHg')
 
+    .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    console.log(results[0].value)
+    addUserPost(results[0].value);
     return results[0].value;
   })
 }

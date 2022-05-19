@@ -383,6 +383,7 @@ transition: all .1s ease-in;
   color: black;
   transform: rotateY(180deg);
   font-family: var(--font);
+  opacity: 1;
 }
 
 .card-flip-header {
