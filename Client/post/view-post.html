@@ -16,44 +16,26 @@
             <h2>Comments</h2>
             <ul id="comments-section"></ul>
             <form onsubmit="postComment(); return false" id="comment-form">
-              <input
-                type="text"
+              <textarea
+                class="comment-input"
+                form="comment-form"
                 name="submit-comment"
                 placeholder="Write your comment here"
+                rows="4" cols="50"
                 required
-              />
-              <input type="submit" value="Submit" />
+              ></textarea>
+              <input type="submit" value="Submit" class="submit-button" />
             </form>
           </section>
         </header>
         <picture class="post-picture"
-          ><img id="dish-img" class="post-img" src="" alt="fish dish"
+          ><img id="dish-img" class="post-img" src="" alt=""
         /></picture>
       </section>
+      <section id="error-display"></section>
     </article>
     <script src="../js/view-post.js"></script>
     <script src="../js/endpoints-sdk.js"></script>
-    <script>
-      fetchComment = () => {
-        // TODO: fetch/read post id and token from storage
-        let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
-        let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
-          .withCredentials()
-          .withQueryParams({ id: 'xx' })
-          .withHeader(
-            "Authorization",
-            `Bearer ${xx}`
-          )
-          .withHeader("Content-Type", "application/json")
-          .build();
-
-        Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-          let comments = results[0].value;
-
-          populateComments(comments);
-          console.log(results[0].value);
-        });
-      };
-    </script>
+    <script src="../js/cookie_consent.js"></script>
   </body>
 </html>
