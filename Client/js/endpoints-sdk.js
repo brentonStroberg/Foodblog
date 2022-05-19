@@ -43,8 +43,8 @@ let  currentHost = 'remote';
     createProfile : '/api/user/profile',
     deleteProfile: '/api/user/profile',
     updateIntro: '/user/intro',  // specify intro in body,
-    updateAvatar: '/user/avatar'  // specify file
-    
+    updateAvatar: '/user/avatar',  // specify file
+    getRecents: '/api/recent' // specifiy the date as a query param
 };
 
 
