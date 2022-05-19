@@ -316,6 +316,30 @@ const updateAvatarUrl = async (url) => {
 /************************************************
   POST ROUTES & CRUD OPS
 ************************************************/
+router.get('/all', function(req,res,next) {
+  getAll()
+  .then(response => {
+    return sendHttpSuccess(req,res,response)
+  }).catch(err => {
+    return sendHttpError(req,res,err);
+  });
+})
+
+const getAll = async () => {
+  return new Promise((resolve,reject) => {
+    let query = 'select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p;'
+    db_client.query(query, function(err,resultSet) {
+      if(err) {
+        err.response="Failed to get all points";
+        reject(err);
+      } else {
+        resolve(resultSet);
+      }
+    })
+  })
+}
+
+
 
 //get recent posts
 router.get('/recent', function(req,res,next) {
