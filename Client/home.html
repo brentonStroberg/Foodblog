@@ -19,10 +19,12 @@
             <li><a href="#explore">Explore</a></li>
             <li><a href="#">Profile</a></li>
         </ul>
-        <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log Out</button></a>
+        <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log
+                Out</button></a>
     </nav>
 
     <section id="favourites" class="posts">
+        <a href=""></a>
         <h2 class="posts-title">Favourite Posts</h2>
         <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
         <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
@@ -42,20 +44,11 @@
         <h2 class="posts-title">Explore</h2>
         <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
         <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
-        <main class="posts-container">
-            <!-- <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section> -->
+        <main id="posts-container-explore" class="posts-container">
         </main>
     </section>
 
-    <footer class="footer-content">
+    <!-- <footer class="footer-content">
         <section class="footer_section">
             <section class="footer_subsection">
                 <section class="footer_panel">
@@ -71,7 +64,8 @@
                             <a href="#">Contact</a>
                         </section>
                         <section class="footer_panel">
-                            <a href="/index.html" onclick="eraseCookie('accessToken'); eraseCookie('idToken');">Sign Out</a>
+                            <a href="/index.html" onclick="eraseCookie('accessToken'); eraseCookie('idToken');">Sign
+                                Out</a>
                             <br>
                             <a href="#posts">Posts</a>
                             <br>
@@ -102,7 +96,7 @@
                 </section>
             </section>
         </section>
-    </footer>
+    </footer> -->
     <script src="./js/home.js"></script>
     <script src="./js/cookie_consent.js"></script>
     <script src="./js/endpoints-sdk.js"></script>
