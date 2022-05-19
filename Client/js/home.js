@@ -127,7 +127,7 @@ populateExplore = (posts) => {
 
 onItemClick = (e) => {
   console.log('clicked', e)
-  setCookie('clickedPost', e, 432000)
+  setCookie('clickedPost', JSON.stringify(e), 432000)
   window.location.href = '/post/view-post.html'
 }
 
