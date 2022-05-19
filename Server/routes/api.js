@@ -509,11 +509,46 @@ return new Promise((resolve,reject) => {
         }
 
     })
+});
+};
 
 
+  // make comment
+  router.post('/comment', validateRequestBody([
+    body('postId').isNumeric(), 
+    body('content').isString(),
+    body('createdAt').isISO8601()
+  ]), function(req,res,next) {
+      let comment = {
+        createdBy : req.user.username,
+        postId: req.body.postId,
+        createdAt : req.body.createdAt,
+        content :  req.body.content
+      }
 
-})
-}
+      createComment(comment)
+      .then(resultSet => {
+        return sendHttpResourceCreated(req,res,null)
+      }).catch(err => {
+        return sendHttpError(req,res,err);
+      })
+  });
+
+  
+  const createComment = async (comment) => {
+    return new Promise((resolve,reject) => {
+      let query = 'INSERT INTO comment SET createdBy = :createdBy, postId = :postId, createdAt = :createdAt, content =:content;';
+      db_client.query(query,comment, function(err,resultSet) {
+        if(err) {
+          err.response="Failed to post comment";
+          reject(err);
+        } else {
+          resolve(resultSet);
+        } 
+
+      })
+    });
+  }
 
 
 
