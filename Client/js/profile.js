@@ -1,19 +1,12 @@
-function onloadHome() {
-    loadCarouselRecentPost();
+function onloadProfile() {
+    loadUserPost();
 }
 
-function loadCarouselRecentPost() {
-    addCarouselObject('recentPost')
+function loadUserPost() {
+    addUserPost('userposts')
 }
 
-function elementCreate(typeOfElement, classList) {
-    let ele = document.createElement(typeOfElement);
-    ele = addClass(classList, ele);
-    return ele;
-
-}
-
-function addCarouselObject(carouselID) {
+function addUserPost(carouselID) {
     let carousel = document.getElementById(carouselID);
     let article = elementCreate('article', 'section carousel item');
     let sectionCardFlip = elementCreate('section', 'card-flip');
@@ -26,10 +19,14 @@ function addCarouselObject(carouselID) {
     sectionCardFlipInner.append(elementCreate('h1', 'card-flip-header'));
     sectionCardFlipBack.append(elementCreate('h2', 'card-flip-header'));
     sectionCardFlipBack.append(elementCreate('article', 'card-flip-text'));
-    console.log(article)
     carousel.append(article);
 }
 
+function elementCreate(typeOfElement, classList) {
+    let ele = document.createElement(typeOfElement);
+    ele = addClass(classList, ele);
+    return ele;
+}
 
 
 function addClass(str, article) {

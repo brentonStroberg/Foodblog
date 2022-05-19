@@ -1,5 +1,6 @@
 function onload(){
     setNavbar();
+    setNavbarRoutes();
 }
 
 function setNavbar(){
@@ -17,4 +18,19 @@ function toggleNavbar(){
     }
 
     console.log(document.getElementById("sidebar").style.display);
+}
+
+function setNavbarRoutes(){
+    setRoute('home', 'home.html');
+    setRoute('post','');
+    setRoute('contactUs','contact_us.html');
+    setRoute('subscribe','');
+}
+
+function setRoute(routeName, route){
+    var home = document.getElementsByClassName("home");
+    for( let i =0; i < home.length; i++){
+        console.log(home[i]);
+        home[i].href = route;
+    }
 }

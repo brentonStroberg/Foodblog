@@ -15,7 +15,7 @@
     <title>FoodBlog</title>
 </head>
 
-<body onload="onload(), onloadHome()">
+<body onload="onload()">
     <nav class="navbar outside">
         <section class="navbar inside">
             <section class="navbarheader">
@@ -31,45 +31,48 @@
             <section class="navbar items">
                 <ul class="navbar items list">
                     <li class="navbar items list item">
-                        <a class="navbar items list item anchor home"  href="home.html">home</a>
+                        <a class="navbar items list item anchor" href="home.html">home</a>
                     </li>
                     <li class="navbar items list item">
-                        <a class="navbar items list item anchor post" href="/Client/post/view-post.html">posts</a>
+                        <a class="navbar items list item anchor" href="/Client/post/view-post.html">posts</a>
                     </li>
                     <li class="navbar items list item">
-                        <a class="navbar items list item anchor subscribe" href="#">subscribe</a>
+                        <a class="navbar items list item anchor" href="#">subscribe</a>
                     </li>
                     <li class="navbar items list item">
-                        <a class="navbar items list item anchor contactUs" href="contact_us.html">contact us</a>
+                        <a class="navbar items list item anchor" href="contact_us.html">contact us</a>
                     </li>
                 </ul>
                 <ul class="navbar buttons list">
-                    <!-- <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">LOG IN</button>
-                    </li> -->
                     <li class="navbar buttons list item">
-                        <button class="navbar buttons list button" href="#">SIGN OUT</button>
+                        <button class="navbar buttons list button" href="#">LOG IN</button>
+                    </li>
+                    <li class="navbar buttons list item">
+                        <button class="navbar buttons list button" href="#">SIGN UP</button>
                     </li>
                 </ul>
             </section>
             <section class="sidebar" id="sidebar">
                 <ul class="sidebar items list">
                     <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor home" href="#">home</a>
+                        <a class="sidebar items list item anchor" href="#">home</a>
                     </li>
                     <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor post" href="#">posts</a>
+                        <a class="sidebar items list item anchor" href="#">posts</a>
                     </li>
                     <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor subscribe" href="#">subscribe</a>
+                        <a class="sidebar items list item anchor" href="#">subscribe</a>
                     </li>
                     <li class="sidebar items list item">
-                        <a class="sidebar items list item anchor contactUs" href="#">contact us</a>
+                        <a class="sidebar items list item anchor" href="#">contact us</a>
                     </li>
                 </ul>
                 <ul class="sidebar buttons list">
                     <li class="sidebar buttons list item">
                         <button class="sidebar buttons list button" href="#">LOG IN</button>
+                    </li>
+                    <li class="sidebar buttons list item">
+                        <button class="sidebar buttons list button" href="#">SIGN UP</button>
                     </li>
                 </ul>
             </section>
@@ -92,38 +95,19 @@
     <br>
     <!-- CSS styling goes into home.css -->
     <main>
-        <section class="section recentPosts">
-            <article class="sectionTitles outside">
-                <h1 class="sectionTitles inside">Recent Posts</h1>
-            </article>
-            <section class="section carousel" id="recentPost">
-                <article class="section carousel item" id="1">
-                    <section class="card-flip">
-                        <section href="#" class="card-flip-inner">
-                            <section class="card-flip-front">
-                                <img class="card-flip-image" src="temporyImages/chicken.jpg">
-                                <h1 class="card-flip-header">Food</h1>
-                            </section>
-                            <section class="card-flip-back">
-                                <h2 class="card-flip-header">Food</h2>
-                                <article class="card-flip-text">
-                                    I love food, I love food, I love food,
-                                    I love food, I love food, I love food,
-                                    I love food, I love food, I love food
-                                </article>
-                            </section>
-                            </a>
-                        </section>
-                    </section>
+        <section> 
+            <section class="containerPerson">
+                <article class="person">
+                    <h1 class="person name"></h1>
+                    <p class="person paragraph"></p>
+                    <ul class="person details">
+                        <li class="person details item"></li>
+                    </ul>
                 </article>
-
-                
+                <article class="blankbox"></article>
             </section>
         </section>
-        
-        <br>
     </main>
-    <script src="js/home.js"></script>
     <script src="js/navbar.js"></script>
 </body>
 
