@@ -15,7 +15,7 @@
     <title>FoodBlog</title>
 </head>
 
-<body onload="onload()">
+<body onload="onload(), onloadHome()">
     <nav class="navbar outside">
         <section class="navbar inside">
             <section class="navbarheader">
@@ -99,16 +99,64 @@
             <article class="sectionTitles outside">
                 <h1 class="sectionTitles inside">Recent Posts</h1>
             </article>
-            <section class="section carousel">
+            <section class="section carousel" id="recentPost">
                 <article class="section carousel item" id="1">
-
+                    <section class="card-flip">
+                        <section href="#" class="card-flip-inner">
+                            <section class="card-flip-front">
+                                <img class="card-flip-image" src="temporyImages/chicken.jpg">
+                                <h1 class="card-flip-header">Food</h1>
+                            </section>
+                            <section class="card-flip-back">
+                                <h2 class="card-flip-header">Food</h2>
+                                <article class="card-flip-text">
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food
+                                </article>
+                            </section>
+                            </a>
+                        </section>
+                    </section>
                 </article>
                 <article class="section carousel item" id="2">
-
-                </article >
+                    <section class="card-flip">
+                        <section href="#" class="card-flip-inner">
+                            <section class="card-flip-front">
+                                <img class="card-flip-image" src="temporyImages/chicken.jpg">
+                                <h1 class="card-flip-header">Food</h1>
+                            </section>
+                            <section class="card-flip-back">
+                                <h2 class="card-flip-header">Food</h2>
+                                <article class="card-flip-text">
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food
+                                </article>
+                            </section>
+                            </a>
+                        </section>
+                    </section>
+                </article>
                 <article class="section carousel item" id="3">
-
-                </article >
+                    <section class="card-flip">
+                        <section href="#" class="card-flip-inner">
+                            <section class="card-flip-front">
+                                <img class="card-flip-image" src="temporyImages/chicken.jpg">
+                                <h1 class="card-flip-header">Food</h1>
+                            </section>
+                            <section class="card-flip-back">
+                                <h2 class="card-flip-header">Food</h2>
+                                <article class="card-flip-text">
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food,
+                                    I love food, I love food, I love food
+                                </article>
+                            </section>
+                            </a>
+                        </section>
+                    </section>
+                </article>
             </section>
         </section>
         <br>
@@ -116,16 +164,16 @@
             <article class="sectionTitles outside">
                 <h1 class="sectionTitles inside">Favourites</h1>
             </article>
-            <section class="section carousel">
+            <section class="section carousel" id="favourite">
                 <article class="section carousel item" id="1">
-                    
+
                 </article>
                 <article class="section carousel item" id="2">
 
-                </article >
+                </article>
                 <article class="section carousel item" id="3">
 
-                </article >
+                </article>
             </section>
         </section>
         <br>
@@ -133,47 +181,21 @@
             <article class="sectionTitles outside">
                 <h1 class="sectionTitles inside">Categories</h1>
             </article>
-            <section class="section carousel">
+            <section class="section carousel" id="category">
                 <article class="section carousel item" id="1">
 
                 </article>
                 <article class="section carousel item" id="2">
 
-                </article >
+                </article>
                 <article class="section carousel item" id="3">
 
-                </article >
+                </article>
             </section>
         </section>
         <br>
     </main>
-
-
-    <section class="card">
-       <section class="card image">
-            <img src="temporyImages/chicken.jpg" class="card image item">
-       </section>
-       <section class="card text">
-           <h1 class="card text header">food</h1>
-           <p class="card text description">
-               food food food food food food food food food food food food
-               food food food food food food
-               food food food food food food
-               food food food food food food
-           </p>
-           <article class="card text comments">
-                <ul>
-                    <li>Brent: I like food</li>
-                    <li>Abie: I like food</li>
-                    <li>Razeen: I like food</li>
-                    <li>Tarsheen: I like food</li>
-                    <li>Phindi: I like food</li>
-                    <li>Tshanimo: I like food</li>
-                </ul>
-           </article>
-       </section> 
-    </section>
-
+    <script src="js/home.js"></script>
     <script src="js/navbar.js"></script>
 </body>
 

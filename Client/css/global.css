@@ -1,6 +1,6 @@
 :root {
-    --purple: #6e63a5;
-    --purpleClickable: #7a6dcb;
+    --purple: #FE9901;
+    --navbarBackground: #EDC862;
     --lightGrey: #d3d3d3;
     --backgroundGrey: #d4d4d4;
     --mainNavFontHeaderColor: #62420f;
@@ -21,7 +21,7 @@ nav {
 
 .navbar.inside {
     position: absolute;
-    background-color: var(--backgroundGrey);
+    background-color: var(--navbarBackground);
     height: 100px;
     width: 100%;
     top: 0;
