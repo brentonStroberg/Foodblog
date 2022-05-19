@@ -7,8 +7,6 @@
     --font: 'Kreon', serif;
 }
 
-
-
 .section{
     height: 300px;
     width: 100%;
@@ -70,13 +68,9 @@
     z-index:1;
 }
 
-
-
-
 img{
     max-width:100%;
 }
-
 
 .purpleBlock{
   z-index: -1;
@@ -98,7 +92,6 @@ img{
     background:rgb(240, 239, 238);
     border: 5px solid rgb(182, 182, 182);
     text-align:center;
-    /* transition: all 200ms ease; */
   }
   .mask-shadow{
     z-index:-1 !important;
@@ -115,17 +108,6 @@ img{
     transition: all 400ms ease-in;
   }
   
-  /* .profile-card:hover{
-    box-shadow: 0px 30px 60px -5px rgba(55,55,71,0.3);
-    transform: translate3d(0,-5px,0);
-    
-    .mask-shadow {
-      opacity:1;
-      box-shadow: 0px 30px 60px -5px rgba(55,55,71,0.3);
-      position:absolute;
-    
-    }
-  } */
   .profile-card header{
     display:block;
     margin-top:50px;
@@ -143,11 +125,7 @@ img{
     width:150px;
     height:150px;
   }
-/*   
-  .profile-card:hover header a, .profile-card header a:hover{
-    animation: bounceOut .4s linear; 
-    -webkit-animation: bounceOut .4s linear;
-  } */
+
   .profile-card header h1{
     font-size:20px;
     color:#444;
@@ -195,60 +173,7 @@ img{
     height:35px;
     margin:10px auto 0;
   }
-  /* .profile-social-links li a:hover{
-    background:#ddd;
-    transform: scale(1.2);
-    -webkit-transform: scale(1.2);
-  } */
-  /*animation hover effect*/
-  /* @-webkit-keyframes bounceOut {
-    0% {
-      box-shadow: 0 0 0 4px #82b541;
-      opacity: 1;
-    }
-    25% {
-      box-shadow: 0 0 0 1px #82b541;
-      opacity: 1;
-    }
-    50% {
-      box-shadow: 0 0 0 7px #82b541;
-      opacity: 1;
-    }
-    75% {
-      box-shadow: 0 0 0 4px #82b541;
-      opacity: 1;
-    }
-    100% {
-      box-shadow: 0 0 0 5px #82b541;
-      opacity: 1;
-    }
-  }
-  @keyframes bounceOut {
-    0% {
-      box-shadow: 0 0 0 6px #82b541;
-      opacity: 1;
-    }
-    25% {
-      box-shadow: 0 0 0 2px #82b541;
-      opacity: 1;
-    }
-    50% {
-      box-shadow: 0 0 0 9px #82b541;
-      opacity: 1;
-    }
-    75% {
-      box-shadow: 0 0 0 3px #82b541;
-      opacity: 1;
-    }
-    100% {
-      box-shadow: 0 0 0 5px #82b541;
-      opacity: 1;
-    }
-  } */
-  
-
-
-
+ 
   .main--container{
     position: absolute;
     height: 300px;
@@ -266,8 +191,6 @@ img{
   
   } 
 
-
-
   .card {
     background: white;
     text-decoration: none;
@@ -281,7 +204,6 @@ top: 0;
 transition: all .1s ease-in;
   }
   
-
   .card:hover {
     top: -2px;
     box-shadow: 0 4px 5px rgba(0,0,0,0.2);
