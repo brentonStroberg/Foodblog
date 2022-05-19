@@ -14,21 +14,17 @@
     <main class="banner">
         <nav class="navbar">
             <label class="logo">FOODIE</label>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#posts">Posts</a></li>
-                <li><a href="#">Subscribe</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
         </nav>
 
         <section class="center">
             <h1>EXPLORE YOUR APPETITE</h1>
             <section>
-                <a href="./login.html"><button id="signup-btn" class="signup-btn"
-                        type="submit"><span class="cover"></span>SIGN UP</button></a>
-                <a href="http://www.w3schools.com" target="_blank"><button class="login-btn" type="button"><span
-                            class="cover"></span>LOG IN</button></a>
+                <a
+                    href="https://foodblog.auth.us-east-1.amazoncognito.com/signup?client_id=3r2psen52dgkinbjuvnos3jvoe&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=http://localhost:5500/loginRedirect.html"><button
+                        id="signup-btn" class="signup-btn" type="submit"><span class="cover"></span>SIGN UP</button></a>
+                <a
+                    href="https://foodblog.auth.us-east-1.amazoncognito.com/login?client_id=3r2psen52dgkinbjuvnos3jvoe&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone&redirect_uri=http://localhost:5500/loginRedirect.html"><button
+                        class="login-btn" type="button"><span class="cover"></span>LOG IN</button></a>
 
             </section>
         </section>

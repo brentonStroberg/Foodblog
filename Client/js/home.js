@@ -1,15 +1,17 @@
 loadFunction = () => {
-    fetchRecents();
+  fetchRecents()
 }
 
 fetchRecents = () => {
-  let favourites_endpoint = `http://${hosts[currentHost]}${endpoints.getRecents}`
-  console.log()
+  let favourites_endpoint = `http://${hosts[currentHost]}${endpoints.getFavourites}`
 
   let { endpoint, request } = new ApiCall(favourites_endpoint, 'GET')
     .withCredentials()
-    .withQueryParams({ date: '2022-05-19' })
-    .withHeader('Authorization', `Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiM2IxMmEwYy1kMjU3LTRiNDctOTBmZC1jMzY1M2U1MTExZTgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV8xWkhnd3M1aHMiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIzcjJwc2VuNTJkZ2tpbmJqdXZub3MzanZvZSIsImV2ZW50X2lkIjoiZGFhOTg3NDgtMTZjYS00ZTU5LWFkM2MtYmZlMGI3ZmFjMzMxIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiBwaG9uZSBvcGVuaWQgZW1haWwiLCJhdXRoX3RpbWUiOjE2NTI4NzMxNDAsImV4cCI6MTY1Mjk1OTU0MCwiaWF0IjoxNjUyODczMTQwLCJqdGkiOiJkMjQ2YmQxMi1iZGZiLTQ3NWItODA2OS0zNWQ3NzA3YmYyMmYiLCJ1c2VybmFtZSI6IlJhemVlbiJ9.CV0cy57Q7J0maJNhl7USmwF4sur2Fs1Nwqu7M4oW8uLj93ndFfdYpLgQCeRZ0yK55rdX2Jfa7SET8VAQqrpehBI0GoMBS0uhk-JePC1Q7LEhB49H5ByKovv3AtP1yywdZuzgPgYnQebw8mSDM3VyZWjLQgWZATe_MXedP3i1Vp4-wEiaC2uvOyJ9uPwnQv7fbUCmpmW1TJO17mqgZNDhQ_TRo3oG3uyk1Un6uJuZETEbQs2ZKZMO-Kgyt15jkMrOLKkxKSzDuExcByi2u3z-vTmuMjRCQB7T97Es6P2I3kcXEsKhcD3l7cbNY6LOlrDzQWc_Z-AiI2AILJiIzHjCYw`)
+    .withQueryParams({ id: 1 })
+    .withHeader(
+      'Authorization',
+      `Bearer eyJraWQiOiJ5VzE5UDNadExTaDJLQXdqbVUwemk0OXlFTmJTamhoK3VmMXlQekF6WHB3PSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJiM2IxMmEwYy1kMjU3LTRiNDctOTBmZC1jMzY1M2U1MTExZTgiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0xLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMV8xWkhnd3M1aHMiLCJ2ZXJzaW9uIjoyLCJjbGllbnRfaWQiOiIzcjJwc2VuNTJkZ2tpbmJqdXZub3MzanZvZSIsImV2ZW50X2lkIjoiMDQ0ZTM4NTgtNjg3NC00YjljLWFiM2EtYzdiNzU0MWU3N2RmIiwidG9rZW5fdXNlIjoiYWNjZXNzIiwic2NvcGUiOiJhd3MuY29nbml0by5zaWduaW4udXNlci5hZG1pbiBwaG9uZSBvcGVuaWQgZW1haWwiLCJhdXRoX3RpbWUiOjE2NTI5NjAzNjEsImV4cCI6MTY1MzA0Njc2MSwiaWF0IjoxNjUyOTYwMzYxLCJqdGkiOiIxMzQ0MmU3MS1iMzE0LTRhNDUtODIxMy00MzllMmNiYTBhZmYiLCJ1c2VybmFtZSI6IlJhemVlbiJ9.YrdPUxvfVOBUsMFJWMDUUpOtkHaCieLtBSjJx_IlvfqpzZRzB-6veUUgpXZoed4h0pVJTZoqcrUcdqTpUAAUGv3QDRhWtkB88hv36h_a6h2UFI8Xj7yy_2MDSboaCviAIufAGTpRNnZchnmpy2_ng0FoDwfayi-qzH55n7D4MI1apJgywr7Jf1bSxcys-BelUhFi548YYRskVtFD7qethdbE-WHDtuzQiu9PM4ZW8WI5pdbSIRg6gkyS49ZARov1n0Pxc6ZB8Njbx7GUmxKfm71AdLAqUut5daA430bKdNILduo79iYazFPCd4hq4eCgsQowKgTVGrYF4PdbSPGXHg`
+    )
     .withHeader('Content-Type', 'application/json')
     .build()
 
@@ -26,7 +28,6 @@ populateCarousel = (posts) => {
     let item = document.createElement('section')
     item.classList.add('post-card')
     item.setAttribute('id', 'post-card')
-    // console.log(posts)
 
     let y = `<figure class="post-image">
         <img src="${x.banner}" class="post-thumb" id="dish-img">
@@ -43,7 +44,7 @@ populateCarousel = (posts) => {
 }
 
 onItemClick = () => {
-//   setCookie('testing', 'a bunch of info', 7)
+  //   setCookie('testing', 'a bunch of info', 7)
   console.log('clicked')
 }
 

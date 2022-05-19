@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/home.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>Food Blog FOODIE</title>
 </head>
 
@@ -15,143 +16,43 @@
         <ul>
             <li><a href="#">Home</a></li>
             <li><a href="#posts">Posts</a></li>
-            <li><a href="#">Subscribe</a></li>
+            <li><a href="#subscribe">Subscribe</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
+        <a href="./index.html"><button class="log-out-btn" type="submit" onclick="eraseCookie('accessToken')">Log Out</button></a>
     </nav>
 
     <section id="posts" class="posts">
-        <h2 class="posts-title">Recent Posts</h2>
-        <!-- <hr class="solid"> -->
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-        <main id="posts-container" class="posts-container">
-           
-        </main>
-    </section>
-
-    <section class="posts">
         <h2 class="posts-title">Favourite Posts</h2>
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
-        <main class="posts-container">
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="https://foodblog-avatar.s3.amazonaws.com/2022-05-19T112209.497Z-directory.PNG.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
+        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
+        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
+        <main id="posts-container" class="posts-container">
         </main>
     </section>
 
     <section class="posts">
-        <h2 class="posts-title">Categories</h2>
-        <button class="prev-btn"><img src="images/arrow.png" alt=""></button>
-        <button class="nxt-btn"><img src="images/arrow.png" alt=""></button>
+        <h2 class="posts-title">Recent Posts</h2>
+        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
+        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
         <main class="posts-container">
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card3.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card4.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card3.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card4.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card1.jpg" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
-            <section class="post-card">
-                <figure class="post-image">
-                    <img src="images/card2.webp" class="post-thumb" alt="">
-                </figure>
-                <article class="post-info">
-                    <h2 class="post-name">Crunch Wrap</h2>
-                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
-                </article>
-            </section>
         </main>
     </section>
 
-    <section id="subscribe" class="subscribe">
-        <h2 class="posts-title">Subscribe to our daily mail</h2>
-        <br>
-        <form action="">
-            <label class="email-label" for="email">Enter email address: </label>
-            <input class="email-input" type="text" id="email" name="email"><br><br>
-        </form>
+    <section class="posts">
+        <h2 class="posts-title">Explore</h2>
+        <button class="prev-btn"><i class="fas fa-angle-left"></i></button>
+        <button class="nxt-btn"><i class="fas fa-angle-right"></i></button>
+        <main class="posts-container">
+            <!-- <section class="post-card">
+                <figure class="post-image">
+                    <img src="images/card2.webp" class="post-thumb" alt="">
+                </figure>
+                <article class="post-info">
+                    <h2 class="post-name">Crunch Wrap</h2>
+                    <p class="post-short-description">Lorem ipsum dolor sit,</p>
+                </article>
+            </section> -->
+        </main>
     </section>
 
     <footer class="footer-content">
@@ -161,8 +62,6 @@
             <li><a class="fa fa-facebook" href="#" target="_blank" rel="noopener noreferrer"></a></li>
         </ul>
     </footer>
-
-    <script src="script.js"></script>
     <script src="./js/home.js"></script>
     <script src="./js/cookie_consent.js"></script>
     <script src="./js/endpoints-sdk.js"></script>
