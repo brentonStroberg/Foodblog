@@ -28,7 +28,9 @@ var corsOptions = {
     }
   }
 }
- 
+
+app.use(cors(corsOptions));
+
 
 // app.use(logger('dev'));
 app.use(express.json());
@@ -38,22 +40,6 @@ app.use(cookieParser());
 
 
 
-
-
-const corsOptions = {
-    origin: function (origin, callback) {
-      if (allowedOrigins.indexOf(origin) !== -1) {
-        callback(null, true)
-      } else {
-        var msg = 'The CORS policy for this site does not ' +
-                         'allow access from the specified Origin. ' + origin;
-        callback(new Error(msg))
-      }
-    },
-    credentials: true
-  }
-  
-  app.use(cors(corsOptions));
 
 
 app.use('/api', authenticatedRoute);
