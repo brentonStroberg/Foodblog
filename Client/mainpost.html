@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./css/PostCreate.css" />
+    <script src="./js/endpoints-sdk.js"></script>
+    <script src="./js/post.js"></script>
   </head>
   <body>
     <main class="banner">
@@ -20,25 +22,27 @@
       </nav>
       <h1 class="create-title">Create New Post</h1>
       <section class="form-container">
-        <form action="" class="post-data">
-          <label for="title-input" class="title">Description:</label>
-          <textarea type="text" class="" >
+        <form id="form-createPost" action="" class="post-data">
+          <label for="title-input" class="title">Title:</label>
+          <input type="text" id="title-input"/>
           </textarea>
           <label for="image-input" class="image-upload">Image:</label>
-          <input type="file" class="image-input" />
+          <input id="image-input" accept="image/*" type="file" class="image-input" />
           <label for="description-input" class="description"
             >Description:</label
           >
-          <input type="text" />
+          <textarea id="description-input" type="text" class="" maxlength="1000" rows="12" cols="75"></textarea>
           <label for="categories-input" class="categories">Category</label>
-          <select name="" id="" class="categories-input">
+          <select name="" id="categories-input" class="categories-input">
             <option value="Italian">Italian</option>
             <option value="Chinese">Chinese</option>
             <option value="African">African</option>
             <option value="Mongolese">Mongolese</option>
             <option value="Cuban">Cuban</option>
           </select>
+          <button type="submit" onclick="makePost();return false" >Post</button>
         </form>
+        <!-- <div id="img-preview"></div> -->
       </section>
     </main>
     <footer class="footer-content">
@@ -58,6 +62,6 @@
         </li>
       </ul>
     </footer>
-    <script src="js\post.js"></script>
   </body>
+
 </html>
