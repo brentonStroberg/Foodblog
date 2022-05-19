@@ -1,10 +1,15 @@
 let accessToken;
 let userName;
+let post;
+
 loadPost = () => {
   accessToken = getCookie("accessToken").split("=")[1];
-  console.log(accessToken);
-  fetchComment();
-  populatePost();
+
+  post = JSON.parse(getCookie('clickedPost'))
+  console.log(post)
+  
+  fetchComment(post.id);
+  populatePost(post);
 
   userName = parseJwt(accessToken).username;
 };
@@ -27,12 +32,12 @@ populateComments = (comments) => {
   });
 };
 
-fetchComment = () => {
+fetchComment = (id) => {
   let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
 
   let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
     .withCredentials()
-    .withQueryParams({ id: 2 })
+    .withQueryParams({ id: id })
     .withHeader("Authorization", `Bearer ${accessToken}`)
     .withHeader("Content-Type", "application/json")
     .build();
@@ -45,25 +50,24 @@ fetchComment = () => {
   });
 };
 
-populatePost = () => {
-  // TODO: read/fetch post info from storage
-  // check if post info exist and display error msg
+populatePost = (post) => {
+
   let postHeader = document.createElement("main");
-  if (false) {
+  if (Object.keys(post).length === 0) {
     document.getElementById("error-display").classList.add("error-display");
     let errorMsg = `<h1 class="error-msg">Opps! Something went wrong on our side.</h1>`;
     postHeader.innerHTML = errorMsg;
     return document.getElementById("error-display").appendChild(postHeader);
   }
 
-  let dishName = `<h1 id="dish-name" class="post-name">title</h1>`;
-  let dishDesc = `<p id="dish-desc" class="post-desc">description</p>`;
+  let dishName = `<h1 id="dish-name" class="post-name">${post.title}</h1>`;
+  let dishDesc = `<p id="dish-desc" class="post-desc">${post.content}</p>`;
 
   postHeader.innerHTML = dishName + dishDesc;
 
   document.getElementById("post-content").appendChild(postHeader);
 
-  document.getElementById("dish-img").src = "../assets/pancakes.jfif";
+  document.getElementById("dish-img").src = post.banner;
 };
 
 displayComment = () => {
@@ -73,7 +77,7 @@ displayComment = () => {
     createdBy: userName,
     createdAt: new Date(),
     content: content,
-    postId: 2,
+    postId: post.id,
   };
 
   let li = document.createElement("li");
