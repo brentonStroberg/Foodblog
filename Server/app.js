@@ -13,6 +13,15 @@ var app = express();
 
 // view engine setup
 
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
+
+
+app.options('*', cors())
+
 
 
 // app.use(logger('dev'));
@@ -22,12 +31,6 @@ app.use(cookieParser());
 
 
 
-
-
-app.use(cors({
-    origin: 'http://127.0.0.1:5500',
-    credentials: true
-}));
 
 
 app.use('/api', authenticatedRoute);
