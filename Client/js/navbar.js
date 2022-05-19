@@ -2,7 +2,7 @@ function setNavbarRoutes(){
     setRoute('home', '');
     setRoute('post','');
     setRoute('contact','');
-    setRoute('sub','');
+    setRoute('profile','profile.html');
 }
 
 function setRoute(routeName, route){
