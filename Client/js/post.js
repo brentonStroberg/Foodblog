@@ -12,7 +12,6 @@ const makePost = () => {
   data.append("category", category);
   data.append("createdAt", new Date().toISOString());
 
-  // console.log(file.files['0'])
 
   let { endpoint, request } = new ApiCall(
     `http://${hosts[currentHost]}${endpoints.createPost}`,

@@ -6,7 +6,6 @@ loadPost = () => {
   accessToken = getCookie("accessToken").split("=")[1];
 
   post = JSON.parse(getCookie('clickedPost'))
-  console.log(post)
   
   fetchComment(post.id);
   populatePost(post);
@@ -45,7 +44,6 @@ fetchComment = (id) => {
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
     let comments = results[0].value;
 
-    console.log(results);
     populateComments(comments);
   });
 };
@@ -123,6 +121,6 @@ function parseJwt(token) {
       })
       .join("")
   );
-  console.log(JSON.parse(jsonPayload).username);
+
   return JSON.parse(jsonPayload);
 }

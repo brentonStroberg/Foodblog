@@ -272,7 +272,7 @@ button:hover {
 }
 
 .footer-content {
-    position: fixed;
+ position: inherit;
   left: 0;
   bottom: 0;
   right: 0;

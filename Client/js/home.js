@@ -2,7 +2,6 @@ let accessToken
 
 loadFunction = () => {
   accessToken = getCookie('accessToken').split('=')[1]
-  console.log(accessToken)
 
   fetchFavourites()
   fetchRecents()
@@ -48,7 +47,6 @@ fetchExplore = () => {
     .withHeader('Content-Type', 'application/json')
     .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    console.log(results[0].value)
     populateExplore(results[0].value)
   })
 }
@@ -126,7 +124,6 @@ populateExplore = (posts) => {
 }
 
 onItemClick = (e) => {
-  console.log('clicked', e)
   setCookie('clickedPost', JSON.stringify(e), 432000)
   window.location.href = '/post/view-post.html'
 }
