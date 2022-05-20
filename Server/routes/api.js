@@ -356,7 +356,7 @@ router.get('/recent', function(req,res,next) {
 const getRecentPosts = async () =>  {
   return new Promise((resolve,reject) => {
     
-    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt LIMIT 10"
+    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt DESC LIMIT 10"
     db_client.query(query, function(err,resultSet) {
       if(err) {
         err.response="Failed to get recent post"
