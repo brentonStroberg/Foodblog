@@ -17,22 +17,22 @@
 
 .navbar {
     background-color: #EDC862;
-    width: 100%;
-    margin: auto;
-    padding: 35px 0;
+    padding: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .logo {
-    margin-left: 2rem;
     font-size: 2rem;
     font-weight: bolder;
     cursor: pointer;
     color: #009688;
 }
-
+aside {
+    display: flex;
+    align-items: center;
+}
 .navbar ul li {
     list-style: none;
     display: inline-block;
@@ -261,7 +261,6 @@ button:hover {
     width: 100px;
     padding: 15px 0;
     text-align: center;
-    margin-right: 2rem;
     border-radius: 25px;
     font-weight: bold;
     border: 1px solid black;
