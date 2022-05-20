@@ -1,11 +1,11 @@
 var express = require('express');
-var validateRequest = require('../middleware/requestAuthenticator');
+
 var db_client = require('../database.js');
 
 const fileUploader = require('../middleware/fileUpload');
 
 var router = express.Router();
-router.use(validateRequest);
+
 
 
 
@@ -356,7 +356,7 @@ router.get('/recent', function(req,res,next) {
 const getRecentPosts = async () =>  {
   return new Promise((resolve,reject) => {
     
-    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt LIMIT 10"
+    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt DESC LIMIT 10"
     db_client.query(query, function(err,resultSet) {
       if(err) {
         err.response="Failed to get recent post"
@@ -380,8 +380,7 @@ router.post('/post',fileUploader.fileUploader, validateRequestBody(
     body('title').isString().isLength({max:50}), 
     body('createdAt').isISO8601(),
     body('content').isString(),
-    body('category').isString().isLength({max:50})
-    
+    body('username').isString().isLength({max:50})
   ]
   
   
@@ -389,22 +388,17 @@ router.post('/post',fileUploader.fileUploader, validateRequestBody(
   if (!req.file) {
     return sendHttpError(req,res,{response:"Failed to upload banner image"});
   } else {
-
-
     post = {
         banner: req.file.location,
-        username: req.user.username,
+        username: req.body.username,
         title: req.body.title,
         createdAt: req.body.createdAt,
         content: req.body.content,
-        category: req.body.category
     }
-
-
 
     createPost(post)
     .then(resultSet => {
-        return sendHttpSuccess(req,res,null);
+        return sendHttpSuccess(req,res);
     }).catch(err => {
       return sendHttpError(req,res,err);
     })
@@ -418,74 +412,14 @@ router.post('/post',fileUploader.fileUploader, validateRequestBody(
 
 const createPost = async (post) => {
   return new Promise((resolve,reject) => {
-
-    db_client.beginTransaction(function(err) {
-
-        if (err) {
-          err.response="Failed to create post"
-          reject(err)
-        }
-
-        let postQuery = "INSERT INTO post SET createdBy = :username, title = :title, createdAt = :createdAt, content = :content, banner = :banner;"
-
-
-        db_client.query(postQuery, post, function(err,resultSet1) {
-            if(err) {
-              db_client.rollback(function() {
-                err.response="Failed to create post"
-                reject(err);
-              })
-            }  
-           
-            let categoryQuery = "INSERT   INTO category SET title = :category"
-
-            db_client.query(categoryQuery, post, function(err, resultSet2)  {
-                if(err) {
-                  db_client.rollback(function() {
-                    err.response="Failed to create  category"
-                    reject(err);
-                  })
-                }
-
-          
-                let postCategory = {
-                    postId: resultSet1.insertId,
-                    categoryId: resultSet2.insertId
-                  }
-                  
-              
-
-            
-                let postCategoryQuery = "INSERT INTO post_category SET postId = :postId  , categoryId = :categoryId"
-
-                db_client.query(postCategoryQuery,postCategory, function(err,resultSet3) {
-                  if(err) {
-                    db_client.rollback(function() {
-                      err.response="Failed to create post category"
-                      reject(err);
-                    })
-
-                  }
-
-                  db_client.commit(function(err) {
-                    if (err) {
-                      db_client.rollback(function() {
-                        err.response="Failed to create post"
-                        reject(err);
-                      })
-
-                
-                    }
-
-                    resolve();
-                  })
-                })
-
-            })
-          
-
-        })
-
+    let postQuery = "INSERT INTO post SET createdBy = :username, title = :title, createdAt = :createdAt, content = :content, banner = :banner;"
+    db_client.query(postQuery,post, function(err,resultSet) {
+      if(err) {
+        err.response ="Failed to create post"
+        reject(err);
+      } else {
+        resolve({});
+      }
     })
 
   });
@@ -605,10 +539,12 @@ return new Promise((resolve,reject) => {
   router.post('/comment', validateRequestBody([
     body('postId').isNumeric(), 
     body('content').isString(),
-    body('createdAt').isISO8601()
+    body('createdAt').isISO8601(),
+    body('username').isString().isLength({max:50})
   ]), function(req,res,next) {
+
       let comment = {
-        createdBy : req.user.username,
+        createdBy : req.body.username,
         postId: req.body.postId,
         createdAt : req.body.createdAt,
         content :  req.body.content
@@ -616,7 +552,7 @@ return new Promise((resolve,reject) => {
 
       createComment(comment)
       .then(resultSet => {
-        return sendHttpResourceCreated(req,res,null)
+        return sendHttpSuccess(req,res, comment);
       }).catch(err => {
         return sendHttpError(req,res,err);
       })
