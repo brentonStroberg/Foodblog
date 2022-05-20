@@ -20,6 +20,7 @@
   display: flex;
   width: 80%;
   justify-content: center;
+  padding: 1rem;
 }
 .post-img {
   width: 90%;
