@@ -1,6 +1,7 @@
 let userName;
 let post;
 
+var fetchCommentLoader = false;
 loadPost = () => {
   userName = localStorage.getItem("UserName");
 
@@ -12,6 +13,7 @@ loadPost = () => {
 };
 
 populateComments = (comments) => {
+
   let list = document.getElementById("comments-section");
 
   comments.forEach((item) => {
@@ -30,6 +32,8 @@ populateComments = (comments) => {
 };
 
 fetchComment = (id) => {
+  fetchCommentLoader = false;
+  toggleLoader();
   let comments_endpoint = `http://${hosts[currentHost]}${endpoints.getComments}`;
 
   let { endpoint, request } = new ApiCall(comments_endpoint, "GET")
@@ -39,7 +43,8 @@ fetchComment = (id) => {
 
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
     let comments = results[0].value;
-
+    fetchCommentLoader = true;
+    toggleLoader();
     populateComments(comments);
   });
 };
@@ -92,7 +97,6 @@ displayComment = () => {
 };
 
 postRemoteComment = (comment) => {
-
   let comments_endpoint = `http://${hosts[currentHost]}${endpoints.makeComment}`;
 
   let { endpoint, request } = new ApiCall(comments_endpoint, "POST")
@@ -103,3 +107,14 @@ postRemoteComment = (comment) => {
     console.log(results);
   });
 };
+
+function toggleLoader(){
+ 
+  if(fetchCommentLoader === true){
+    document.getElementById('loader').style.display = "none"
+    document.getElementById('body').style.opacity = 1;
+  }else{
+    document.getElementById('loader').style.display = "Block"
+    document.getElementById('body').style.opacity = 0.3;
+  }
+}

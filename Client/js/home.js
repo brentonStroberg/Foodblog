@@ -1,5 +1,8 @@
 let userName
 
+var fetchRecentsLoader = false;
+var fetchExploreLoader = false;
+
 loadFunction = () => {
   userName = localStorage.getItem("UserName");
   console.log(userName)
@@ -9,22 +12,30 @@ loadFunction = () => {
 }
 
 fetchRecents = () => {
+    fetchRecentsLoader = false;
+    toggleLoader();
   let recentEndpoint = `http://${hosts[currentHost]}${endpoints.getRecentPosts}`
   let { endpoint, request } = new ApiCall(recentEndpoint, 'GET')
     .withHeader('Content-Type', 'application/json')
     .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
     populateRecents(results[0].value)
+    fetchRecentsLoader = true;
+    toggleLoader();
   })
 }
 
 fetchExplore = () => {
+  fetchExploreLoader = false;
+  toggleLoader();
   let exploreEndpoint = `http://${hosts[currentHost]}${endpoints.allPosts}`
   let { endpoint, request } = new ApiCall(exploreEndpoint, 'GET')
     .withHeader('Content-Type', 'application/json')
     .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
     populateExplore(results[0].value)
+    fetchExploreLoader = true;
+    toggleLoader();
   })
 }
 
@@ -98,3 +109,15 @@ productContainers.forEach((item, i) => {
     item.scrollLeft -= containerWidth
   })
 })
+
+
+function toggleLoader(){
+ 
+  if(fetchRecentsLoader === true && fetchExploreLoader === true){
+    document.getElementById('loader').style.display = "none"
+    document.getElementById('body').style.opacity = 1;
+  }else{
+    document.getElementById('loader').style.display = "Block"
+    document.getElementById('body').style.opacity = 0.3;
+  }
+}
