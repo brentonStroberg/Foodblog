@@ -394,7 +394,6 @@ router.post('/post',fileUploader.fileUploader, validateRequestBody(
         title: req.body.title,
         createdAt: req.body.createdAt,
         content: req.body.content,
-        category: req.body.category
     }
 
     createPost(post)
