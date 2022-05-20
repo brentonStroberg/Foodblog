@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.banner {
+  width: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+    url(../assets/banner.jpg);
+  background-size: cover;
+  background-position: center;
+  color: white;
+}
+
+.navbar {
+  background-color: transparent;
+  margin: 0 0 0 1.5rem;
+  padding: 35px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bolder;
+  cursor: pointer;
+  color: #009688;
+}
+
+.navbar ul li {
+  list-style: none;
+  margin: 0 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.navbar ul li::after {
+  content: "";
+  height: 3px;
+  width: 0;
+  background: #009688;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+}
+
+.navbar ul li:hover::after {
+  width: 100%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.post-data {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+}
+
+.create-title {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  display: flex;
+}
+
+footer {
+  height: 20vh;
+  background-color: #EDC862;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+footer span a {
+  color: rgb(39, 61, 133);
+  text-decoration: none;
+}
+
+footer span a:hover {
+  text-decoration: underline;
+}
+textarea {
+  resize: none;
+}
+
+form label {
+  padding: 0.5rem 0 0.5rem 0;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+}
+
+@media only screen and (max-width: 765px) {
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 2rem 0;
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  nav ul {
+    padding-top: 0.5rem;
+  }
+
+  form label {
+    padding: 0.5rem 0 0.5rem 0;
+  }
+
+  .navbar ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .banner {
+    width: 100%;
+  }
+
+}

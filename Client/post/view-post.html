@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/view-post.css" />
+    <title>Post View</title>
+  </head>
+  <body onload="loadPost()" id="body">
+    <nav class="navbar">
+      <label class="logo">FOODIE</label>
+      <ul>
+        <li><a href="../home.html">Home</a></li>
+        <li><a href="../mainpost.html">Create Post</a></li>
+      </ul>
+    </nav>
+    <article class="post-wrapper">
+      <section class="post">
+        <header id="post-header" class="post-header">
+          <section id="post-content"></section>
+
+          <section class="comment-section">
+            <h2>Comments</h2>
+            <ul id="comments-section"></ul>
+            <form onsubmit="displayComment(); return false" id="comment-form">
+              <textarea
+                class="comment-input"
+                form="comment-form"
+                name="submit-comment"
+                placeholder="Write your comment here"
+                rows="4"
+                cols="50"
+                required
+              ></textarea>
+              <input type="submit" value="Submit" class="submit-button" />
+            </form>
+          </section>
+        </header>
+        <picture class="post-picture"
+          ><img id="dish-img" class="post-img" src="" alt=""
+        /></picture>
+      </section>
+      <section id="error-display"></section>
+    </article>
+    <section id="loader" class="loader">
+      <svg class="spinner" viewBox="0 0 200 200" xlmns="http://www.w3.org/2000/svg">
+          <circle class="path" cx="25" cy="25" r="20" fill="black" stroke-width="5" ></circle>
+        </svg>
+  </section>
+    <script src="../js/view-post.js"></script>
+    <script src="../js/endpoints-sdk.js"></script>
+    <script src="../js/cookie_consent.js"></script>
+  </body>
+</html>

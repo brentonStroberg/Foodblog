@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="./css/landing.css" />
+    <title>Food Blog FOODIE</title>
+  </head>
+
+  <body>
+    <main class="banner">
+      <nav class="navbar">
+        <label class="logo">FOODIE</label>
+      </nav>
+
+      <section class="center">
+        <h1>EXPLORE YOUR APPETITE</h1>
+        <section>
+          <form id="user-name-form" onsubmit="saveUser(); return false">
+            <input
+              type="text"
+              name="user-name"
+              id="user-name"
+              placeholder="Enter your User Name here"
+              required
+            />
+            <input type="submit" value="Chow" class="login-btn" />
+          </form>
+        </section>
+      </section>
+    </main>
+    <script src="./js/index.js"></script>
+    <script src="./js/cookie_consent.js"></script>
+  </body>
+</html>

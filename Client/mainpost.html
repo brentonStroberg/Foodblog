@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/PostCreate.css" />
+    <script src="./js/endpoints-sdk.js"></script>
+    <script src="./js/cookie_consent.js"></script>
+    <script src="./js/post.js"></script>
+  </head>
+  <body onload="checkForUser()">
+    <main class="banner">
+      <nav class="navbar">
+        <label class="logo">FOODIE</label>
+        <ul>
+          <li><a href="./home.html">Home</a></li>
+        </ul>
+      </nav>
+      <h1 class="create-title">Create New Post</h1>
+      <section class="form-container">
+        <form id="form-createPost" class="post-data">
+          <label for="title-input" class="title">Title:</label>
+          <input type="text" id="title-input" required/>
+          </textarea>
+          <label for="image-input" class="image-upload">Image:</label>
+          <input id="image-input" accept="image/*" type="file" class="image-input" required/>
+          <label for="description-input" class="description"
+            >Description:</label
+          >
+          <textarea id="description-input" type="text" class="" maxlength="1000" rows="12" cols="75" required></textarea>
+          <button type="button" value="submit" onclick="makePost();return false">Post</button>
+        </form>
+      </section>
+    </main>
+    <footer class="footer-content">
+      <p>Created By <a href="https://www.youtube.com/c/DavidSeymourofficial" target="_blank">Foodies</a> | 2022 All rights reserved.</p>
+    </footer>
+  </body>
+
+</html>

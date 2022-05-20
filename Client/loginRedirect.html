@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in page</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/cookie_consent.css">
+    <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/cookie_consent.js"></script>
+    <script>
+        const paramString = window.location.href.split('#')[1];
+        params = paramString.split('&');
+
+        setCookie('idToken', params[0], params[3]);
+        setCookie('accessToken', params[1], params[3]);
+
+        window.location.href = '/home.html';
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

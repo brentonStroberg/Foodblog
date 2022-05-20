@@ -26,12 +26,11 @@ CREATE TABLE post (
     createdBy VARCHAR(50) NOT NULL,
     title VARCHAR(50) NOT NULL,
     slug VARCHAR(100)  ,
-    summary VARCHAR(200),
     createdAt timestamp NOT NULL,
     updatedAt timestamp NULL,
     content TEXT NOT NULL,
     banner VARCHAR (512) NULL,
-    rating INT NULL,
+    rating INT DEFAULT 0,
     PRIMARY  KEY  (id),
     UNIQUE (slug)
 );
@@ -64,7 +63,7 @@ CREATE table comment (
 
 CREATE TABLE category (
     id  INT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(50) NOT NULL UNIQUE,
+    title VARCHAR(50) NOT NULL,
     PRIMARY  KEY  (id)
 );
 
@@ -74,7 +73,7 @@ create table post_category (
     postId INT NOT NULL,
     categoryId INT NOT NULL,
     PRIMARY  KEY  (id),
-   	FOREIGN KEY (postId) REFERENCES post(id),
+   	FOREIGN KEY (postId) REFERENCES post(id) ON DELETE CASCADE,
     FOREIGN  KEY (categoryId) REFERENCES category(id)
 );
 

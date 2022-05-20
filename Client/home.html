@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/home.css">
+    <title>Food Blog FOODIE</title>
+</head>
+
+<body onload="loadFunction()" id="body">
+    <nav class="navbar">
+        <label class="logo">FOODIE</label>
+        <ul>
+            <li><a href="./mainpost.html">Create Post</a></li>
+        </ul>
+    </nav>
+
+    <section id="recents" class="posts">
+        <h2 class="posts-title">Recent Posts</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-recents" class="posts-container">
+        </main>
+    </section>
+
+    <section id="explore" class="posts">
+        <h2 class="posts-title">Explore</h2>
+        <button class="prev-btn"><img src="./assets/arrow-right.png" alt=""></i></button>
+        <button class="nxt-btn"><img src="./assets/arrow-right.png" alt=""></button>
+        <main id="posts-container-explore" class="posts-container">
+        </main>
+    </section>
+
+    <section id="loader" class="loader">
+        <svg class="spinner" viewBox="0 0 200 200" xlmns="http://www.w3.org/2000/svg">
+            <circle class="path" cx="25" cy="25" r="20" fill="black" stroke-width="5" ></circle>
+          </svg>
+    </section>
+
+    <footer class="footer-content">
+        <p>Created By <a href="https://www.youtube.com/c/DavidSeymourofficial" target="_blank">Foodies</a> | 2022 All rights reserved.</p>
+    </footer>
+    <script src="./js/home.js"></script>
+    <script src="./js/cookie_consent.js"></script>
+    <script src="./js/endpoints-sdk.js"></script>
+</body>
+
+</html>

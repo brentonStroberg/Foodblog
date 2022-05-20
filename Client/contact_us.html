@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/global.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kreon:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>FoodBlog</title>
+</head>
+
+<body onload="onload()">
+    <nav class="navbar outside">
+        <section class="navbar inside">
+            <section class="navbarheader">
+                <a class="navbarheader anchor">
+                    <h1 class="navbar title">Foodie</h1>
+                </a>
+                <button class="navbarheader menu-toggler" onclick="toggleNavbar()">
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                </button>
+            </section>
+            <section class="navbar items">
+                <ul class="navbar items list">
+                    <li class="navbar items list item">
+                        <a class="navbar items list item anchor" href="home.html">home</a>
+                    </li>
+                    <li class="navbar items list item">
+                        <a class="navbar items list item anchor" href="/Client/post/view-post.html">posts</a>
+                    </li>
+                    <li class="navbar items list item">
+                        <a class="navbar items list item anchor" href="#">subscribe</a>
+                    </li>
+                    <li class="navbar items list item">
+                        <a class="navbar items list item anchor" href="contact_us.html">contact us</a>
+                    </li>
+                </ul>
+                <ul class="navbar buttons list">
+                    <li class="navbar buttons list item">
+                        <button class="navbar buttons list button" href="#">LOG IN</button>
+                    </li>
+                    <li class="navbar buttons list item">
+                        <button class="navbar buttons list button" href="#">SIGN UP</button>
+                    </li>
+                </ul>
+            </section>
+            <section class="sidebar" id="sidebar">
+                <ul class="sidebar items list">
+                    <li class="sidebar items list item">
+                        <a class="sidebar items list item anchor" href="#">home</a>
+                    </li>
+                    <li class="sidebar items list item">
+                        <a class="sidebar items list item anchor" href="#">posts</a>
+                    </li>
+                    <li class="sidebar items list item">
+                        <a class="sidebar items list item anchor" href="#">subscribe</a>
+                    </li>
+                    <li class="sidebar items list item">
+                        <a class="sidebar items list item anchor" href="#">contact us</a>
+                    </li>
+                </ul>
+                <ul class="sidebar buttons list">
+                    <li class="sidebar buttons list item">
+                        <button class="sidebar buttons list button" href="#">LOG IN</button>
+                    </li>
+                    <li class="sidebar buttons list item">
+                        <button class="sidebar buttons list button" href="#">SIGN UP</button>
+                    </li>
+                </ul>
+            </section>
+        </section>
+    </nav>
+    <br>
+    <br>
+    <section class="search">
+        <form class="formSearch">
+            <button type="submit" id="formSearchSubmit" name="formSearchSubmit" value="">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+            </button>
+            <input type="text" id="formSearchText" name="formSearchText" />
+        </form>
+    </section>
+
+    <section class="purpleBlock"></section>
+    <br>
+    <!-- CSS styling goes into home.css -->
+    <main>
+        <section> 
+            <section class="containerPerson">
+                <article class="person">
+                    <h1 class="person name"></h1>
+                    <p class="person paragraph"></p>
+                    <ul class="person details">
+                        <li class="person details item"></li>
+                    </ul>
+                </article>
+                <article class="blankbox"></article>
+            </section>
+        </section>
+    </main>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>

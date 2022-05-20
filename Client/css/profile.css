@@ -1,0 +1,334 @@
+:root {
+  --purple: #6e63a5;
+  --purpleClickable: #7a6dcb;
+  --lightGrey: #d3d3d3;
+  --backgroundGrey: #d4d4d4;
+  --mainNavFontHeaderColor: #62420f;
+  --font: 'Kreon', serif;
+}
+
+* {
+  margin:0;
+}
+
+.section{
+  height: 300px;
+  width: 100%;
+}
+
+.sectionTitles{
+  font-family: var(--font);
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.sectionTitles.outside{
+  width: 30%;
+  padding-left: 15%;
+}
+
+.sectionTitles.inside{
+  border-bottom: solid black 1px;
+  text-align: left;
+}
+
+@media only screen and (min-width: 769px) {
+  .sectionTitles.outside{
+      width: 30%;
+      padding-left: 15%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .sectionTitles.outside{
+      width: 50%;
+      padding-left: 5%;
+  }
+}
+
+.card{
+  position: relative;
+  width:300px;
+  height:300px;
+}
+
+.card.image{
+  position: absolute;
+  top:0;
+  left:0;
+  z-index:2;
+}
+
+.card.image.item{
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+
+.card.text{
+  position: absolute;
+  top:0;
+  left:0;
+  z-index:1;
+}
+
+img{
+  max-width:100%;
+}
+
+
+.purpleBlock{
+z-index: -1;
+position: absolute;
+height: 380px;
+width: 100%;
+padding:40px 0px 10px; 
+background:rgb(255, 207, 159);
+border: 5px solid rgb(182, 182, 182);
+text-align:center;
+margin-top: -20px;
+}
+
+.profile-card{
+  position: absolute;
+  height: 300px;
+  width: 100%;
+  padding:40px 0px 10px; 
+  background:rgb(240, 239, 238);
+  text-align:center;
+}
+.mask-shadow{
+  z-index:-1 !important;
+  width:95%;
+  height:12px;
+  background:#000;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:0 auto;
+  position:absolute;
+  border-radius:4px;
+  opacity:0;
+  transition: all 400ms ease-in;
+}
+
+.profile-card header{
+  display:block;
+  margin-top:50px;
+  width: 99%;
+}
+.profile-card header a{
+  width:150px;
+  height:150px;
+  display:block;
+  border-radius:100%;
+  margin:-120px auto 0;
+  box-shadow: 0 0 0 5px rgb(253, 217, 118);
+}
+.profile-card header a img{
+  border-radius: 50%;
+  width:150px;
+  height:150px;
+}
+
+.profile-card header h1{
+  font-size:20px;
+  color:#444;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.profile-card header h2{
+  font-size:14px;
+  color:#acacac;
+  text-transform:uppercase;
+  margin:0;
+}
+/*content*/
+.profile-bio{
+  font-size:14px;
+  color:#a5a5a5;
+  line-height:1.7;
+  font-style: italic;
+  margin-bottom:30px;
+}
+/*link social*/
+.profile-social-links{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.profile-social-links li{
+  display: inline-block;
+  margin: 0 10px;
+}
+.profile-social-links li a{
+  width: 55px;
+  height:55px;
+  display:block;
+  background:#f1f1f1;
+  border-radius:50%;
+  -webkit-transition: all 2.75s cubic-bezier(0,.83,.17,1);
+    -moz-transition: all 2.75s cubic-bezier(0,.83,.17,1);
+    -o-transition: all 2.75s cubic-bezier(0,.83,.17,1);
+    transition: all 2.75s cubic-bezier(0,.83,.17,1);
+  transform-style: preserve-3d;
+}
+.profile-social-links li a img{
+  width:35px;
+  height:35px;
+}
+
+.main--container{
+  position: absolute;
+  height: 300px;
+  padding: 0px 55px 0px; 
+  margin-top: 400px;
+
+  width: 100%;
+  grid-template-columns: repeat(auto-fit,300px);
+  place-content: center;
+  gap: 5rem;
+
+  padding:40px 0px 10px; 
+  text-align:center;
+
+} 
+
+.card {
+  background: white;
+  text-decoration: none;
+  color: #444;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: relative;
+top: 0;
+transition: all .1s ease-in;
+}
+
+
+.card:hover {
+  top: -2px;
+  box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+}
+
+
+
+
+.section {
+  height: 400px;
+  width: 100%;
+}
+
+.sectionTitles {
+  font-family: var(--font);
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.sectionTitles.outside {
+  width: 30%;
+  padding-left: 15%;
+}
+
+.sectionTitles.inside {
+  border-bottom: solid black 1px;
+  text-align: left;
+}
+
+@media only screen and (min-width: 769px) {
+  .sectionTitles.outside {
+      width: 30%;
+      padding-left: 15%;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .sectionTitles.outside {
+      width: 50%;
+      padding-left: 5%;
+  }
+}
+
+.section.carousel {
+  position: relative;
+  display: inline-flex;
+}
+
+.section.carousel.item {
+  flex: 1;
+  object-position: center;
+  justify-content: center;
+  width:400px;
+}
+
+.card-flip-image {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  height: 300px;
+  width: 400px;
+  object-fit: contain;
+}
+
+.card-flip {
+  background-color: transparent;
+  width: 400px;
+  height: 350px;
+  perspective: 1000px;
+  font-family: var(--font);
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.card-flip:hover .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card-flip-front {
+  background-color: var(--lightGrey);
+  color: black;
+}
+
+.card-flip-back {
+  background-color: var(--lightGrey);
+  color: black;
+  transform: rotateY(180deg);
+  font-family: var(--font);
+  opacity: 1;
+}
+
+.card-flip-header {
+  font-family: var(--font);
+  font-size: larger;
+}
+
+@media only screen and (max-width: 449px) {
+  .navbar {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 411px) and (max-width: 820px) {
+  
+}
+
+@media only screen and (min-width: 821px) and (max-width: 1230px) {
+  
+}

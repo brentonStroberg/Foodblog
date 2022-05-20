@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Kreon&display=swap");
+* {
+  margin: 0;
+  font-family: "Kreon", serif;
+}
+.navbar {
+  background-color: #edc862;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bolder;
+  cursor: pointer;
+  color: #009688;
+}
+
+.navbar ul li {
+  list-style: none;
+  display: inline-block;
+  margin: 0 20px;
+  position: relative;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: black;
+  text-transform: uppercase;
+}
+
+.navbar ul li::after {
+  content: "";
+  height: 3px;
+  width: 0;
+  background: #009688;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+}
+
+.navbar ul li:hover::after {
+  width: 100%;
+}
+
+.post {
+  display: flex;
+  flex-direction: row;
+}
+.post-header {
+  width: -webkit-fill-available;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.post-name {
+  font-size: 4vw;
+}
+.post-picture {
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  padding: 1rem;
+}
+.post-img {
+  width: 90%;
+}
+.post-desc {
+  margin: 1rem 2rem;
+  font-size: 20px;
+}
+@media screen and (max-width: 1400px) {
+  .post {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  margin-top: 1rem;
+}
+.comment-section {
+  margin: 1rem 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: #edc862;
+  width: inherit;
+}
+.comment-header {
+  display: flex;
+  align-items: flex-end;
+}
+#created-by {
+  font-size: 1.2rem;
+}
+#created-at {
+  font-size: 0.9rem;
+  margin-left: 2rem;
+}
+#content {
+  font-size: 1rem;
+  padding: 0.5rem;
+  text-align: initial;
+}
+.comment-input {
+  width: 90%;
+  resize: none;
+  margin-top: 2rem;
+}
+.submit-button {
+  background-color: #fe9901;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 2rem;
+}
+main {
+  background-color: white;
+  padding: 2rem 0.5rem;
+}
+.error-display {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  color:#edc862;
+  animation: rotate 2s linear infinite;
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -25px 0 0 -25px;
+  width: 50px;
+  height: 50px; 
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
