@@ -1,8 +1,8 @@
-let accessToken
+let userName
 
 loadFunction = () => {
-  accessToken = getCookie('accessToken').split('=')[1]
-
+  userName = getCookie('UserName')
+  console.log(userName)
   fetchFavourites()
   fetchRecents()
   fetchExplore()
