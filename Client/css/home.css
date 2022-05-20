@@ -29,10 +29,7 @@
   cursor: pointer;
   color: #009688;
 }
-aside {
-  display: flex;
-  align-items: center;
-}
+
 .navbar ul li {
   list-style: none;
   display: inline-block;

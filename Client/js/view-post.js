@@ -3,7 +3,9 @@ let post;
 
 loadPost = () => {
   userName = localStorage.getItem("UserName");
-
+  if(userName === null) {
+    window.location.href = '../index.html'
+  }
   post = JSON.parse(localStorage.getItem("clickedPost"));
   console.log(post)
   fetchComment(post.id);
