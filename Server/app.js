@@ -3,7 +3,6 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var validateRequest = require('./middleware/requestAuthenticator');
 var authenticatedRoute = require('./routes/api');
 var cors = require('cors');
 
@@ -15,22 +14,9 @@ var app = express();
 
 
 
-var allowedOrigins = ['http://localhost:5500',
-                      'http://127.0.0.1:5500','undefined','http://127.0.0.1:5501','http://localhost:5501'];
 
 
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS with origin ' + origin))
-    }
-  },
-  credentials: true
-}
-
-app.use(cors(corsOptions))
+app.use(cors())
 
 
 // app.use(logger('dev'));
