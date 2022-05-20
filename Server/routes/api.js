@@ -19,12 +19,12 @@ const {
 
 
 const validateRequestBody = require('../utils/requestBodyValidator');
-const { body, check } = require('express-validator');
+const { body, check ,query} = require('express-validator');
 /************************************************
   FAVOURITE ROUTES & CRUD OPS
 ************************************************/
 
-
+// get iser favourites
 router.get('/favourite', function(req, res, next) {
   favourite = {
     username : req.user.username
@@ -37,11 +37,11 @@ router.get('/favourite', function(req, res, next) {
   })
 });
 
-
-router.post('/favourite',validateRequestBody([body('postId').isNumeric()]),function (req,res,next) {
+// add post to favourite
+router.post('/favourite',validateRequestBody([query('id').isNumeric()]),function (req,res,next) {
 
     favourite = {
-        postId: req.body.postId,
+        postId: req.query.id,
         username: req.user.username
     } 
   
@@ -56,11 +56,11 @@ router.post('/favourite',validateRequestBody([body('postId').isNumeric()]),funct
 
 });
 
-
-router.delete('/favourite',validateRequestBody([body('postId').isNumeric()]), function (req,res,next) {
+// delete user favourite
+router.delete('/favourite',validateRequestBody([query('id').isNumeric()]), function (req,res,next) {
 
     favourite = {
-      postId: req.body.postId,
+      postId: req.query.id,
       username: req.user.username
   } 
     removeFavourite(favourite)
@@ -77,9 +77,9 @@ router.delete('/favourite',validateRequestBody([body('postId').isNumeric()]), fu
 
 const getUserFavourites = async (username) => {
   return new Promise((resolve, reject) => {
-      let query = `select p.id, p.createdBy, p.title, p.slug, p.summary, p.createdAt, p.updatedAt, p.content, p.banner,p.rating  from post p 
-      Inner join favourite f  on f.username = :username  and p.id = f.postId`
-      db_client.query(query, favourite,(err,resultSet) => {
+      let query = `select p.id, p.createdBy, p.title, p.slug, p.createdAt, p.updatedAt, p.content, p.banner,p.rating  from post p 
+      Inner join favourite f  on f.username = :username  and p.id = f.postId;`
+      db_client.query(query, username,(err,resultSet) => {
           if (err) {
             err.response = "Failed to get user favourites"
             reject(err);
@@ -87,6 +87,7 @@ const getUserFavourites = async (username) => {
               resolve(resultSet);
           }
       });
+  
   });
 };
 
@@ -94,7 +95,7 @@ const getUserFavourites = async (username) => {
 const addFavourite = async (favourite) => {
   return new Promise((resolve,reject) => {
     let query = "INSERT INTO favourite SET username = :username, postId = :postId ON DUPLICATE KEY UPDATE username = :username , postId = :postId;"
-    db_client.query(query, favourite,(err,resultSet) => {
+   db_client.query(query, favourite,(err,resultSet) => {
         if (err) {
           err.response = "Failed to add post to user favourites"
           reject(err);
@@ -134,6 +135,35 @@ const removeFavourite = async (favourite) => {
   USER ROUTES & CRUD OPS
 ************************************************/
 
+
+router.get('/user/posts', function(req,res,next) {
+    let username = {
+      username: req.user.username
+    };
+    getUsersPosts(username).then(resultSet => {
+      return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+     
+      return sendHttpError(req,res,err);
+    })
+});
+
+
+const getUsersPosts = async  (username) => {
+    return new Promise((resolve,reject) => {
+        let query = "SELECT p.id, p.createdBy,p.title,p.slug,p.createdAt,p.updatedAt,p.content,p.banner,p.rating from post p WHERE p.createdBy = :username;"
+
+        db_client.query(query,username, function(err,resultSet) {
+            if(err) {
+              console.log(err);
+              err.response = "Failed to delete favourite"
+              reject(err);
+            } else {
+              resolve(resultSet);
+            }
+        });
+    });
+}
 
 // create profile
 router.post('/user/profile',validateRequestBody([body('username').isString().isLength({min:9,max:99}),body('intro').isString().isLength({max:255}), body('avatarUrl').isURL().isLength({max : 50})]), function(req,res,next) {
@@ -264,7 +294,7 @@ router.put('/user/avatar',fileUploader.fileUploader, function(req, res ,next)  {
 const updateAvatarUrl = async (url) => {
   return new Promise((resolve,reject) => {
       let query = "UPDATE profile SET avatarUrl = :avatarUrl WHERE username = :username;";
-     let x = db_client.query(query
+     db_client.query(query
         ,url, 
         function (err,resultSet) {
           if (err) {
@@ -278,6 +308,335 @@ const updateAvatarUrl = async (url) => {
 }
 
 
+
+
+
+
+
+/************************************************
+  POST ROUTES & CRUD OPS
+************************************************/
+router.get('/all', function(req,res,next) {
+  getAll()
+  .then(response => {
+    return sendHttpSuccess(req,res,response)
+  }).catch(err => {
+    return sendHttpError(req,res,err);
+  });
+})
+
+const getAll = async () => {
+  return new Promise((resolve,reject) => {
+    let query = 'select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p;'
+    db_client.query(query, function(err,resultSet) {
+      if(err) {
+        err.response="Failed to get all points";
+        reject(err);
+      } else {
+        resolve(resultSet);
+      }
+    })
+  })
+}
+
+
+
+//get recent posts
+router.get('/recent', function(req,res,next) {
+  
+    getRecentPosts()
+    .then(resultSet => {
+      return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+})
+
+
+const getRecentPosts = async () =>  {
+  return new Promise((resolve,reject) => {
+    
+    let query = "select  p.id, p.createdBy, p.title, p.slug, p.createdAt,p.content,p.banner,p.rating from post p ORDER BY p.createdAt LIMIT 10"
+    db_client.query(query, function(err,resultSet) {
+      if(err) {
+        err.response="Failed to get recent post"
+        reject(err);
+      } else {
+        resolve(resultSet);
+      }
+    })
+  
+  })
+}
+
+
+
+
+
+
+// create post
+router.post('/post',fileUploader.fileUploader, validateRequestBody(
+  [
+    body('title').isString().isLength({max:50}), 
+    body('createdAt').isISO8601(),
+    body('content').isString(),
+    body('category').isString().isLength({max:50})
+    
+  ]
+  
+  
+  ), function(req, res ,next)  {
+  if (!req.file) {
+    return sendHttpError(req,res,{response:"Failed to upload banner image"});
+  } else {
+
+
+    post = {
+        banner: req.file.location,
+        username: req.user.username,
+        title: req.body.title,
+        createdAt: req.body.createdAt,
+        content: req.body.content,
+        category: req.body.category
+    }
+
+
+
+    createPost(post)
+    .then(resultSet => {
+        return sendHttpSuccess(req,res,null);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+  }
+});
+
+
+
+
+
+
+const createPost = async (post) => {
+  return new Promise((resolve,reject) => {
+
+    db_client.beginTransaction(function(err) {
+
+        if (err) {
+          err.response="Failed to create post"
+          reject(err)
+        }
+
+        let postQuery = "INSERT INTO post SET createdBy = :username, title = :title, createdAt = :createdAt, content = :content, banner = :banner;"
+
+
+        db_client.query(postQuery, post, function(err,resultSet1) {
+            if(err) {
+              db_client.rollback(function() {
+                err.response="Failed to create post"
+                reject(err);
+              })
+            }  
+           
+            let categoryQuery = "INSERT   INTO category SET title = :category"
+
+            db_client.query(categoryQuery, post, function(err, resultSet2)  {
+                if(err) {
+                  db_client.rollback(function() {
+                    err.response="Failed to create  category"
+                    reject(err);
+                  })
+                }
+
+          
+                let postCategory = {
+                    postId: resultSet1.insertId,
+                    categoryId: resultSet2.insertId
+                  }
+                  
+              
+
+            
+                let postCategoryQuery = "INSERT INTO post_category SET postId = :postId  , categoryId = :categoryId"
+
+                db_client.query(postCategoryQuery,postCategory, function(err,resultSet3) {
+                  if(err) {
+                    db_client.rollback(function() {
+                      err.response="Failed to create post category"
+                      reject(err);
+                    })
+
+                  }
+
+                  db_client.commit(function(err) {
+                    if (err) {
+                      db_client.rollback(function() {
+                        err.response="Failed to create post"
+                        reject(err);
+                      })
+
+                
+                    }
+
+                    resolve();
+                  })
+                })
+
+            })
+          
+
+        })
+
+    })
+
+  });
+} 
+
+
+// delete post by id
+router.delete('/post',validateRequestBody([query('id').isNumeric()]) ,function(req,res,next){
+    id = {
+      id: req.query.id
+    }
+  deletePost(id)
+  .then(resultSet => {
+      return sendHttpSuccess(req,res,null);
+  }).catch(err => {
+    return sendHttpError(req,res,err);
+  })
+})
+
+
+const deletePost = async (id) => {
+  return new Promise((resolve,reject) => {
+      let query = "DELETE FROM post WHERE id = :id;"
+      db_client.query(query,id, function(err,resultSet) {
+        if(err) {
+          err.response = "Failed to delete post"
+          reject(err)
+        } else {
+          resolve("Post deleted");
+        }
+      })
+  });
+}
+
+
+
+
+
+
+// get post 
+router.get('/post',validateRequestBody([query('id').isNumeric()]),function(req,res,next){
+      id = {
+        id: req.query.id
+      }
+    getPost(id)
+    .then(resultSet => {
+        return sendHttpSuccess(req,res,resultSet);
+    }).catch(err => {
+      return sendHttpError(req,res,err);
+    })
+})
+
+
+const getPost = async(id) => {
+  return new Promise((resolve,reject) => {
+
+      let query = `SELECT p.id, p.createdBy, p.title,p.slug,p.createdAt, p.updatedAt,p.content,p.banner,p.rating FROM post p WHERE p.id = :id;`
+
+        db_client.query(query,id,function(err,resultSet) {
+
+            if(err){
+              console.log(err)
+              err.response="Failed to get post";
+              reject(err);
+
+            } else {
+              resolve(resultSet);
+            }
+
+        })
+
+
+
+  })
+}
+
+
+
+
+
+// get post  comments
+router.get('/comment',validateRequestBody([query('id').isNumeric()]),function(req,res,next){
+  id = {
+    id: req.query.id
+  }
+getComments(id)
+.then(resultSet => {
+    return sendHttpSuccess(req,res,resultSet);
+}).catch(err => {
+  return sendHttpError(req,res,err);
+})
+})
+
+
+const getComments = async(id) => {
+return new Promise((resolve,reject) => {
+
+  let query = `SELECT c.id, c.createdBy, c.postId,c.parentId,c.createdAt, c.updatedAt,c.content FROM comment  c WHERE c.postId = :id;`
+
+    db_client.query(query,id,function(err,resultSet) {
+
+        if(err){
+          console.log(err)
+          err.response="Failed to get comments";
+          reject(err);
+
+        } else {
+          resolve(resultSet);
+        }
+
+    })
+});
+};
+
+
+  // make comment
+  router.post('/comment', validateRequestBody([
+    body('postId').isNumeric(), 
+    body('content').isString(),
+    body('createdAt').isISO8601()
+  ]), function(req,res,next) {
+      let comment = {
+        createdBy : req.user.username,
+        postId: req.body.postId,
+        createdAt : req.body.createdAt,
+        content :  req.body.content
+      }
+
+      createComment(comment)
+      .then(resultSet => {
+        return sendHttpResourceCreated(req,res,null)
+      }).catch(err => {
+        return sendHttpError(req,res,err);
+      })
+  });
+
+  
+  const createComment = async (comment) => {
+    return new Promise((resolve,reject) => {
+      let query = 'INSERT INTO comment SET createdBy = :createdBy, postId = :postId, createdAt = :createdAt, content =:content;';
+      db_client.query(query,comment, function(err,resultSet) {
+        if(err) {
+          err.response="Failed to post comment";
+          reject(err);
+        } else {
+          resolve(resultSet);
+        } 
+
+      })
+    });
+  }
 
 
 
