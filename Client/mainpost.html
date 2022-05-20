@@ -7,6 +7,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/PostCreate.css" />
     <script src="./js/endpoints-sdk.js"></script>
+    <script src="./js/cookie_consent.js"></script>
     <script src="./js/post.js"></script>
   </head>
   <body>
@@ -20,7 +21,7 @@
       </nav>
       <h1 class="create-title">Create New Post</h1>
       <section class="form-container">
-        <form id="form-createPost" action="" class="post-data">
+        <form id="form-createPost" class="post-data">
           <label for="title-input" class="title">Title:</label>
           <input type="text" id="title-input"/>
           </textarea>
@@ -38,7 +39,7 @@
             <option value="Mongolese">Mongolese</option>
             <option value="Cuban">Cuban</option>
           </select>
-          <button type="submit" onclick="makePost();return false" >Post</button>
+          <button type="button" value="submit" onclick="makePost();return false">Post</button>
         </form>
       </section>
     </main>

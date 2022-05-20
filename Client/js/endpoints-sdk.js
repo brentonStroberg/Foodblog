@@ -10,7 +10,7 @@ let endpoints = {
   addToFavourites: '/api/favourite', // specify id of the post as query param id=<insert id>
   removeFromFavourites: '/api/favourite', // specify id of the post as query param id=<insert id>
   getComments: '/api/comment', // specify query param id=<insert id here>
-  createPost: '/api/post/create',
+  createPost: '/api/post',
   deletePost: '/api/post/delete', // specify id of the post as query param id=<insert id>
   getPost: '/api/post', // specify id of the post as query param id=<insert id>
   createProfile: '/api/user/profile',
