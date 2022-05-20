@@ -2,7 +2,7 @@ let currentHost = 'remote'
 
 let hosts = {
   localhost: 'localhost:8080',
-  remote: '3.226.187.18:8080'
+  remote: '44.193.140.253:8080'
 }
 
 let endpoints = {

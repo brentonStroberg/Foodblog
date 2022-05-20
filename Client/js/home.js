@@ -1,37 +1,16 @@
 let userName
 
 loadFunction = () => {
-  userName = getCookie('UserName')
+  userName = localStorage.getItem("UserName");
   console.log(userName)
-  fetchFavourites()
+
   fetchRecents()
   fetchExplore()
-}
-
-fetchFavourites = () => {
-  let favourites_endpoint = `http://${hosts[currentHost]}${endpoints.getFavourites}`
-
-  let { endpoint, request } = new ApiCall(favourites_endpoint, 'GET')
-    .withCredentials()
-    .withQueryParams({ id: 1 })
-    .withHeader('Authorization', `Bearer ${accessToken}`)
-    .withHeader('Content-Type', 'application/json')
-    .build()
-
-  Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    if (results[0].value.length === 0) {
-      document.getElementById('favourites').style.display = 'none'
-    } else {
-      populateFavourites(results[0].value)
-    }
-  })
 }
 
 fetchRecents = () => {
   let recentEndpoint = `http://${hosts[currentHost]}${endpoints.getRecentPosts}`
   let { endpoint, request } = new ApiCall(recentEndpoint, 'GET')
-    .withCredentials()
-    .withHeader('Authorization', `Bearer ${accessToken}`)
     .withHeader('Content-Type', 'application/json')
     .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
@@ -42,8 +21,6 @@ fetchRecents = () => {
 fetchExplore = () => {
   let exploreEndpoint = `http://${hosts[currentHost]}${endpoints.allPosts}`
   let { endpoint, request } = new ApiCall(exploreEndpoint, 'GET')
-    .withCredentials()
-    .withHeader('Authorization', `Bearer ${accessToken}`)
     .withHeader('Content-Type', 'application/json')
     .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
@@ -51,29 +28,6 @@ fetchExplore = () => {
   })
 }
 
-populateFavourites = (posts) => {
-  let post = document.getElementById('posts-container-favs')
-
-  posts.forEach((x) => {
-    let item = document.createElement('section')
-    item.classList.add('post-card')
-    item.setAttribute('id', 'post-card')
-
-    let y = `<figure class="post-image">
-        <img src="${x.banner}" class="post-thumb" id="dish-img">
-    </figure>
-    <article class="post-info">
-        <h2 class="post-name">${x.title}</h2>
-        <p class="post-short-description">${x.content}</p>
-    </article>`
-
-    item.innerHTML = y
-    post.appendChild(item)
-    item.addEventListener('click', () => {
-      onItemClick(x)
-    })
-  })
-}
 
 populateRecents = (posts) => {
   let post = document.getElementById('posts-container-recents')
@@ -124,7 +78,7 @@ populateExplore = (posts) => {
 }
 
 onItemClick = (e) => {
-  setCookie('clickedPost', JSON.stringify(e), 432000)
+  localStorage.setItem("clickedPost", JSON.stringify(e));
   window.location.href = '/post/view-post.html'
 }
 

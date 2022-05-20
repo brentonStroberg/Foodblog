@@ -1,15 +1,15 @@
 const makePost = () => {
-  let token = getCookie("accessToken").split("=")[1];
+  let userName = localStorage.getItem("UserName");
+  console.log(userName)
   let data = new FormData();
   let file = document.getElementById("image-input");
   let title = document.getElementById("title-input").value;
   let content = document.getElementById("description-input").value;
-  let category = document.getElementById("categories-input").value;
 
+  data.append("username", userName);
   data.append("file", file.files["0"]);
   data.append("title", title);
   data.append("content", content);
-  data.append("category", category);
   data.append("createdAt", new Date().toISOString());
 
 
@@ -17,8 +17,6 @@ const makePost = () => {
     `http://${hosts[currentHost]}${endpoints.createPost}`,
     "POST"
   )
-    .withCredentials()
-    .withHeader("Authorization", `Bearer ${token}`)
     .withBody(data)
     .build();
 
