@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../css/view-post.css" />
     <title>Post View</title>
   </head>
-  <body onload="loadPost()">
+  <body onload="loadPost()" id="body">
     <nav class="navbar">
       <label class="logo">FOODIE</label>
       <ul>
@@ -42,6 +42,11 @@
       </section>
       <section id="error-display"></section>
     </article>
+    <section id="loader" class="loader">
+      <svg class="spinner" viewBox="0 0 200 200" xlmns="http://www.w3.org/2000/svg">
+          <circle class="path" cx="25" cy="25" r="20" fill="black" stroke-width="5" ></circle>
+        </svg>
+  </section>
     <script src="../js/view-post.js"></script>
     <script src="../js/endpoints-sdk.js"></script>
     <script src="../js/cookie_consent.js"></script>

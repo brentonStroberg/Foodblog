@@ -1,5 +1,8 @@
 let userName;
 
+var fetchRecentsLoader = false;
+var fetchExploreLoader = false;
+
 loadFunction = () => {
   userName = localStorage.getItem("UserName");
   if (userName === null) {
@@ -12,24 +15,33 @@ loadFunction = () => {
 };
 
 fetchRecents = () => {
-  let recentEndpoint = `http://${hosts[currentHost]}${endpoints.getRecentPosts}`;
-  let { endpoint, request } = new ApiCall(recentEndpoint, "GET")
-    .withHeader("Content-Type", "application/json")
-    .build();
+    fetchRecentsLoader = false;
+    toggleLoader();
+  let recentEndpoint = `http://${hosts[currentHost]}${endpoints.getRecentPosts}`
+  let { endpoint, request } = new ApiCall(recentEndpoint, 'GET')
+    .withHeader('Content-Type', 'application/json')
+    .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    populateRecents(results[0].value);
-  });
-};
+    populateRecents(results[0].value)
+    fetchRecentsLoader = true;
+    toggleLoader();
+  })
+}
 
 fetchExplore = () => {
-  let exploreEndpoint = `http://${hosts[currentHost]}${endpoints.allPosts}`;
-  let { endpoint, request } = new ApiCall(exploreEndpoint, "GET")
-    .withHeader("Content-Type", "application/json")
-    .build();
+  fetchExploreLoader = false;
+  toggleLoader();
+  let exploreEndpoint = `http://${hosts[currentHost]}${endpoints.allPosts}`
+  let { endpoint, request } = new ApiCall(exploreEndpoint, 'GET')
+    .withHeader('Content-Type', 'application/json')
+    .build()
   Promise.allSettled([callAPI(endpoint, request)]).then((results) => {
-    populateExplore(results[0].value);
-  });
-};
+    populateExplore(results[0].value)
+    fetchExploreLoader = true;
+    toggleLoader();
+  })
+}
+
 
 populateRecents = (posts) => {
   let post = document.getElementById("posts-container-recents");
@@ -96,7 +108,19 @@ productContainers.forEach((item, i) => {
     item.scrollLeft += containerWidth;
   });
 
-  preBtn[i].addEventListener("click", () => {
-    item.scrollLeft -= containerWidth;
-  });
-});
+  preBtn[i].addEventListener('click', () => {
+    item.scrollLeft -= containerWidth
+  })
+})
+
+
+function toggleLoader(){
+ 
+  if(fetchRecentsLoader === true && fetchExploreLoader === true){
+    document.getElementById('loader').style.display = "none"
+    document.getElementById('body').style.opacity = 1;
+  }else{
+    document.getElementById('loader').style.display = "Block"
+    document.getElementById('body').style.opacity = 0.3;
+  }
+}
