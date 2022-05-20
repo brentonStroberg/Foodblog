@@ -1,3 +1,10 @@
+
+const checkForUser = () => {
+  let userName = localStorage.getItem("UserName");
+  if(userName === null) {
+    window.location.href = '../index.html'
+  }
+}
 const makePost = () => {
   let userName = localStorage.getItem("UserName");
   console.log(userName)
